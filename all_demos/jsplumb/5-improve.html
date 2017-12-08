@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="js/jQuery-2.1.4.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jsplumb.js"></script>
+        <style type="text/css">
+            .wrap{ 
+                width:600px; height:500px; border:1px solid #ccc; position:relative;
+            }
+            .box{
+                position:absolute; width:100px; height:100px; background:rgba(0,0,0,0.3); 
+            }
+            .box:nth-child(1){ top:100px; left:50px;}
+            .box:nth-child(2){ top:100px; left:250px;}
+            .box:nth-child(3){ top:100px; left:450px;}
+        </style>
+
+    </head>
+
+    <body>
+        <div class="wrap">
+            <div class="box" id="a"></div>
+            <div class="box" id="b"></div>
+            <div class="box" id="c"></div>
+        </div>
+        <button id="add">+</button>
+        <button id="save">save</button>
+        <button id="clear">clear</button>
+        <button id="read">read</button>
+    </body>
+
+</html>
+<script>
+    // localStorage.removeItem('jspData')
+    var mydata={
+        "nodes": [{
+            "id": "a",
+            "anchors": ["Bottom"],
+            "position": ["50px", "100px"]
+        }, {
+            "id": "b",
+            "anchors": ["Bottom"],
+            "position": ["250px", "100px"]
+        }, {
+            "id": "c",
+            "anchors": ["Bottom", "Left"],
+            "position": ["450px", "100px"]
+        }],
+        "links": [{
+            "source": {
+                "id": "a",
+                "type": "Bottom"
+            },
+            "target": {
+                "id": "c",
+                "type": "Bottom"
+            }
+        }, {
+            "source": {
+                "id": "b",
+                "type": "Bottom"
+            },
+            "target": {
+                "id": "c",
+                "type": "Left"
+            }
+        }]
+    }
+</script>
+
+<script>
+        var jsp=jsPlumb.getInstance({});
+        // 连接点样式及线
+        var point={
+            endpoint: "Dot",
+            connector: [ "Flowchart", { stub: [50, 50], gap: 10, cornerRadius: 5, alwaysRespectStubs: false } ],
+            // 是否作为头尾连接点
+            isSource: true,
+            isTarget:true,
+            maxConnections: -1,
+            connectorOverlays:[[ "Arrow", {
+                location: 1,
+                visible:true,
+            }]],
+            connectorPaintStyle:{
+                stroke: "#aaa",
+                strokeWidth: 1,
+            },
+            connectorHoverStyle:{
+                stroke: "#000",
+                strokeWidth: 2,
+            },
+            hoverPaintStyle: {
+                fill: "#ff0",
+            },
+        }
+        var line={
+            connector: [ "Flowchart", { stub: [50, 50], gap: 10, cornerRadius: 5, alwaysRespectStubs: false } ],
+            connectorOverlays:[[ "Arrow", {
+                location: 1,
+                visible:true,
+            }]],
+            connectorPaintStyle:{
+                stroke: "#aaa",
+                strokeWidth: 1,
+            },
+            connectorHoverStyle:{
+                stroke: "#000",
+                strokeWidth: 2,
+            },
+        }
+        // 所有元素可拖动
+        jsp.draggable(jsPlumb.getSelector(".wrap .box"));
+
+        // 在元素上添加点
+        jsp.addEndpoint('a',point,{uuid:'a1'});
+        jsp.addEndpoint('b',point,{uuid:'b1'});
+        jsp.addEndpoint('c',point,{uuid:'c1'}); 
+        jsp.addEndpoint('c',point,{uuid:'c2',anchor:'Left'});
+
+        //自动连线
+        jsp.connect({uuids: ["a1", "c1"], editable: false}); 
+        jsp.connect({uuids: ["b1", "c2"], editable: false});
+        jsPlumb.connect({
+          source:'window3',
+          target:'window4',
+          paintStyle:{ strokeWidth:10, stroke:'rgba(0, 0, 200, 0.5)' },
+          anchors:["Right", "Left"],
+          endpoint:[ "Rectangle", { width:10, height:8 } ]
+        });
+        console.log(jsp);
+
+        var n=0;
+        $('#add').click(add_dom);
+        $('#save').click(data);
+        $('#clear').click(clear);
+        $('#read').click(function(){
+            var data=JSON.parse(localStorage.getItem('jspData'));
+            if (data==null) {
+                data=mydata;
+            };
+            read(data)
+        })
+        function clear(){
+            jsp.reset();
+            $('.wrap').empty();
+        }
+        // 添加新div，并且添加节点
+        function add_dom(){
+            var id='n'+n;
+            var id='n_'+parseInt(Math.random()*1000000);
+            var $dom=$('<div class="box" id="'+id+'"></div>');
+            $dom.appendTo('.wrap').css('bottom',0);
+            jsp.draggable($dom);
+            jsp.addEndpoint(id,point,{anchor:'Bottom'})
+            jsp.addEndpoint(id,point,{anchor:'Top'});
+            jsp.addEndpoint(id,point,{anchor:'Left'});
+            jsp.addEndpoint(id,point,{anchor:'Right'});
+        }
+        //读取数据画图-------------------------------------------------------------------------------------
+        function paintNodes(data){
+            console.log(point)
+            console.log(1)
+            $.each(data.nodes,function(idx,item){
+                $('<div class="box" id="'+item.id+'"></div>').appendTo('.wrap').css({left:item.position[0],top:item.position[1]});
+                for (var i = 0; i < item.anchors.length; i++) {
+                    var xxx=jsp.addEndpoint(item.id,point,{ anchor:item.anchors[i]});
+                    console.log(xxx)
+                };
+            })
+            jsp.draggable(jsPlumb.getSelector(".wrap .box"));
+        }
+        function paintLinks(data){
+            $.each(data.links,function(idx,item){
+                jsp.connect({
+                  source:item.source.id,
+                  target:item.target.id,
+                  anchors:[item.source.type, item.target.type],
+                  connector: [ "Flowchart", { stub: [50, 50], gap: 10, cornerRadius: 5, alwaysRespectStubs: false } ]
+                });
+            })
+        }
+        function read(data){
+            clear();
+            paintNodes(data);
+
+            paintLinks(data);
+        }
+        //读取数据画图-------------------------------------------------------------------------------------
+        
+        //保存数据 data/getNodes/getinks-------------------------------------------------------------------------------------
+        function getNodes(){
+            var arr=[];
+            var doms=jsp.getManagedElements();
+            for(var key in doms){
+                var anchors=jsp.getEndpoints(key);
+                var arrAnchor=[];
+                for (var i = 0; i < anchors.length; i++) {
+                    arrAnchor.push(anchors[i].anchor.type);
+                };
+                var $dom=$('#'+key+'');
+                arr.push({
+                    id:key,
+                    anchors:arrAnchor,
+                    position:[$dom.css('left'),$dom.css('top')]
+                })
+            }
+            return arr;
+        }
+
+        function getLinks(){
+            var arr=[];
+            $.each(jsp.getAllConnections(),function(idx,item){
+                console.log(item);
+                console.log(item.getAttachedElements())
+                var type=item.getAttachedElements()
+                arr.push({
+                    source:{id:item.sourceId,type:item.getAttachedElements()[0].anchor.type},
+                    target:{id:item.targetId,type:item.getAttachedElements()[1].anchor.type}
+                })
+            })
+            return arr;
+        }
+
+        function data(){
+            var data={
+                nodes:getNodes(),
+                links:getLinks()
+            }
+            localStorage.setItem('jspData',JSON.stringify(data));
+            return data;
+        }
+        //保存数据 data/getNodes/getinks-------------------------------------------------------------------------------------
+
+</script>
+

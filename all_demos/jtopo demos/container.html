@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jtopo-0.4.08.js"></script>
+</head>
+<body>
+	<canvas id="canvas" width="500px" height="500px" style="border:1px solid black; "></canvas>
+</body>
+<script>
+	$(document).ready(function(){    
+            var canvas = document.getElementById('canvas');   
+            var stage = new JTopo.Stage(canvas);  
+            stage.width=500;
+            stage.height=500; 
+            var scene = new JTopo.Scene(stage); 
+
+            var node= new JTopo.Node("哈哈哈哈哈");
+            scene.add(node);
+
+            var container = new JTopo.Container('点击切换布局');
+            container.layout = JTopo.layout.GridLayout(4, 3);
+            container.fillColor = '10,10,100';
+            container.setBound(10, 10, 300, 200);            
+            scene.add(container);
+
+            for(var i=0; i<12; i++){
+                var node = new JTopo.Node("F_" + i);    
+                node.textPosition = "Middle_Center";
+                scene.add(node);
+                container.add(node);
+            }
+           
+      });  
+</script>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/bootstrap.js"></script>
+</head>
+<body>
+	<div id="apptop">
+
+
+
+	    <header class="main-header" id="app-header">
+	        <!-- Logo -->
+	        <a href="#" class="logo">
+	          <!-- mini logo for sidebar mini 50x50 pixels -->
+	          <span class="logo-mini"><b>优普</b></span>
+	          <!-- logo for regular state and mobile devices -->
+	          <span class="logo-lg"><b>Unipower</b></span>
+	        </a>
+	        <!-- Header Navbar: style can be found in header.less -->
+	        <nav class="navbar navbar-static-top" role="navigation">
+	          <!-- Sidebar toggle button-->
+	          <a class="sidebar-toggle" onclick="sidebartoggle()" data-toggle="offcanvas" role="button">
+	            <span class="sr-only">Toggle navigation</span>
+	          </a>
+	          <div class="navbar-custom-menu">
+	            <ul class="nav navbar-nav">            
+	              <!-- User Account: style can be found in dropdown.less -->
+	              <li class="dropdown user user-menu">
+	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding:12px 10px" aria-expanded="false">
+	                 <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+	                  
+	                  管理员
+	               </a>  
+	               <ul class="dropdown-menu">
+	                  <!-- User image -->
+	                  <li class="user-header">
+	                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+	                    <p>
+	                      Alexander Pierce - Web Developer
+	                      <small>Member since Nov. 2012</small>
+	                    </p>
+	                  </li>
+	                  <!-- Menu Body -->
+	                  <li class="user-body">
+	                    <div class="col-xs-4 text-center">
+	                      <a href="#">Followers</a>
+	                    </div>
+	                    <div class="col-xs-4 text-center">
+	                      <a href="#">Sales</a>
+	                    </div>
+	                    <div class="col-xs-4 text-center">
+	                      <a href="#">Friends</a>
+	                    </div>
+	                  </li>
+	                  <!-- Menu Footer-->
+	                  <li class="user-footer">
+	                    <div class="pull-left">
+	                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+	                    </div>
+	                    <div class="pull-right">
+	                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+	                    </div>
+	                  </li>
+	                </ul>             
+	              </li> 
+	               <li style="color: #fff;font-size:16px;">          
+	                 <a style="padding:11px 3px 13px 3px;"> <div id="timeslide">2016/12/7 16:51:11</div></a>                     
+	              </li>
+	           
+	              <!-- <li  class="dropdown tasks-menu" style="color: #fff; font-size:16px;">
+	                   <a><div id="timeslide" style="height:auto;width:50px;"></div> </a>             
+	              </li>  -->
+	              <li>
+	                <a id="LoginOut" onclick="logOut()" style="padding:12px 15px"><i class="glyphicon glyphicon-off"></i></a>
+	              </li>
+	            </ul>
+	            
+	          </div>
+	        </nav>
+	      </header>  
+      <script type="text/javascript">
+      	$(function() {
+            getTime();
+            setInterval("getTime();", 1000); //每隔一秒执行一次 
+        })
+    
+        function getTime() {
+            var myDate = new Date();
+            var date = myDate.toLocaleDateString();
+            var hours = myDate.getHours();
+            var minutes = myDate.getMinutes();
+            var seconds = myDate.getSeconds();
+            $("#timeslide").html(date + " " + (hours>10?hours:Number('0'+hours))  + ":" + (minutes>10?minutes:'0'+minutes) + ":" + (seconds>9?seconds:'0'+seconds)); //将值赋给div 
+        }
+    
+	
+		function checkTime(i){
+		 if (i<10) 
+		   {i="0" + i;}
+		   return i;
+		} 	
+		
+		function logOut(){
+		   if(confirm("确定退出系统吗？")){
+		       $('#LoginOut').attr('href','Logout.action');
+		   }
+		}
+    </script>   
+
+</div>
+
+<div id="appleft">
+	<aside class="main-sidebar">
+        <section class="sidebar">
+        	<input type="hidden" id="NodeType3">
+			<input type="hidden" id="managerId3">
+			<input type="hidden" id="show_id3">
+			<input type="hidden" id="treeid3">
+			<input type="hidden" id="timevalue3">
+          <input type="hidden" id="selectedmenu" value="null">       
+          <ul class="sidebar-menu">        
+           
+            
+				
+				 <li style="cursor: pointer;" class="treeview  onetreeview active" id="10"> 
+					<a onclick="oneMenu(this,'unipower_index.action')">             
+                       <i class="fa fa-home"></i>
+                       <span>主页</span>
+                    </a>
+                  </li>
+				
+				
+		   
+            
+             <li style="cursor: pointer;" class="treeview" id="11">             
+					<a>             
+                       <i class="fa fa-sitemap"></i>
+                       <span>监测视图</span>
+                       <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+					<ul class="treeview-menu" id="ul1" style="display:none">
+						
+							
+						  		<li class="thridtreeview" id="1101">
+						  		  <a id="ta" onclick="zzz('treeMain.action?functionCode=1101','1101')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>资源</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+							
+							
+								<li class="thridtreeview" id="1103">
+								 <a id="ta" onclick="zzz('resourceSearch_findKeyByPage.action?functionCode=1103','1103')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>资源检索</span> 
+								 </a>
+								</li>						
+							
+						
+					</ul>
+				  </li>
+				
+				
+				
+		   
+            
+             <li style="cursor: pointer;" class="treeview" id="12">             
+					<a>             
+                       <i class="fa fa-support"></i>
+                       <span>拓扑视图</span>
+                       <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+					<ul class="treeview-menu" id="ul1" style="display:none">
+						
+							
+						  		<li class="thridtreeview" id="1201">
+						  		  <a id="ta" onclick="zzz('physicalTopoShow.action?functionCode=1201','1201')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>拓扑展示</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+							
+						  		<li class="thridtreeview" id="1202">
+						  		  <a id="ta" onclick="zzz('Physical.action?functionCode=1202','1202')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>拓扑配置</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+					</ul>
+				  </li>
+				
+				
+				
+		   
+            
+             <li style="cursor: pointer;" class="treeview" id="13">             
+					<a>             
+                       <i class="fa fa-list"></i>
+                       <span>数据中心</span>
+                       <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+					<ul class="treeview-menu" id="ul1" style="display: none;">
+						
+							
+						  		<li class="thridtreeview" id="1301">
+						  		  <a id="ta" onclick="zzz('datanode.action?functionCode=1301','1301')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>数据节点管理</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+							
+							
+								<li class="thridtreeview" id="1302">
+								 <a id="ta" onclick="zzz('dataout_backup.action?functionCode=1302','1302')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>备份恢复</span> 
+								 </a>
+								</li>						
+							
+						
+							
+						  		<li class="thridtreeview" id="1303">
+						  		  <a id="ta" onclick="zzz('dataout_downloadPage.action?functionCode=1303','1303')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>数据导出</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+					</ul>
+				  </li>
+				
+				
+				
+		   
+            
+				
+				 <li style="cursor: pointer;" class="treeview  onetreeview" id="14"> 
+					<a onclick="oneMenu(this,'improving.action')">             
+                       <i class="fa fa-shield"></i>
+                       <span>安全视图</span>
+                    </a>
+                  </li>
+				
+				
+		   
+            
+             <li style="cursor: pointer;" class="treeview" id="15">             
+					<a>             
+                       <i class="fa fa-pie-chart"></i>
+                       <span>报表视图</span>
+                       <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+					<ul class="treeview-menu" id="ul1" style="display:none">
+						
+							
+							
+								<li class="thridtreeview" id="1501">
+								 <a id="ta" onclick="zzz('allReportList.action?reportType=1','1501')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>通用</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1502">
+								 <a id="ta" onclick="zzz('allReportList.action?reportType=2','1502')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>系统维护</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1503">
+								 <a id="ta" onclick="zzz('allReportList.action?reportType=3','1503')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>设备报表</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1504">
+								 <a id="ta" onclick="zzz('allReportList.action?reportType=4','1504')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>业务报表</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1505">
+								 <a id="ta" onclick="zzz('allReportList.action?reportType=5','1505')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>定制报表</span> 
+								 </a>
+								</li>						
+							
+						
+					</ul>
+				  </li>
+				
+				
+				
+		   
+            
+             <li style="cursor: pointer;" class="treeview" id="16">             
+					<a>             
+                       <i class="fa fa-stethoscope"></i>
+                       <span>管理视图</span>
+                       <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+					<ul class="treeview-menu" id="ul1" style="display:none">
+						
+							
+						  		<li class="thridtreeview" id="1601">
+						  		  <a id="ta" onclick="zzz('UserList.action?functionCode=1601','1601')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>用户管理</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+							
+						  		<li class="thridtreeview" id="1602">
+						  		  <a id="ta" onclick="zzz('Ping.action?functionCode=1602','1602')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>诊断工具</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+							
+							
+								<li class="thridtreeview" id="1603">
+								 <a id="ta" onclick="zzz('timedtask_list.action?functionCode=1603','1603')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>定时任务</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1604">
+								 <a id="ta" onclick="zzz('netconfig_getConf.action','1604')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>网卡设置</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1605">
+								 <a id="ta" onclick="zzz('version_uploadPage','1605')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>系统升级</span> 
+								 </a>
+								</li>						
+							
+						
+					</ul>
+				  </li>
+				
+				
+				
+		    
+		 </ul>	
+		  <input type="hidden" id="loginuser" value="1">	               
+        </section>           
+      </aside>
+
+      <script>
+
+		  	$(document).ready(function(){ 	
+			  $("#10").addClass("active");
+			  $(".treeview").click(function(){
+			  if( $(this).children("ul").is(":visible")){
+			     $(this).children("ul").hide();
+			  }else{
+			  $(this)			
+					.children("ul").show().end()			//将子节点的ul元素显示出来并重新定位到上次操作的元素
+				.siblings()	                                //获取元素的兄弟元素
+					.children("ul").hide();				//将兄弟元素下的ul元素隐藏
+			    }		
+			   });
+			  $(".treeview > ul").click(function(event) {
+		            event.stopPropagation();
+		        }); 
+		      $(".thridtreeview").click(function(){
+		          $(this).siblings("li").removeClass("active");
+		          $(this).parent("ul").parent("li").siblings("li").children("ul").children("li").removeClass("active");
+		          $(this).parent("ul").parent("li").siblings("li").removeClass("active");
+		          $(this).parent("ul").parent("li").addClass("active");
+		          $(this).addClass("active");        
+		      });
+		       $(".onetreeview").click(function(){
+		          $(this).siblings("li").removeClass("active");
+		          $(this).siblings("li").children("ul").children("li").removeClass("active");
+		      	  $(this).addClass("active");
+		      }); 
+		});       
+		    
+      </script>
+</div>
+	
+</body>
+</html>

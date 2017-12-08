@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/jquery-1.9.1.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/drilldown.js"></script>
+    
+</head>
+<body>
+    <div id="myMap" style="width:300px; height:300px; border:1px solid black"></div>
+</body>
+</html>
+<script>
+$.getJSON('https://data.jianshukeji.com/jsonp?filename=geochina/guangdong.json&callback=?', function(mapdata) {
+    console.log(JSON.stringify(mapdata))
+})
+	
+</script>

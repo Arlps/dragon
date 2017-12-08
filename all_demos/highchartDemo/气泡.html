@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/jquery-1.9.1.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/drilldown.js"></script>
+    <script src="js/cn-with-city.js"></script>
+</head>
+<body>
+    <div id="myMap" style="width:500px; height:500px; border:1px solid black"></div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function() {
+        // Prepare random data
+        var data = [
+            {
+                value: 7270,
+                name: "浙江",
+                href: ''
+            }, {
+                value: 7270,
+                name: "北京",
+                href: ''
+            }, {
+                value: 10000,
+                name: '广东',
+                href: ''
+            }, {
+                value: 100,
+                name: '内蒙古',
+                href: ''
+            }, {
+                value: 200,
+                name: "西藏"
+            }, {
+                value: 1000,
+                name: "台湾"
+            }
+        ];
+        var mapData = [
+            {
+                z: 12,
+                name: '福州'
+            }, {
+                z: 120,
+                name: "厦门"
+            }, {
+                z: 1200,
+                name: '杭州'
+            }, {
+                z: 100,
+                name: "上海"
+            }, {
+                z: 1000,
+                name: '北京'
+            }, {
+                z: 1000088,
+                name: '广州',
+                color: '#00ccee'
+            }, {
+                z: 10,
+                name: '深圳'
+            }, {
+                z: 12000,
+                name: "重庆"
+            }, {
+                z: 20888,
+                name: "苏州"
+            }, {
+                z: 1000000,
+                name: '武汉'
+            }
+        ];
+        console.log(data)
+        var mapArray = Highcharts.maps['cn-with-city'];
+        console.log(mapArray);
+        var mappoint = Highcharts.geojson(mapArray, 'mappoint');
+        console.log(mappoint)
+        $('#myMap').highcharts('Map', {
+            title: {text: null},
+            credits: {enabled: false},
+            chart: {
+                // events: {
+                //     click: function(e) {
+                //         var x = Math.round(e.xAxis[0].value),
+                //             y = Math.round(e.yAxis[0].value);
+                //         this.get('clicks').addPoint({
+                //             x: x,
+                //             y: y,
+                //             name: '[' + x + ', ' + y + ']'
+                //         });
+                //     }
+                // }
+            },
+            // 放大缩小按钮
+            mapNavigation: {
+                enabled: true,
+                buttonOptions: {
+                    verticalAlign: 'bottom'
+                }
+            },
+            series: [{
+                // #1 气泡数据
+                //keys:keys,
+                data: mapData,
+                type: 'mapbubble', //'mapbubble',
+                mapData: mappoint,
+                joinBy: ['name', 'name'],
+                name: 'bubble data',
+                states: {
+                    hover: {
+                        color: '#BADA55'
+                    }
+                },
+                // negativeColor:'#FF0022',
+                maxSize: '5%',
+                minSize: 5,
+                negativeColor: '#FF0022',
+                zThreshold: 120,
+                showInLegend: true,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}',
+                    style: {
+                        fontSize: '8px',
+                        color: '#000'
+                    }
+                },
+                states: {
+                    hover: {
+                        brightness: 0.8,
+                        borderWidth: 10
+                    }
+                },
+                tooltip: {
+                    formatter: function() {
+                        return this.point.name + " \t" + this.point.z;
+                    }
+                },
+                zIndex: 1000
+            },{
+                // #3 基础地图数据
+                data: data,
+                mapData: mapArray,
+                joinBy: ['name', 'name'],
+                name: 'basic data',
+                //color: '#000',
+                negativeColor: 'rgba(255, 0, 0, 0.2)',
+                showInLegend: true,
+                states: {
+                    hover: {
+                        color: '#BADA55'
+                    }
+                },
+                events: {
+                    click: function(e) {
+                        // var href = e.point.href;
+                        // window.location.href = href;
+                        //console.log(e.point.href);
+                    }
+                },
+                cursor: 'pointer',
+                // 省份名称
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}',
+                    style: {
+                        fontSize: '8px'
+                    }
+                }
+            }, ]
+        }, function(map) {
+            console.log(map)
+            console.log("Map init ok!");
+        });
+    });
+</script>

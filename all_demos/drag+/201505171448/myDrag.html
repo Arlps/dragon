@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>可变动拖拽+图表</title>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="dist/gridstack.css"/>
+	<script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/lodash.min.js"></script>
+    <script src="dist/gridstack.js"></script>
+    <!-- highcharts -->
+    <script src="js/highcharts.js"></script>
+    <script src="js/highcharts-more.js"></script>
+    <script src="js/solid-gauge.js"></script>
+    
+    
+	<style type="text/css">
+		.menu{ overflow:hidden; padding:5px; background-color:#c60;}
+		.grid-wrap{ overflow:hidden; background:#ccc; min-height:500px;}
+	    .grid-stack {/*background: yellow;*/ width:100%; margin-top: 10px }
+	    .grid-stack-item{ box-shadow:0 0 00px;}
+	    .grid-stack-item-content { 
+	    	color: #2c3e50; background-color: #18bc9c;background-color: #fff; width:100%; height:100%; float:left!important; overflow:hidden!important; overflow-x:scroll; padding:30px; box-shadow:0 0 0px;position:relative;
+	    }
+	    .chart{ width:100%; height:100%; box-shadow:0 0 1px; }
+	    .selectBox{ position:absolute; top:0; right:0; box-shadow:0 0 3px;}
+	    select{ /*background-color:#ff0;*/}
+	    
+	</style>
+</head>
+<body>
+	<div class="grid-wrap">
+		<div class="menu">
+			<button class="btn btn-primary" id="save">SAVE</button>
+			<button class="btn btn-warning" id="delete">DELETE</button>
+			<button class="btn btn-success" id="resize">RESIZE</button>
+			<span class="time"></span>
+			<button class="btn btn-danger pull-right" id="add">NEW</button>
+		</div>
+		
+		<div class="grid-stack">
+<!-- 		    <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="2" data-gs-height="2">
+	            <div class="grid-stack-item-content">
+	            	<button class="">终于可以输中文了</button>
+	            </div>
+		    </div> -->
+		</div>  
+	</div>
+<!-- 	<div id="pie"></div><script src="js_charts/chart1.js"></script> -->
+	<script src="js/data.js"></script>
+	<script src="js/myDrag.js"></script>
+	<script src="js_charts/chart1.js"></script>
+</body>
+<!--  渲染结构
+		    <div class="grid-stack-item" data="xxx">
+	            <div class="grid-stack-item-content">
+	            	<div class="chart">
+	            		<select name="" id="">
+	            			<option value="pie"></option>
+	            			<option value="line"></option>
+	            			<option value="bar"></option>
+	            		</select>
+	            	</div>
+	            </div>
+		    </div>
+		-->
+</html>
+
+

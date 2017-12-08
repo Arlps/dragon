@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<script src="js/echarts.min.js"></script>
+</head>
+<body>
+	<div id="chart" style="width:50%; height:400px; border:1px solid black"></div>
+	<script>
+	var myChart = echarts.init(document.getElementById("chart"));
+	var app = {};
+	option = {
+		title: {
+			text: '动态数据',
+			subtext: '纯属虚构'
+		},
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'cross',
+				label: {
+					backgroundColor: '#283b56'
+				}
+			}
+		},
+		legend: {
+			data:['dataA', 'dataB']
+		},
+		toolbox: {//工具栏
+			// show: true,
+			feature: {
+				dataView: {readOnly: false},
+				restore: {},
+				saveAsImage: {}
+			}
+		},
+		dataZoom: { //区间缩放
+			show: false,
+			start: 0,
+			end: 200
+		},
+		xAxis: [
+		{
+			type: 'category',
+			boundaryGap: true,
+			// 生成十个距离now前十秒内的的时间点
+			data: (function (){
+				var now = new Date();
+				console.log(now.toLocaleTimeString())
+				var res = [];
+				var len = 10;
+				while (len--) {
+					res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+					console.log(now-2000)
+					now = new Date(now - 2000);
+				}
+				return res;
+			})()
+		},
+		{
+			type: 'category',
+			boundaryGap: true,
+			data: (function (){
+				var res = [];
+				var len = 10;
+				while (len--) {
+					res.push(10-len);
+				}
+				return res;
+			})()
+		}
+		],
+		yAxis: [
+		{
+			type: 'value',
+			scale: true,
+			name: '价格',
+			max: 30,
+			min: 0,
+			boundaryGap: [0.2, 0.2]
+		},
+		{
+			type: 'value',
+			scale: true,
+			name: '预购量',
+			max: 1200,
+			min: 0,
+			boundaryGap: [0.2, 0.2]
+		}
+		],
+		series: [
+		{
+			name:'预购队列',
+			type:'bar',//'effectScatter',
+			xAxisIndex: 1,
+			yAxisIndex: 1,
+			data:(function (){
+				var res = [];
+				var len = 10;
+				while (len--) {
+					res.push(Math.round(Math.random() * 1000));
+				}
+				return res;
+			})()
+		},
+		{
+			name:'最新成交价',
+			type:'line',
+			data:(function (){
+				var res = [];
+				var len = 0;
+				while (len < 10) {
+					res.push((Math.random()*10 + 5).toFixed(1) - 0);
+					len++;
+				}
+				return res;
+			})()
+		}
+		]
+	};
+
+	app.count = 11;
+	setInterval(function (){
+		// 当前时间
+		axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+
+		var data0 = option.series[0].data;
+		var data1 = option.series[1].data;
+		data0.shift();
+		data0.push(Math.round(Math.random() * 1000));
+		data1.shift();
+		data1.push((Math.random() * 10 + 5).toFixed(1) - 0);
+
+		option.xAxis[0].data.shift();
+		option.xAxis[0].data.push(axisData);
+		option.xAxis[1].data.shift();
+		option.xAxis[1].data.push(app.count++);
+
+		myChart.setOption(option);
+	}, 1000);
+	
+	myChart.setOption(option, true);
+	//必须手动调整大小
+	$(window).resize(myChart.resize);
+	setTimeout(function(){
+		$('#chart').width(400);
+		$(window).trigger('resize');
+		setTimeout(function(){
+			$('#chart').width('50%');
+			$(window).trigger('resize');
+		},2000)
+	},2000)
+
+	
+	</script>
+</body>
+</html>

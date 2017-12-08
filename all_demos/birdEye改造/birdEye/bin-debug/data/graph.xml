@@ -1,0 +1,33 @@
+<Graph>
+<!--集群节点-->
+  <Node id="1" name="集群" desc="This is a description" nodeColor="0x333333" nodeSize="32" nodeClass="earth" nodeIcon="center" x="10" y="10" />
+<!--集群节点-->
+
+<!--主机节点-->
+  <Node id="2" name="humj" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="12" nodeClass="tree" nodeIcon="2" x="10" y="15" />
+  <Node id="3" name="fuhh" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="12" nodeClass="tree" nodeIcon="2" x="10" y="15" />
+  
+<!--主机节点-->
+
+<!--虚拟机节点-->
+  <Node id="8" name="aaaa" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="21" nodeClass="leaf" nodeIcon="3" x="20" y="20" />
+  <Node id="9" name="bbbb" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="15" nodeClass="leaf" nodeIcon="3" x="20" y="25" />
+  <Node id="10" name="cccc" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="32" nodeClass="leaf" nodeIcon="3" x="20" y="30" />
+  <Node id="11" name="dddd" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="16" nodeClass="leaf" nodeIcon="3" x="20" y="35" />
+  <Node id="12" name="eeee" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="12" nodeClass="leaf" nodeIcon="3" x="20" y="40" />
+  <Node id="13" name="ffff" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="10" nodeClass="leaf" nodeIcon="3" x="20" y="45" />
+<!--虚拟机节点-->
+
+
+<!--边-->
+  <Edge fromID="1" toID="2" edgeLabel="No Change" flow="50" color="0x556b2f" edgeClass="sun" edgeIcon="" />
+  <Edge fromID="1" toID="3" edgeLabel="No Change" flow="50" color="0x556b2f" edgeClass="sun" edgeIcon="" />
+
+  <Edge fromID="2" toID="8" edgeLabel="Bad" flow="400" color="0xcd5c5c" edgeClass="sun" edgeIcon="Bad" />
+  <Edge fromID="2" toID="9" edgeLabel="Good" flow="80" color="0xb22222" edgeClass="sun" edgeIcon="Good" />
+  <Edge fromID="3" toID="10" edgeLabel="Good" flow="100" color="0x607b8b" edgeClass="sun" edgeIcon="Good" />
+  <Edge fromID="3" toID="11" edgeLabel="No Change" flow="120" color="0x333333" edgeClass="sun" edgeIcon="" />
+  <Edge fromID="3" toID="12" edgeLabel="Bad" flow="150" color="0x6b8e23" edgeClass="sun" edgeIcon="Bad" />
+<!--边-->
+  
+</Graph>

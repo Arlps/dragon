@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/metroStyle/metroStyle.css">
+	<style>
+		.treeBtnWrap{ position:absolute; /*right:0; */display:inline-block;}
+		.treeBtn{ display:inline-block; width:21px; height:21px; background-image:url('metro.png'); cursor:pointer;margin-left:3px;}
+		.treeBtn.add{ background-position:-189px 0; }
+		.treeBtn.edit{ background-position:-189px -21px; }
+		.treeBtn.delete{ background-position:-189px -42px; }
+	</style>
+	
+</head>
+	<div class="zTreeDemoBackground left" style="width:50%; float:left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script src="js/jquery.ztree.all.min.js"></script>
+<script src="js/my_data.js"></script>
+<script>
+	$(document).ready(function(){
+		creatTree($("#treeDemo"),mydata);
+	});
+	var mydata=[{
+		name:1,
+		children:[{
+			name:"adasfsfsd",
+			//自定义数据
+			id:'12344214'
+		},{
+			name:"aderewf ",
+			//自定义数据
+			id:'12344214'
+		},{
+			name:"adwerrwrr4t4",
+			//自定义数据
+			id:'12344214'
+		}]
+	},{
+		name:1,
+		children:[{
+			name:"adasfsfsd",
+			//自定义数据
+			id:'12344214'
+		},{
+			name:"aderewf ",
+			//自定义数据
+			id:'12344214'
+		},{
+			name:"adwerrwrr4t4",
+			//自定义数据
+			id:'12344214'
+		}]
+	}]
+	function creatTree($dom,data){
+		var setting = {	
+			data:{
+				key:{
+					title:"id"
+				}
+			},
+			view: {
+			  showIcon: false, //设置是否显示节点图标
+			  showTitle: true
+			},
+			// 节点点击事件
+			callback:{
+				// onClick:jump
+			}
+		};
+		var myTree=$.fn.zTree.init($dom, setting, data);
+		myTree.expandAll(true);//全部展开 
+
+		// 所有node组成的对象(树级)
+		var nodes=myTree.getNodes();
+		console.log(nodes);
+		console.log(JSON.stringify(nodes))
+		// 所有node组成的数组(平级)
+		var nodesArray=myTree.transformToArray(myTree.getNodes())
+		console.log(nodesArray);
+
+		console.log(myTree.transformTozTreeNodes(myTree.getNodes()));
+
+		var node = myTree.getNodeByParam('id', 1);//获取id为1的点  
+		console.log(node)
+	    myTree.selectNode(node);//选择点  
+	    myTree.setting.callback.onClick(null, myTree.setting.treeId, node);//调用事件  
+	}
+
+	function getfirstNode(data){
+		if(!data[0].hasOwnProperty('children') || data[0].children.length==0){
+			return data[0].id;
+		}else{
+			getfirstNode(data[0].children)
+		}
+	}
+</script>

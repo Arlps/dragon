@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src='js/jquery-1.9.1.js'></script>
+	<script src='js/amcharts.js'></script>
+	<script src='js/serial.js'></script>
+	<style>
+	html,body{ height: 100%}
+		.chart-box{ width: 40%; height: 50%; border:1px solid black; float:left;}
+	</style>
+</head>
+<body>
+	<div id="a" class="chart-box"></div>
+    <div id="b" class="chart-box"></div>
+	<button>111</button>
+</body>
+<script>
+    $(function(){
+        createChart(data1,"a");
+        createChart(data2,"b");
+    })
+	
+    // 封装
+    function createChart(data,domId){
+            setColor(data);
+        var chart =new AmCharts.AmSerialChart();
+            chart.dataProvider = data;
+            chart.categoryField = "range";
+            chart.columnWidth=0.3
+            // the following two lines makes chart 3D
+            chart.depth3D = 15;
+            chart.angle = 20;
+            chart.startDuration=1;
+            // chart.rotate=true;
+
+        // x轴------------------------------------
+        var categoryAxis = chart.categoryAxis;
+            categoryAxis.labelRotation = 0;
+            categoryAxis.width=12
+            categoryAxis.gridPosition = "start";
+            // 网格虚线长度
+            categoryAxis.dashLength = 10;
+            //轴的粗
+            categoryAxis.axisThickness = 3;
+            //刻度的长度
+            categoryAxis.tickLength =0;
+            //字的颜色
+            categoryAxis.color = "#666";
+            //字的大小
+            categoryAxis.maxPeriod=10;
+            //x轴的颜色
+            categoryAxis.axisColor = "#ccc";
+            //单位
+            categoryAxis.unit = "";
+            categoryAxis.position="left"
+
+        // y轴--------------------------------
+        var valueAxis = new AmCharts.ValueAxis();
+            valueAxis.dx=10
+            valueAxis.title = "Visitors";
+            // 网格虚线长度
+            valueAxis.dashLength = 10;//设置y轴标题
+            valueAxis.title ="";
+            //y轴的颜色
+             valueAxis.color = "#666";
+             //设置y轴的最小值、起始值
+             valueAxis.minimum =0;
+            //y轴标题颜色
+            valueAxis.titleColor = "#666";
+            //y轴颜色
+            valueAxis.axisColor = "#ccc";
+            //y轴靠右
+            valueAxis.position = "left";
+            //
+            valueAxis.unit = "";
+        chart.addValueAxis(valueAxis);
+
+        var guide=new AmCharts.Guide();
+        valueAxis.addGuide(guide)
+
+        // GRAPH-----------------------------
+        var graph = new AmCharts.AmGraph();
+            graph.type = "column";
+            //graph.title = "线条的名称";
+            graph.valueField = "visits";
+            //graph.fillColors=['#f20','#f60']
+            //设置数组时为渐变
+            graph.colorField = "color";
+            graph.balloonText = "<span style='font-size:10px'>[[category]]: <b>[[value]]</b></span>";
+            //柱体边透明度
+            graph.lineAlpha = 0;
+            //柱体透明度
+            graph.fillAlphas = 0.7;
+        chart.addGraph(graph);
+
+        // 十字光标
+        var chartCursor = new AmCharts.ChartCursor();
+            chartCursor.cursorAlpha = 0.3;
+            // 缩放
+            chartCursor.zoomable = true;
+            // 光标样式
+            chartCursor.pan=true;
+            chartCursor.categoryBalloonEnabled = false;
+        chart.addChartCursor(chartCursor);
+
+        // 加载数据
+        chart.creditsPosition = "top-right";
+        chart.write(domId);
+        console.log(chart)
+
+        // 更新数据
+        reloadData(chart,data)
+    }
+
+    // 刷新数据
+    function reloadData(chart,data) {  
+        setInterval(function(){
+            data[0].visits+=5;
+            chart.dataProvider = data;  
+            chart.validateNow();  
+            chart.validateData(); 
+        },500);    
+    } 
+
+    // 每个数据设置颜色
+    function setColor(data){
+        var colors=[ "#006298", "#AD232F", "#00AEA5", "#009CE7", "#E46603", "#0ac2d2", "#88ad23", "#ad8823", "#6a45c9", "#45c983" ];
+        $.each(data,function(idx,item){
+            item.color=colors[idx];
+        })
+    }
+
+    // 数据 
+    var data1 = [
+        {
+            "range": "中级",
+            "visits": 40,
+        },
+        {
+            "range": "紧急",
+            "visits": 82,
+        },
+        {
+            "range": "一般",
+            "visits": 19,
+        },
+        {
+            "range": "低级",
+            "visits": 22,
+        }
+    ];
+    var data2=[
+        {
+            "range": "中级",
+            "visits": 40,
+        },
+        {
+            "range": "紧急",
+            "visits": 82,
+        }
+    ]
+</script>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义增删该查</title>
+	<link rel="stylesheet" href="css/metroStyle/metroStyle.css">
+</head>
+<BODY>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<button onclick="edit()">编辑</button>
+		<button onclick="remove()">删除</button>
+		<button onclick="add()">添加</button>
+		<ul id="log" class="log"></ul></p>
+	</div>
+</div>
+</BODY>
+</html>
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script src="js/jquery.ztree.all.min.js"></script>
+<SCRIPT type="text/javascript">
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes2);
+		});
+
+		// 自定义编辑
+		function edit(){
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			// var first=zTree.getNodes()[1];
+			// zTree.selectNode(first);
+			var nodes = zTree.getSelectedNodes();
+			zTree.editName(nodes[0])
+		}
+		//自定义删除
+		function remove(){
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			// var first=zTree.getNodes()[1];
+			// zTree.selectNode(first);
+			var nodes = zTree.getSelectedNodes();
+			zTree.removeNode(nodes[0])
+		}
+		// 自定义添加
+		function add(){
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var nodes = zTree.getSelectedNodes();
+			var newNode=zTree.addNodes(nodes.length>0?nodes[0]:null,{ name:"new node"});
+			console.log(newNode)
+		}
+
+		var setting = {
+			view: {
+				// addHoverDom: function(treeId, treeNode) {
+				// 	var sObj = $("#" + treeNode.tId + "_span");
+				// 	// 对处于正在编辑或者选中状态的节点忽略
+				// 	if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+				// 	sObj.after( "<span class='button add' id='addBtn_" + treeNode.tId + "' title='add node' onfocus='this.blur();'></span>");
+				// 	var $btn = $("#addBtn_"+treeNode.tId);
+				// 	if ($btn) $btn.bind("click", function(){
+				// 		var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+				// 		zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+				// 		return false;
+				// 	});
+				// },
+				// removeHoverDom: function(treeId, treeNode) {
+				// 	$("#addBtn_"+treeNode.tId).unbind().remove();
+				// },
+				// 多选 需要ctrl配合
+				selectedMulti: true
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			edit: {
+				enable: false,
+				editNameSelectAll: true,
+				// 为第一节点时不显示删除按钮
+				showRemoveBtn: function(treeId,treeNode){
+					return !treeNode.isFirstNode;
+				},
+				//为最后节点时不显示编辑按钮
+				showRenameBtn: function(treeId,treeNode){
+					// console.log(treeNode)
+					return !treeNode.isLastNode;
+				},
+			},
+			callback: {
+				onClick: function(event, treeId, treeNode, clickFlag){
+					console.log(treeNode)
+				},
+
+				// enter按下后 更新名称前(判断字符串是否正规)----------------------------------------
+				beforeRename: function(treeId, treeNode, newName, isCancel) {
+					if (newName.length == 0) {
+						var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+						zTree.cancelEditName();
+						alert("节点名称不能为空.");
+						return false;
+					}
+					// return true;
+				},
+				// 更新名字后
+				onRename: function(){},
+
+
+				// 按下按钮后 删除按钮前------------------------------------------------------
+				beforeRemove: function beforeRemove(treeId, treeNode) {
+					var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+					zTree.selectNode(treeNode);
+					return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+				},
+				// 删除按钮后
+				onRemove: function(){},
+				
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"父节点 1", open:true},
+			{ id:11, pId:1, name:"叶子节点 1-1"},
+			{ id:12, pId:1, name:"叶子节点 1-2"},
+			{ id:13, pId:1, name:"叶子节点 1-3"},
+			{ id:2, pId:0, name:"父节点 2", open:true},
+			{ id:21, pId:2, name:"叶子节点 2-1"},
+			{ id:22, pId:2, name:"叶子节点 2-2"},
+			{ id:23, pId:2, name:"叶子节点 2-3"},
+			{ id:3, pId:0, name:"父节点 3", open:true},
+			{ id:31, pId:3, name:"叶子节点 3-1"},
+			{ id:32, pId:3, name:"叶子节点 3-2"},
+			{ id:33, pId:3, name:"叶子节点 3-3"}
+		];
+		var zNodes2=[{
+			name:'主页',
+		},{
+			name:'数据地图',
+			children:[{
+				name:"数据搜索",
+			},{
+				name:"数据地图",
+			}]
+		},{
+			name:'元数据管理',
+		},{
+			name:'应用中心',
+		},{
+			name:'运维中心',
+			children:[{
+				name:'资源管理',
+			},{
+				name:'资源监控',
+			},{
+				name:'调度监视',
+				children:[{
+					name:'afsafs'
+				}]
+			},]
+		},{
+			name:'系统管理',
+			children:[{
+				name:'数据连接管理',
+			},{
+				name:'权限管理',
+			},{
+				name:'应用管理',
+			},{
+				name:'日志管理',
+			}]
+		},]
+
+		
+		//-->
+	</SCRIPT>

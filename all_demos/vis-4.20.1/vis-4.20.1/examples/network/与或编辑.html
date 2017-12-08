@@ -1,0 +1,279 @@
+<!doctype html>
+<html>
+<head>
+  <title>与或</title>
+  <link href="../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+  <link href="../../dist/bootstrap.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../../dist/jQuery-2.1.4.min.js"></script>
+  <script src="../../dist/bootstrap.js"></script>
+  <script type="text/javascript" src="../../dist/vis.js"></script>
+  <style type="text/css">
+  *{ margin:0; padding: 0;}
+  .netbox{ position: relative; width: 800px;height: 400px; border:1px solid #000;float:left;}
+  #sheet-map{ height:100%;}
+  .form{  width: 200px;height: 400px; border:1px solid #000;float:left;}
+  </style>
+</head>
+<body>
+  <div class="netbox">
+    <div id="sheet-map"></div>
+    <div class="btn-group" style="margin-top:10px">
+      <button class="btn btn-primary" id="and">与</button>
+      <button class="btn btn-primary" id="or">或</button>
+      <button class="btn btn-primary" id="x">X</button>
+    </div>
+  </div>
+  <div class="form">
+    <p>
+      <label for="">名称</label><input type="text" name="label">
+    </p>
+    <p>
+      <label for="">类别</label>
+      <select name="type" id="">
+        <option value="a">A</option>
+        <option value="b">B</option>
+        <option value="c">C</option>
+      </select>
+    </p>
+    <p>
+      <button id="sure">更改</button>
+    </p>
+  </div>
+  
+  <script type="text/javascript">
+
+    var network;
+    var ID;
+    $(function(){
+      network=flow(nodes,edges,$('#sheet-map')[0],network);
+      var allNodes=network.get
+    })
+
+    // 节点数据
+    var nodes = new vis.DataSet([
+      {id: 1, label: 'ID=1',y:100},
+      {id: 2, label: 'ID=2'},
+      {id: 3, label: 'ID=3'},
+      {id: 4, label: 'ID=4'},
+      {id: 5, label: 'ID=5'}
+    ]);
+   
+    // create an array with edges
+    var edges = new vis.DataSet([
+      {from: 1, to: 3},
+      {from: 1, to: 2},
+      {from: 2, to: 4},
+      {from: 2, to: 5}
+    ]);
+    console.log(edges.get())
+     // 节点总数 用于设置新节点ID
+    var m=nodes.get().length;
+    var n=edges.get().length;
+
+    // 初始化函数
+    function flow(nodes,edges,$dom,network){
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      
+      console.log("节点和线的数据是：");
+      console.log(data);
+      // var jsonNode = nodes.get({returnType:"Object"});
+      // console.log("节点的JSON数据是：");
+      // console.log(jsonNode)
+      var options = {
+        // 点样式
+        nodes: {
+          label:"node",
+          shape:'box',//'box',
+          // image:'img/indonesia/1.png',
+          fixed:false,//固定节点
+          size:20,
+           margin: { top: 10, right: 20, bottom: 10, left: 20 },
+           y:-100,
+           x:100
+        },
+        edges:{
+          arrows:'to',
+          length:100,
+        },
+        // 图层
+        layout: {
+          hierarchical: {
+              direction: 'LR',//树状布局 并规定方向RL UD DU LR
+              sortMethod: 'directed',//'hubsize',//
+            },
+            randomSeed:1, //一旦设置则固定初始化布局
+        },
+        physics: {
+          enabled:false, //是否支持物理运动
+          stabilization: false,//false弹性不稳定增强
+        }, 
+        interaction:{
+          zoomView:{
+            false
+          }
+        }
+      };
+      network = new vis.Network($dom, data, options);
+      network.on("click", function (params) {
+        // 判断是否点击到节点
+        if (params.nodes.length > 0) {
+           // console.log(params);
+          // console.log(this.getNodeAt(params.pointer.DOM))
+        }
+         
+      });
+      network.on("selectNode", function(params) {
+        var nodeId=params.nodes[0];
+        ID=nodeId;console.log("被选中的节点是："+ID);
+        var node=getNodeById2(nodes._data,ID);
+        $('input[name=label]').val(node.label);
+      });
+
+      //更改选中节点信息
+      $('#sure').click(function(){
+        // var nodeId=network.getSelectedNodes()[0];
+        console.log(ID);
+        console.log(nodes);
+        var newLabel=$('input[name=label]').val();
+        console.log(newLabel)
+        nodes.update({
+          id:ID, 
+          label:newLabel //此处包含空格会出现bug
+        });
+      })
+
+      $('#and').click(function(){
+        var selectID=network.getSelectedNodes()[0];
+        var toID=[];
+        var bloodEdges=network.getConnectedEdges(ID);
+        
+        //得到当前节点的children节点数组toID
+        for (var i = 0; i < edges.get().length; i++) {
+          if(edges.get()[i].from==selectID){
+            toID.push(edges.get()[i].to);
+          }
+        };
+        console.log("当前节点的children：")
+        console.log(toID)
+
+        //新建节点m 并且作为当前节点selectID的下级节点
+        m++;n++;
+        nodes.add({
+          id:m,
+          label:"ID="+m,
+        });
+        edges.add({
+          id:n,
+          from:selectID,
+          to:m
+        })
+
+        //建立新节点m与toID的连线关系
+        for (var i = 0; i < toID.length; i++) {
+          n++;
+          edges.add({
+            id:n,
+            from:m,
+            to:toID[i]
+          })
+        };
+
+        //删除当前节点与toID的连线关系
+        var old=[];
+        for (var i = 0; i < edges.get().length; i++) {
+          if(edges.get()[i].from==selectID && edges.get()[i].to!=m){
+            console.log('from:'+edges.get()[i].from,'to:'+edges.get()[i].to);
+            old.push(edges.get()[i].id)
+          }
+        };
+        for (var i = 0; i < old.length; i++) {
+          edges.remove({id:old[i]});
+        };
+        
+      })
+      $('#or').click(function(){
+        // var blood= network.getConnectedNodes(ID);
+        var arr=edges.get();
+        for (var j = 0; j < arr.length; j++) {
+          if(arr[j].to==network.getSelectedNodes()[0]){
+            console.log(arr[j])
+            m++;n++;
+            nodes.add({
+              id:m,
+              label:"ID="+m,
+            });
+            edges.add({
+              id:n,
+              from:arr[j].from,
+              to:m
+            })
+          }
+        };
+      })
+      $('#x').click(function(){
+        
+        var selectID=network.getSelectedNodes()[0];
+        var bloodEdges=network.getConnectedEdges(ID);
+        var fromID,toID=[];
+        nodes.remove({id:selectID});
+        
+
+        for (var i = 0; i < edges.get().length; i++) {
+          if(edges.get()[i].to==selectID){
+            fromID=edges.get()[i].from
+          }
+          if(edges.get()[i].from==selectID){
+            toID.push(edges.get()[i].to)
+          }
+        };
+        
+        console.log('被删除节点的father:'+fromID);
+        console.log(toID)
+        for (var i = 0; i < toID.length; i++) {
+          n++;
+          edges.add({
+            id:n,
+            from:fromID,
+            to:toID[i]
+          })
+        };
+        
+      })
+      return network;
+    }
+
+    // function getNodeById(nodes, id) {
+    //   for (var n = 0; n < nodes.length; n++) {
+    //     if (nodes[n].id == id) { 
+    //       return nodes[n];
+    //     }
+    //   }
+    // }
+    function getNodeById2(nodes, id) {
+      for (var key in nodes) {
+        if (key == id) { 
+          return nodes[key];
+        }
+      }
+    }
+    //获取某节点直属下级节点
+    function Children(ID) {
+        var arr=[];
+        var nodes = network.getConnectedNodes(ID);//获取所有连接节点
+        $.each(connectedNodes, function(index, item) {
+            if (item != allnodes[ID - 1]['pid']) {//当前节点的父节点 ，不操作
+                arr.push(item);
+            }
+        });
+        return arr;
+    }
+
+
+  </script>
+
+
+</body>
+</html>

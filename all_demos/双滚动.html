@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src='js/jquery-1.9.1.js'></script>
+	<style>
+		body{ height:900px;}
+		div.haha{ height:200px; overflow:auto; width:400px; border:1px solid red; padding:10px 0;}
+		div.xixi{ height:500px; background:black;}
+	</style>
+</head>
+<body>
+	<div class="haha">
+		
+		<div class="xixi"></div>
+	</div>
+	<script>
+		$('.haha').scroll(function(){
+			$(window).scrollTop(0)
+		}
+	</script>
+</body>
+</html>

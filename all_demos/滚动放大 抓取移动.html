@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{ margin:0; padding:0;}
+		.box{ width:50%; height:400px;background:#990; overflow:hidden;position:relative; margin:100px auto;}
+		#pic{ width:80%; height:80%; box-shadow:0 0 10px; background:rgba(255,150,0,0.5); position:absolute; top:10%; margin-left:10%;transition:0.5s;}
+		.intro{ color:#fff; margin-left:40%; margin-top:45%; border:1px dashed yellow; float:left;}
+	</style>
+	<script src='js/jquery-1.9.1.js'></script>
+</head>
+<body>
+	<div class="box">
+		<div id="pic">
+			<div class="intro">
+				picture of box
+			</div>
+		</div>
+	</div>
+	<button>放大</button>
+</body>
+<script>
+	$(function(){
+		var  wheel=1;
+		var $pic=document.getElementById('pic') 
+		document.onmousewheel=function(e){
+			console.log(e);
+			if (e.deltaY>0) {
+				console.log('+');
+				wheel+=0.1;
+			} else{
+				console.log('-');
+				wheel-=0.1;
+			};
+			$('#pic').css('transform','scale('+wheel+')')
+		}
+	})
+</script>
+</html>

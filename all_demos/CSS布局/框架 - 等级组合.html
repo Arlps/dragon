@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{ margin:0; padding:0;}
+		html,body{ height:100%; min-height:600px; /*overflow-y:hidden; overflow-y:auto;*/ }
+		.wrap{ height:100%; width:100%; background:gray; position:relative; min-width:1000px ;}
+		
+		.left{width:170px; position:absolute;left:0; top:0; bottom:0; background:red; }
+		.right{ position:absolute; left:170px; right:0; top:0; bottom:36px; background:yellow; box-sizing:border-box; padding:10px}
+		.right .right-inner{ width:100%; height:100%; overflow:auto;}
+		.right .right-inner .wrapper{ height:1000px;}
+		.bottom{ height:36px; position:absolute; bottom:0; left:170px; right:0px; background:green;}
+		
+
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="left"></div>
+		<div class="right">
+			<div class="right-inner">
+				<div class="wrapper"></div>
+			</div>
+		</div>
+		<div class="bottom"></div>
+	</div>
+
+</body>
+</html>
+

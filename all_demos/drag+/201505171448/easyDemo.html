@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="dist/gridstack.css"/>
+	<script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/lodash.min.js"></script>
+    <script src="dist/gridstack.js"></script>
+    
+    
+	<style type="text/css">
+		.grid-wrap{ overflow:hidden; background:#ccc; padding:10px;}
+	    .grid-stack {/*background: yellow;*/ width:100%; }
+	    .grid-stack-item{ box-shadow:0 0 10px;}
+	    .grid-stack-item-content { 
+	    	color: #2c3e50; background-color: #18bc9c;background-color: #fff; width:100%; height:100%; float:left!important; overflow:hidden!important; overflow-x:scroll; padding:30px; box-shadow:0 0 0px;position:relative;
+	    }
+	    
+	</style>
+</head>
+<body>
+	<div class="grid-wrap">
+		<div class="grid-stack">
+			<!-- x:网格中水平坐标，y：网格中垂直坐标, width:网格中宽度，height：网格中高度 -->
+		    <div class="grid-stack-item" data-gs-x="o" data-gs-y="0" data-gs-width="6" data-gs-height="3">
+	            <div class="grid-stack-item-content">
+	            	<button class="">终于可以输中文了</button>
+	            </div>
+		    </div>
+		    <div class="grid-stack-item" data-gs-x="6" data-gs-y="0" data-gs-width="6" data-gs-height="3">
+	            <div class="grid-stack-item-content">
+	            	<button class="">终于可以输中文了</button>
+	            </div>
+		    </div>
+		    <div class="grid-stack-item" data-gs-x="0" data-gs-y="3" data-gs-width="6" data-gs-height="3">
+	            <div class="grid-stack-item-content">
+	            	<button class="">终于可以输中文了</button>
+	            </div>
+		    </div>
+		    <div class="grid-stack-item" data-gs-x="6" data-gs-y="3" data-gs-width="6" data-gs-height="3">
+	            <div class="grid-stack-item-content">
+	            	<button class="">终于可以输中文了</button>
+	            </div>
+		    </div>
+		</div>  
+	</div>
+	<script>
+		var options = {
+			float:false,//这才是浮动
+			animate:true,
+		    cell_height: 100,
+		    width:12,
+		    vertical_margin: 20,
+		    always_show_resize_handle:false,
+		    
+		};
+		$('.grid-stack').gridstack(options);
+	</script>
+</body>
+
+</html>
+<script type="text/javascript">
+// $(function () {
+//     var options = {
+//         cell_height: 80,
+//         vertical_margin: 10
+//     };
+//     $('.grid-stack').gridstack(options);
+// });
+//              
+//  配置参数
+// always_show_resize_handle：如果设置为true，缩放手柄将会一直显示。默认为false。
+// animate：转换为动画。默认为false。
+// auto：如果设置为false将不会初始化已经存在的项。默认为true。
+// cell_height：单元格的高度。默认值为60。
+// draggable：允许覆盖 jQuery UI draggable 选项。默认值：{handle: '.grid-stack-item-content', scroll: true, appendTo: 'body'}。
+// handle：拖放手柄选择器。默认值为：'.grid-stack-item-content'。
+// height：最大行数。默认为0，意思是没有最大行数。
+// float：允许元素浮动。默认值：false。
+// item_class：元素组件的class。默认值'grid-stack-item'。
+// min_width：最小宽度。如果窗口的宽度小于网格的宽度，将会以单列显示。默认值为768。
+// placeholder_class：placeholder的class。默认值为'grid-stack-placeholder'。
+// resizable：允许覆盖jQuery UI resizable选项。默认值为：{autoHide: true, handles: 'se'}。
+// vertical_margin：垂直间隙的尺寸。默认值为20。
+// width：网格的列数。默认值为12。
+//  网格属性
+
+// data-gs-animate：转换为动画。
+// data-gs-width：列数。
+// data-gs-height：最大行数。默认为0，意思是没有最大行数。
+//  Item属性
+
+// ata-gs-x, data-gs-y：元素的位置。0
+
+// data-gs-width, data-gs-height：元素的尺寸。
+// data-gs-max-width, data-gs-min-width, data-gs-max-height, data-gs-min-height：元素的约束。
+// data-gs-no-resize：禁止元素缩放尺寸。
+// data-gs-no-move：禁止元素移动。
+// data-gs-auto-position：忽略data-gs-x和data-gs-y属性，并将元素放置在第一个可用的位置上。
+// data-gs-locked：元素将被锁定。锁定后其它元素在缩放或移动时不能改变这个元素。但是该元素仍然可以被移动或缩放。如果不希望它移动或缩放，需要添加data-gs-no-move或data-gs-no-resize属性。
+ </script>  

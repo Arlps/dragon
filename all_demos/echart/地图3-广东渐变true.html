@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/jQuery-2.1.4.min.js"></script>
+    <script src="js/echarts.min.js"></script>
+
+    <script src="js/guangdong.js"></script>
+</head>
+<body>
+    <div id="chart" style="height:500px;width:500px;border:1px solid #aaa"></div>
+    <script>
+    var geodata = [{
+        name: '广州市',
+        value: 123
+    }, {
+        name: '佛山市',
+        value: 14
+    }, {
+        name: '东莞市',
+        value: 232
+    }, {
+        name: '中山市',
+        value: 13
+    }, {
+        name: '江门市',
+        value: 56
+    }, {
+        name: '阳江市',
+        value: 436
+    }, {
+        name: '茂名市',
+        value: 332
+    }, {
+        name: '湛江市',
+        value: 88
+    }, ];
+
+    map('chart',geodata)
+    
+
+
+    function map(domID,data){
+        var gdJson=JSON.stringify(GD_JSON);
+        echarts.registerMap('guangdong', gdJson);
+        var option = {
+
+            tooltip: {
+    //                    show: false //不显示提示标签
+                formatter: '{b}', //提示标签格式
+            },
+            visualMap: {
+                min: 0,
+                max: 500,
+                inRange: {
+                    // color: ['lightskyblue','yellow', 'orangered'],
+                    color:[ 'rgba(0,0,0,0.2)','rgba(0,0,0,0.5)']
+                }
+            },
+            series: [{
+                type: 'map',
+                map: 'guangdong',
+                zoom:2,
+                label: {
+                    normal: {
+                        // show: true,//显示省份标签
+                        // textStyle:{color:"#c71585"}//省份标签字体颜色
+                    }
+                },
+                itemStyle: {
+                    // normal: {
+                    //     borderWidth: .5,//区域边框宽度
+                    //     borderColor: '#009fe8',//区域边框颜色
+                    //     areaColor:"#ffefd5",//区域颜色
+                    // },
+                    // emphasis: {
+                    //     borderWidth: .5,
+                    //     borderColor: '#4b0082',
+                    //     areaColor:"#ffdead",
+                    // }
+                },
+                data:data
+            }],
+        };
+        var myChart=echarts.init(document.getElementById(domID));
+        myChart.setOption(option);
+    }
+    </script>
+</body>
+</html>

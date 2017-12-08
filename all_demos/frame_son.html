@@ -1,0 +1,39 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title> -->
+	<script src="js/jquery-1.8.3.js"></script>
+	<style>
+	html,body{ height:100%;}
+	.box2{ height:100%}
+		.left,.right{ height: 500px; box-shadow: 0 0 1px red; float:left;}
+		.left{width: 40%;}
+		.right{width: 60%;}
+
+		.radar{ width:200px; height:200px; background:url(img/radar.png); background-size: 100% 100%; position: relative; }
+		.scan{ width:100px; height:100px; position:absolute; left:50%; top:0%; background:url(img/scan3.png); background-size: 100% 100%;transform-origin: left bottom;}
+
+	</style>
+<!-- </head>
+<body> -->
+	<div class="box2">
+		<div class="left">
+			<div class="radar">
+				<div class="scan"></div>
+			</div>
+		</div>
+		<div class="right"></div>
+	</div>
+	<script>
+		$(function(){
+			var degree=0;
+			var radar=setInterval(function(){
+				degree+=3
+				$('.scan').css('transform','rotate('+degree+'deg)')
+			},10)
+			//clearInterval(radar);
+		})
+	</script>
+<!-- </body>
+</html> -->

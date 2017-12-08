@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jquery-1.9.1.js"></script>
+	<style>
+	
+		a{ display:inline-block;width:346px; height:200px; position:relative; margin:200px 0 0 100px; background-image:url(img/01452222.jpg); /*background-size: auto 200px;*/ background-position: 50% 50%;}
+		.six1{ transform:rotate(60deg);z-index:-1;}
+		.six2{ transform:rotate(-60deg);z-index:-2;}
+		.six1,.six2{width:346px; height:200px;border:1px solid red; position:absolute;}
+	</style>
+</head>
+<body>
+	<a href="#">
+		<div class="six six1"></div>
+		<div class="six six2"></div>
+	</a>
+
+	<button>1</button>
+</body>
+<script>
+	$(function(){
+		$('button').click(function(){
+			$('.six').css('background','inherit')
+		})
+		
+	})
+</script>
+</html>

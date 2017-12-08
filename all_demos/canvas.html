@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+*{ padding:0;  margin:0;}
+	#myCanvas,.box{ border:0px solid black; background:pink; width:500px; height:500px;}
+	.box{ position:absolute; top:0; left:0; opacity:0.4; background:red;}
+	.canvasBox{ width:600px; height:500px; border:1px solid black; padding:20px;}
+	canvas{ margin:0 auto;}
+</style>
+<body>
+	<div class="canvasBox">
+		<canvas id="myCanvas">
+			<input type="text">
+		</canvas>
+	</div>
+	
+	<!-- <div class="box">hah</div> -->
+	<script>
+
+		var c=document.getElementById("myCanvas");
+		var ctx=c.getContext("2d");
+		ctx.lineWidth=0.3;
+		ctx.strokeStyle="#f00";
+		ctx.moveTo(100,0);
+		ctx.lineTo(200,100);
+
+		ctx.stroke();
+
+	</script>
+</body>
+</html>

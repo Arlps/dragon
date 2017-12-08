@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/font-awesome.css">
+		<script src="js/jquery-1.9.1.js"></script>
+		<script src="js/jit.js"></script>
+		<script src="js/jsBezier-0.4.js"></script>
+		<script src="js/data.js"></script>
+		<style>
+		*{ -webkit-user-select: none;}
+		i{ padding: 0 4px}
+		  #infovis {
+		    position:relative;
+		    margin:2px;
+		    overflow: hidden;
+		    box-shadow: 0 0 10px;
+		  }
+		  #direction{
+		  	width: 100%;
+		  	height: 30px
+		  }
+		</style>
+	</head>
+
+	<body>
+		<div id="infovis" style="width:100%;height:500px;background:#edf2f9"></div>
+		<div id="direction">
+			<label style="padding:10px;">
+		      <input type="radio" id="r-top" name="orientation" value="top" />Top
+		    </label>
+		    <label style="padding:10px;">
+		      <input type="radio" id="r-bottom" name="orientation" value="bottom" />Bottom
+		    </label>
+		    <label style="padding:10px;">
+		      <input type="radio" id="r-left" checked name="orientation" value="left" />Left
+		    </label>
+		    <label style="padding:10px;">
+		      <input type="radio" id="r-right" name="orientation" value="right" />Right
+		    </label>
+	    </div>
+		<script>
+		$(function(){
+
+			
+			// jit.js 6199行被注释
+			var labelType, useGradients, nativeTextSupport, animate;
+			init(json2);
+			function init(data) {
+				//数据格式
+				//真正应用的是数据是json2，在data.js定义
+				var json = {
+					"id": "1",
+					"name": "unipower",
+					"data": {
+						"substatus": "1",
+						"fdn": "k2117029135",
+						"severity": 0,
+						"moclass": "Business"
+					},
+					"children": [
+						{
+							"id": "2",
+							"name": "服务 01",
+							"data": {
+								"substatus": "1",
+								"fdn": "k-708090434",
+								"severity": 0,
+								"moclass": "Service"
+							},
+							"children": [
+								{
+									"id": "3",
+									"name": "服务器",
+									"data": {
+										"substatus": "1",
+										"fdn": "k1605913741",
+										"severity": 0,
+										"moclass": "ServiceDependency"
+									},
+									"children": []
+								}
+							]
+						}
+					]
+				}
+				//end
+
+				//创建一个 ST 实例
+				var st = new $jit.ST({
+					background: {
+					CanvasStyles: {
+						fillcolor:"#f60",
+						strokeStyle: '#555',
+				        shadowBlur: 10,
+				        shadowColor: '#ccc'
+					}
+				},
+					//目标div的id
+					injectInto: 'infovis',
+					//展示出拓扑图的动画时间
+					duration: 100,
+					Position:'top',
+					//设置动画类型
+					transition: $jit.Trans.Quart.easeInOut,
+					//设置横向节点距离
+					levelDistance: 15,
+					subtreeOffset: 20,
+    				siblingOffset: 10,
+					multitree: false,
+					indent:5,
+					orientation: 'left',
+				    width: $('#infovis').width(),
+				    height: $('#infovis').height(),
+				    Navigation: { enable:true, zooming:false, panning:true },
+					//点击节点后下级几点展示几层
+					levelsToShow: 2,
+					// //是否可以移动
+					// Navigation: {
+					// 	enable: false,
+					// 	panning: false
+					// },
+					//节点类型样式设置，节点类型支持扩展
+					Node: {
+						height: 50,
+						width:110,
+						type: 'rectangle',
+						lineWidth: 2,
+						overridable: true,
+						color: '#ccc'
+					},
+					//线条类型(bezier,line,arrow,quadratic:begin,quadratic:end)样式设置
+					Edge: {
+						type: 'bezier',
+						lineWidth: 2,
+						color: '#ccc',
+						overridable: true
+					},
+					//计算节点位置前
+					onBeforeCompute: function(node) {},
+					//计算节点位置后
+					onAfterCompute: function() {},
+					//创建节点文本时触发事件
+					onCreateLabel: function(label, node) {
+						label.id = node.id;
+						label.innerHTML = node.name;
+						label.onclick = function() {
+							st.onClick(node.id);
+						};
+						var style = label.style;
+						style.width = 210 + 'px';
+						style.height = 25 + 'px';
+						style.lineHeight = 25 + 'px';
+						style.cursor = 'pointer';
+						style.color = '#fff'; //'#c5c4c4';
+						style.verticalAlign = 'center';
+						label.style.fontSize = '16px';
+				        label.style.textAlign= 'left';
+				        label.style.paddingTop = '0px';
+				        label.style.paddingLeft = '5px';
+				        moclass = node.data['moclass'];
+				        mofdn = node.data['fdn'];
+				        var iconTag = 'icon-stethoscope';
+				        if (moclass == 'Business') { iconTag = 'icon-cogs'; }
+				        if (moclass == 'Service') { iconTag = 'icon-cogs'; }
+				        if (moclass == 'ServiceDependency') { iconTag = 'icon-cog'; }
+				        if (moclass == 'MonitorGroup') { iconTag = 'icon-tags'; }
+				        var params = { moclass: moclass, fdn: mofdn, node: node, icon: iconTag }
+				        if (node.data.substatus == '1') { params.supportsSingleClick = true; }
+				        if (node.name.length > 20) { node.name = (node.name).substring(0, 19) + "..." }
+				        // $(label).html(toHtml('#bizview-obj-tmpl', params));	
+				        $(label).html("<i class="+iconTag+"></i>"+$(label).html());
+				        $(label).dblclick(function(){
+				        	console.log(params.fdn);
+				        	
+				        })
+					},
+					//渲染节点触发事件
+					onBeforePlotNode: function(node) {
+						severity = node.data['severity'];
+				        if (severity == '0') { sevColor = '#B94A48' }
+				        else if (severity == '1') { sevColor = '#FA9300' }
+				        else if (severity == '2') { sevColor = '#CECF00'}
+				        else if (severity == '3') { sevColor = '#3A87AD'}
+				        else if (severity == '88') { sevColor = '#468847' }
+				        else if (severity == '99') { sevColor = '#AEA8B3'}
+				        else if (severity == '10000') { sevColor = '#AEA8B3' }
+				        node.data.$color = sevColor;
+				    	if (node.selected) { jitBorderColor ='#666' }
+        				else { jitBorderColor = '#111'}
+					},
+					//连线前触发事件，可以修改线条颜色等
+					onBeforePlotLine: function(adj) {
+						adj.data.$color = "#bbb";
+						if(adj.nodeFrom.selected && adj.nodeTo.selected) {
+							
+							adj.data.$lineWidth = 1;
+						} else {
+							delete adj.data.$color;
+							delete adj.data.$lineWidth;
+						}
+					}
+
+				});
+				//加载数据
+				st.loadJSON(data);
+				//计算布局
+				st.compute();
+				// st.switchPosition("left", "animate");
+				//整体渲染
+				st.geom.translate(new $jit.Complex(-200, 0), "current");
+				//展现根节点
+				st.onClick(st.root);
+
+				var top = $jit.id('r-top'),
+			        left = $jit.id('r-left'),
+			        bottom = $jit.id('r-bottom'),
+			        right = $jit.id('r-right');
+			    top.onchange=left.onchange=bottom.onchange=right.onchange=changeHandler;
+				function changeHandler()
+			    {
+			      if (this.checked) {
+			        top.disabled=bottom.disabled=right.disabled=left.disabled=true;
+			        st.switchPosition(this.value, "animate", {
+			          onComplete: function() { top.disabled=bottom.disabled=right.disabled=left.disabled=false; }
+			        });
+			      }
+			    };
+			}
+		})
+		</script>
+	</body>
+
+</html>

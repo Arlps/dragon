@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/jquery-1.9.1.js"></script>
+    <script src="js/highcharts.js"></script>
+
+</head>
+<body>
+        <div id="container"></div>
+    </body>
+</html>
+
+
+<script>
+    $(function () {
+        go();go()
+    });
+
+    function go(){
+        var arrX=[1,2,3,4,5];
+        var arrY=[4,4,4,4,4];
+        var chart = Highcharts.chart('container', {
+            tooltip: {
+                formatter: function() {
+                    console.log(this.point)
+                    return '<b>' +
+                        this.point.category +
+                        '</b><br/><br/>' +
+                        this.series.name
+
+                        +
+                        ":" +
+                        Highcharts.numberFormat(Math
+                            .abs(this.point.y), 0);
+                }
+            },
+            xAxis: {
+                categories:arrX
+            },
+            series: [{
+                type: 'column',
+                data: arrY,
+            }]
+        },function(){
+            var arr=arrY.concat()
+            setInterval(function(){
+                arrX.shift(); arrX.push(parseInt(Math.random()*10));
+                arr.shift(); arr.push(parseInt(Math.random()*10));
+                
+                $('#container').highcharts().xAxis[0].update({
+                    categories:arrX
+                });
+                $('#container').highcharts().series[0].update({
+                    data:arr
+                });
+            },1000)
+        });
+    }
+</script>
+
+

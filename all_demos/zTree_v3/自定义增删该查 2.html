@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义增删该查</title>
+	<link rel="stylesheet" href="css/metroStyle/metroStyle.css">
+	<style>
+		.box{ position:fixed; width:200px; height:200px; top:50%; left:50%; margin-left:-100px; margin-top:-100px; background:rgba(0,0,0,0.3); color:#fff; display:none; }
+		.box p{ margin-bottom:10px;}
+	</style>
+</head>
+<BODY>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<button onclick="edit2()">编辑</button>
+		<button onclick="remove()">删除</button>
+		<button onclick="add2()">添加</button>
+	</div>
+</div>
+<div class="box" id="box">
+	<p><label>名称</label><input type="text" name="name"></p>
+	<p><label>备注</label><input type="text"></p>
+	<button onclick="save_edit()">保存</button>
+</div>
+<div class="box" id="box2">
+	<p><label>名称</label><input type="text" name="name2"></p>
+	<p><label>备注</label><input type="text"></p>
+	<button onclick="save_add()">保存</button>
+</div>
+</BODY>
+</html>
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script src="js/jquery.ztree.all.min.js"></script>
+<SCRIPT type="text/javascript">
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes2);
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			// zTree.expandAll(true);
+			expandTree()
+		});
+
+		//展开树层级设置
+		function expandTree() {
+		    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+		    //获取 zTree 的全部节点数据将节点数据转换为简单 Array 格式
+		    var nodes = zTree.transformToArray(zTree.getNodes());
+		    for(var i=0;i<nodes.length;i++){
+		        if(nodes[i].level == 0 || nodes[i].level == 1 ){
+		            console.log(nodes[i].name);
+		            //根节点展开
+		            zTree.expandNode(nodes[i],true,true,false)
+		        }else{
+		            zTree.expandNode(nodes[i],false,true,false)
+		        }
+		    }
+		}
+		// 自定义编辑1（树上修改）---------------------------------------------
+		function edit(){
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			// var first=zTree.getNodes()[1];
+			// zTree.selectNode(first);
+			var nodes = zTree.getSelectedNodes();
+			zTree.editName(nodes[0])
+		}
+		// 自定义编辑2(带弹窗修改)p-----------------------------------------------
+		function edit2(){
+			$('#box').show();
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var nodes = zTree.getSelectedNodes();
+			$('input[name=name]').val(nodes[0].name)
+		}
+		function save_edit(){
+			$('#box').hide();
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var nodes = zTree.getSelectedNodes();
+			if($('input[name=name]').val()==''){
+				alert('请输入正确的名称');
+				return;
+			}
+            nodes[0].name = $('input[name=name]').val();
+            zTree.updateNode(nodes[0]);
+            
+		}
+		//自定义删除------------------------------------------------------------
+		function remove(){
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			// var first=zTree.getNodes()[1];
+			// zTree.selectNode(first);
+			var nodes = zTree.getSelectedNodes();
+			//	不删除当前层第一节点
+			if(!nodes[0].isFirstNode){
+				zTree.removeNode(nodes[0])
+			}
+		}
+		// 自定义添加1------------------------------------------------------
+		function add(){ alert()
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var nodes = zTree.getSelectedNodes();
+			var newNode=zTree.addNodes(nodes.length>0?nodes[0]:null,{ name:"new node"});
+			// console.log(newNode)
+		}
+		// 自定义添加2 弹窗新增------------------------------------------------------
+		function add2(){
+			$('#box2').show();
+		}
+		function save_add(){
+			$('#box2').hide();
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var nodes = zTree.getSelectedNodes();
+			if($('input[name=name2]').val()==''){
+				alert('请输入正确的名称');
+				return;
+			}
+			zTree.addNodes(nodes.length>0?nodes[0]:null,{ name:$('input[name=name2]').val()});
+            
+		}
+
+		var setting = {
+			view: {
+				selectedMulti: true
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: function(event, treeId, treeNode, clickFlag){
+					console.log(treeNode)
+				},
+
+				// enter按下后 更新名称前(判断字符串是否正规)----------------------------------------
+				beforeRename: function(treeId, treeNode, newName, isCancel) {
+					if (newName.length == 0) {
+						var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+						zTree.cancelEditName();
+						alert("节点名称不能为空.");
+						return false;
+					}
+					// return true;
+				},
+				// 更新名字后
+				onRename: function(){},
+
+
+				// 按下按钮后 删除按钮前------------------------------------------------------
+				beforeRemove: function beforeRemove(treeId, treeNode) {
+					var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+					zTree.selectNode(treeNode);
+					return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+				},
+				// 删除按钮后
+				onRemove: function(){},
+				
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"父节点 1", open:true},
+			{ id:11, pId:1, name:"叶子节点 1-1"},
+			{ id:12, pId:1, name:"叶子节点 1-2"},
+			{ id:13, pId:1, name:"叶子节点 1-3"},
+			{ id:2, pId:0, name:"父节点 2", open:true},
+			{ id:21, pId:2, name:"叶子节点 2-1"},
+			{ id:22, pId:2, name:"叶子节点 2-2"},
+			{ id:23, pId:2, name:"叶子节点 2-3"},
+			{ id:3, pId:0, name:"父节点 3", open:true},
+			{ id:31, pId:3, name:"叶子节点 3-1"},
+			{ id:32, pId:3, name:"叶子节点 3-2"},
+			{ id:33, pId:3, name:"叶子节点 3-3"}
+		];
+		var zNodes2=[{
+			name:'主页',
+		},{
+			name:'数据地图',
+			children:[{
+				name:"数据搜索",
+			},{
+				name:"数据地图",
+			}]
+		},{
+			name:'元数据管理',
+		},{
+			name:'应用中心',
+		},{
+			name:'运维中心',
+			children:[{
+				name:'资源管理',
+			},{
+				name:'资源监控',
+			},{
+				name:'调度监视',
+				children:[{
+					name:'afsafs'
+				}]
+			},]
+		},{
+			name:'系统管理',
+			children:[{
+				name:'数据连接管理',
+			},{
+				name:'权限管理',
+			},{
+				name:'应用管理',
+			},{
+				name:'日志管理',
+			}]
+		},]
+
+		
+		//-->
+	</SCRIPT>

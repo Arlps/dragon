@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box{ width: 100px; height: 100px; background-color: blue; box-shadow:inset 0 0 40px; padding:5px; box-sizing: border-box;}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+	<img src="img/yun.png" height="73" width="134" alt="">
+	<button>111</button>
+</body>
+<script src="js/jquery-1.9.1.js"></script>
+<script>
+// $(function(){console.log(1)});
+window.onload=function(){
+	console.log(2)
+}
+$(function(){console.log(1)});
+	$(function(){
+		var flag=true;
+		if(flag){
+			//无效
+
+			$('button').click(function(){
+				flag=!flag;
+				console.log(flag)
+				alert();
+			})
+		}else{
+			console.log(2)
+		}
+	})
+</script>
+</html>

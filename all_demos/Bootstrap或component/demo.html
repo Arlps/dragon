@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>最基本的使用——plupload演示demo</title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/plupload.full.min.js"></script>
+	<style>
+	body{ font-size: 12px;}
+	body,p,div{ padding: 0; margin: 0;}
+	.wraper{ padding: 30px 0;}
+	.btn-wraper{ text-align: center;}
+	.btn-wraper input{ margin: 0 10px;}
+	#file-list{ width: 350px; margin: 20px auto;}
+	#file-list li{ margin-bottom: 10px;}
+	.file-name{ line-height: 30px;}
+	.progress{ height: 4px; font-size: 0; line-height: 4px; background: orange; width: 0;}
+	.tip1{text-align: center; font-size:14px; padding-top:10px;}
+    .tip2{text-align: center; font-size:12px; padding-top:10px; color:#b00}
+    .catalogue{ position: fixed; _position:absolute; _width:200px; left: 0; top: 0; border: 1px solid #ccc;padding: 10px; background: #eee}
+    .catalogue a{ line-height: 30px; color: #0c0}
+    .catalogue li{ padding: 0; margin: 0; list-style: none;}
+    </style>
+</head>
+<body>
+	<!-- 弹窗带表单 -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+				</button>
+				<h4 class="modal-title" id="myModalLabel">新建</h4>
+			</div>
+			<div class="modal-body">
+				<div class="wraper">
+					<div class="btn-wraper">
+						<input type="button" value="选择文件..." id="browse" />
+						<input type="button" value="开始上传" id="upload-btn" />
+					</div>
+					<ul id="file-list">
+
+					</ul>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary">确定</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- 结束 -->
+	<p class="tip2">注意：该demo把上传的地址设为了一个静态的html页面，所以文件并不会真正的上传到服务器，但这不会影响上传功能的演示！</p>
+	
+	<ul class="catalogue">
+		<li><a href="index.html">1、最基本的使用demo</a></li>
+		<li><a href="index2.html">2、文件过滤功能demo</a></li>
+		<li><a href="index3.html">3、拖拽上传功能demo</a></li>
+		<li><a href="index4.html">4、图片预览功能demo</a></li>
+		<li><a href="http://chaping.github.io/plupload/doc/">Plupload文档</a></li>
+	</ul>
+	<script>
+	$('#modal').modal('show');
+	var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
+		browse_button : 'browse',
+		url : 'upload.html',
+		flash_swf_url : 'js/Moxie.swf',
+		silverlight_xap_url : 'js/Moxie.xap',
+	});
+	uploader.init(); //初始化
+
+	//绑定文件添加进队列事件
+	uploader.bind('FilesAdded',function(uploader,files){
+		for(var i = 0, len = files.length; i<len; i++){
+			var file_name = files[i].name; //文件名
+			//构造html来更新UI
+			var html = '<li id="file-' + files[i].id +'"><p class="file-name">' + file_name + '</p><p class="progress"></p></li>';
+			$(html).appendTo('#file-list');
+		}
+	});
+
+	//绑定文件上传进度事件
+	uploader.bind('UploadProgress',function(uploader,file){
+		$('#file-'+file.id+' .progress').css('width',file.percent + '%');//控制进度条
+	});
+
+	//上传按钮
+	$('#upload-btn').click(function(){
+		uploader.start(); //开始上传
+	});
+
+	</script>
+</body>
+</html>

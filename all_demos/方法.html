@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button onclick="location.assign('https://www.baidu.com')">location.assign</button>
+	<button class="btn1" onClick="move(this)">1</button>
+	<button class="btn2">2</button>
+	<input type="text">
+	<input type='button' id='mybutton'/>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+	</ul>
+	<script>
+	var str='abc';
+	console.log(str++);
+	console.log(str);
+	//交换a b
+		var a="123";
+		var b="4567";
+		b=b+a; // b="4561237"
+		a=b.slice(0,4);//截取
+		b=b.slice(4,7);
+		console.log(a,b)
+	//统计最大重复书
+		// var str="asfjijjjsddf";
+		// var obj={};
+		// for (var i = 0; i < str.length; i++) {
+		// 	var key=str[i];//k=str.charAt(i);
+		// 	if (!obj[key]) {
+		// 		obj[key]=1;
+		// 	} else{
+		// 		obj[key]++;
+		// 	}
+		// }
+		// console.log(obj)
+		// var max=-1;var it=null;
+		// for(var k in obj){
+		// 	if (obj[k]>max) {
+		// 		max=obj[k];
+		// 		it=k
+		// 	};
+		// }
+		// console.log(it,max)
+	//去重
+		// var arr = [1 ,1 ,2, 3, 3, 2, 1];
+		// var obj={};var brr=[];
+		// for (var i = 0; i < arr.length; i++) {
+		// 	var key=arr[i];
+		// 	if (!obj[key]) {
+		// 		obj[key]=1; //把没出现过的变成obj属性
+		// 		brr.push(key);//并在brr加入这个元素
+		// 	}
+		// };
+		// console.log(brr)
+	//去重2
+		 // var arr = [1 ,1 ,2, 3, 3, 2, 1];
+		 // arr.reverse();
+		 // arr.sort(function(a,b){return a-b})
+		 // alert(arr)
+		 // var brr=[];
+		 // for (var i = 0; i < arr.length; i++) {
+		 // 	if(brr.indexOf(arr[i])==-1){
+		 // 		brr.push(arr[i])
+		 // 	}
+		 // }
+		 // alert(brr)
+	//判断是不是字符串
+		// function isStr(x){
+		// 	if (typeof(x)=='string'||x.constructor == String) {
+		// 		console.log('yes')
+		// 	}else{
+		// 		console.log('no')
+		// 	}
+		// }
+		// var a='dsf';var b=1;
+		// isStr(a);
+		// isStr(b)
+	//移动btn
+		// var btn1=document.getElementsByClassName('btn1')[0];
+		// btn1.onclick=function(){
+		// 	var btn3=btn1.cloneNode(true);
+		// 	btn1.parentNode.appendChild(btn3);
+		// 	btn1.remove();
+		// }
+	//闭包获取index
+	// 	var li=document.getElementsByTagName('li');
+	// 	for (var i = 0; i < li.length; i++) {
+	// 		li[i].onclick=(function(i){
+	// 			return function(){
+	// 				alert(i)
+	// 			}
+	// 		})(i)
+	// 	};
+	// document.getElementById("mybutton").click(function(){     alert("1"); });
+	// 	//change/input
+	// 		var input=document.getElementsByTagName('input')[0];
+	// 		input.onchange=function(){
+	// 			alert(); //改变并且失去焦点
+	// 		}
+	</script>
+	 
+	<script> 
+ 
+// document.getElementById("mybutton").click(function(){     alert("2"); }); 
+</script>
+</body>
+</html>

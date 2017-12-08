@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	// <script src="js/jQuery-2.1.4.min.js"></script>
+	<style>
+		#box:focus{ background:pink;}
+		/*input:focus{ background:red;}*/
+	</style>
+</head>
+<body>
+	<div id="box" style="display:block; background:red"></div>
+	<input type="text">
+	<script>
+		// console.log($('#box')[0]);
+		// console.log($('#box').is(':visible'))
+		// $('#box').css('height',400)w
+		console.log(document.getElementsByTagName('input')[0])
+		document.getElementsByTagName('input')[0].onfocus=function(){
+			this.style.background='#ff0'
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+      <script src="js/data.js"></script>
+	<script src="js/jtopo-0.4.08.js"></script>
+</head>
+<body>
+	<canvas id="canvas" width="800px" height="500px" style="border:1px solid black; "></canvas>
+</body>
+<script>
+	$(document).ready(function() {  
+            // 初始化
+            var canvas = document.getElementById('canvas');  
+            var stage = new JTopo.Stage(canvas);  
+            stage.width=500;
+            stage.height=500;
+            scene = new JTopo.Scene(stage); 
+            scene.backgroundColor='255,255,255'; 
+            scene.background='img/bg1.png';  
+            // 绘制
+            var nodeData=[];var linkData=[];
+            scene.clear();
+            paint(group,nodeData,linkData);
+            setInterval(function(){
+                  var nodeData=[];var linkData=[];
+                  scene.clear();
+                  paint(group,nodeData,linkData);
+                  scene.doLayout(JTopo.layout.TreeLayout('down', 100, 100));
+                  scene.centerAndZoom();
+            },2000)
+            
+            // 布局
+            scene.doLayout(JTopo.layout.TreeLayout('down', 100, 100));
+            scene.centerAndZoom();
+      }); 
+
+      // 添加节点
+      function addNode(obj){
+            var node=new JTopo.Node(obj.name);
+            node.fontColor = '255,255,100';
+            node.setSize(40,40);
+            // node.setLocation(100,100);
+            // 设置图标
+            node.setImage('img/' + obj.type + '.png');
+            // 设置节点名称切换
+            var aaa=0;
+            setInterval(function(){
+                  aaa=(aaa==0?1:0);
+                  if(aaa){
+                        node.text=obj.id
+                  }else{
+                        node.text=obj.name
+                  }
+            },1000)
+            // 设置颜色状态
+            if(obj.status==1){
+                  node.fillColor="255,0,0";
+                  node.alarm='warning';
+                  node.alarmColor = '255,0,0';
+                  node.alarmAlpha = 0.7;
+                  JTopo.Animate.stepByStep(node, {alpha: 0.5}, 1000, true).start()
+            }else{
+                  node.fillColor="255,255,255";  
+            }
+            // 节点事件
+            node.click(function(){
+                  alert(obj.id)
+            })
+            node.mouseover(function() {
+                  node.fontColor = '255,255,255';
+            });
+            node.mouseout(function() {
+                  node.fontColor = '255,255,100';
+            });
+            scene.add(node);
+            return node;
+      }
+      // 添加连线
+      function addLink(nodeA,nodeB){
+            var link=new JTopo.CurveLink(nodeA,nodeB);
+            if(nodeB.fillColor=="255,0,0"){
+                  link.strokeColor="255,0,0";
+                  link.zIndex=10;
+            }
+            link.font='50px Consolas';
+            link.width=0.5;
+            link.text="link1";
+            link.fontColor="0,0,0"
+            link.textOffsetY=20;
+            link.alpha=0.5;
+            //link.offsetGap = (treeHeight - nodeSize) / 2; 
+            link.offsetGap=30;
+            scene.add(link);
+            return link;
+      }
+      var n=1;
+      // 根据数据渲染节点 并创建节点数组
+      function createByData(data,nodeData){
+            for(var i=0; i<data.length; i++){
+                  nodeData.push({
+                        node:addNode(data[i]),
+                        id:data[i].id,
+                        son:[]
+                  });
+                  if(typeof(data[i].son)=='object'){
+                        createByData(data[i].son,nodeData[i].son)
+                  }
+            }
+            console.log(n)
+      }
+      // 根据节点数组连线 并创建连线数组
+      function linkByData(nodeData,linkData){
+            for(var i=0; i<nodeData.length; i++){
+                  for(var j=0; j<nodeData[i].son.length; j++){
+                        var link=addLink(nodeData[i].node,nodeData[i].son[j].node);
+                        // linkData.push({
+                        //       link:addLink(nodeData[i].node,nodeData[i].son[j].node),
+                        //       son:[]
+                        // })
+                  }
+                  if(typeof(nodeData[i].son)=='object'){
+                        linkByData(nodeData[i].son,linkData)
+                  }
+            }
+      }
+      // 一条龙渲染
+      function paint(data,nodeData,linkData){
+            createByData(data,nodeData);
+            linkByData(nodeData,linkData);
+      }
+</script>

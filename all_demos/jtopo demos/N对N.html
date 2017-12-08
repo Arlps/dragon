@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jtopo-0.4.08.js"></script>
+</head>
+<body><!--   -->
+	<canvas id="canvas" width="500px" height="500px" style="border:1px solid black; "></canvas>
+</body>
+<script>
+	$(document).ready(function() {    
+            var canvas = document.getElementById('canvas');   
+            var stage = new JTopo.Stage(canvas);  
+            stage.width=500;
+            stage.height=500; 
+            var scene = new JTopo.Scene(stage); 
+            scene.background='img/bg1.png';  
+            
+
+            var node= new JTopo.Node();node.setSize(100,100);
+
+            var x1=10,y1=100;var x2=100,y2=100;
+            for (var i = 0; i <data.length; i++) {
+                  var node= new JTopo.Node(data[i].id); 
+                  node.textPosition = "Middle_Center";
+                  node.setSize(20,20);
+                  node.setLocation(x1,y1);
+                  node.setImage('img/arrow.png');
+                  node._id=data[i].id;
+                  node.click(function(){alert(this._id);})
+                  scene.add(node);y1+=50;
+                  
+                  for (var j = 0; j < data[i].son.length; j++) {
+
+                        var node2= new JTopo.Node(data[i].son[j].id); 
+                        node2.textPosition = "Middle_Center";
+                        node2.setSize(20,20);
+                        node2.setLocation(x2,y2);
+                        node2.setImage('img/arrow.png');
+                        node2._id=data[i].son[j].id;
+                        var allNodes=scene.getDisplayedNodes();//console.log(allNodes)
+                        for (var num = 0; num < allNodes.length; num++) {
+                              if (allNodes[num]._id==data[i].son[j].id) {
+                                    console.log(data[i].son[j].id);
+                                    console.log(allNodes[num].y);
+                                    node2.setLocation(allNodes[num].x,allNodes[num].y);
+                                    JTopo.Animate.stepByStep(allNodes[num], {alpha: 0.1}, 1000, true).start()
+                                    y2-=50
+                              } else{
+                                    
+                              };
+                        }   
+                        scene.add(node2);y2+=50
+                        linking(node,node2)
+                        
+                  };
+                  
+            };           
+
+            //---------函数定义部分------------------------
+            function noding(obj,x,y){
+                  var node= new JTopo.Node(obj.id); 
+                  node.setSize(20,20);
+                  node.setLocation(x,y);
+                  node.setImage('img/arrow.png');
+                  node._id=obj.id;
+                  node.click(function(){alert(this._id);})
+                  scene.add(node);
+            }
+            function linking(nodeA,nodeB){
+                  var link=new JTopo.Link(nodeA,nodeB);
+                  link.lineWidth = .8; 
+                  link.name='Link';
+                  scene.add(link);
+            }
+
+            //五角星连线
+            var nodes=[];
+            for (var i = 0; i <=19; i++) {
+                  var angleRnd=parseInt(360/20*i);
+                  var x=150*Math.cos(2*Math.PI/360*angleRnd)+300;
+                  var y=150*Math.sin(2*Math.PI/360*angleRnd)+300;
+                  var node= new JTopo.Node(); 
+                  //node.textPosition = "Bottom_Center";
+                  node.setSize(1,1);
+                  node.setLocation(x,y);
+                  scene.add(node);
+                  nodes.push(node);
+            };
+            //五角形
+            // for (var i = 0; i < nodes.length; i++) {
+            //       for (var j = i; j < nodes.length; j++) {
+            //             if (Math.abs(i-j)!=1 && Math.abs(i-j)!=4 && Math.abs(i-j)!=0) {
+            //                   linking(nodes[i],nodes[j])
+            //             };
+            //             if (Math.abs(i-j)==1 || Math.abs(i-j)==4) {
+            //                   var link=new JTopo.CurveLink(nodes[i],nodes[j]);scene.add(link);
+            //             };
+
+            //       };
+            // };
+            // 花纹
+            for (var i = 0; i < nodes.length; i++) {
+                  for (var j = i; j < nodes.length; j++) {
+                        if (Math.abs(i-j)!=0) {
+                              linking(nodes[i],nodes[j])
+                        };
+                  };
+            };
+        });  
+
+var data=[{
+      id:'a',
+      son:[{id:'a1'},{id:'a2'}]
+},{
+      id:'b',
+      son:[{id:'b1'},{id:'a2'}]
+},{
+      id:'c',
+      son:[{id:'c1'},{id:'a1'}]
+}];
+</script>
+</html>

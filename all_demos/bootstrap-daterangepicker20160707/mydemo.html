@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+	<head>
+		<meta charset="UTF-8" />
+		<title>
+			A date range picker for Bootstrap
+		</title>
+		<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.css"rel="stylesheet">
+		<link href="http://www.jq22.com/jquery/font-awesome.4.6.0.css"
+		rel="stylesheet">
+		<link rel="stylesheet" type="text/css" media="all" href="daterangepicker-bs3.css"
+		/>
+		<script type="text/javascript" src="jquery.min.js">
+		</script>
+		<script type="text/javascript" src="bootstrap.min.js">
+		</script>
+		<script type="text/javascript" src="moment.min.js">
+		</script>
+		<script type="text/javascript" src="daterangepicker.js">
+		</script>
+	</head>
+	<body>
+      <div class="well">
+        
+
+       <form class="form-horizontal">
+         <fieldset>
+          <div class="control-group">
+            <div class="controls">
+             <div class="input-group">
+                <input type="text" style="width: 200px" name="demo" id="demo" class="form-control" /> 
+               <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+             </div>
+            </div>
+          </div>
+         </fieldset>
+       </form>
+
+        <button id="btn">ad</button>
+       <script type="text/javascript">
+       $(function(){
+        $('#demo').daterangepicker({
+           startDate: '2017-01-01',
+            endDate: moment(),
+            "timePicker": false,
+            "timePicker24Hour": true,
+            "timePickerSeconds": true,
+            "linkedCalendars": false,
+            "autoUpdateInput": false,
+            locale : {  
+                  applyLabel : '确定',  
+                  cancelLabel : '取消',  
+                  fromLabel : '起始时间',  
+                  toLabel : '结束时间',  
+                  customRangeLabel : '自定义',  
+                  daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],  
+                  monthNames : [ '1月', '2月', '3月', '4月', '5月', '6月',  
+                          '7月', '8月', '9月', '10月', '11月', '12月' ],  
+                  firstDay : 1  
+              }  
+        }, function(start, end, label) {
+          // console.log(start.format('@') + ' to ' + end.format('YYYY-MM-DD'));
+          // console.log(start,end)
+          // console.log(start._d.getTime()/1000,end._d.getTime()/1000)
+        });
+
+        $('#btn').click(function(){
+          var str=$('[name=demo]').val();
+          console.log(str);
+          var arr=str.split(' - ');console.log(arr)
+          var start_time=str.split(' - ')[0];
+          var end_time=str.split(' - ')[1]
+          console.log(start_time);
+          console.log(end_time)
+        })
+      })
+       </script>
+
+    </div>
+	
+	</body>
+</html>

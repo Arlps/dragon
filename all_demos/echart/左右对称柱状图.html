@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css">
+    <script src="js/jQuery-2.1.4.min.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/dark.js"></script>
+</head>
+<body>
+    <div id="chart" style="width:500px; height:500px;"></div>
+</body>
+</html>
+
+<script>
+    $(function(){
+
+        var myChart=echarts.init(document.getElementById('chart'));
+        myChart.setOption(option);
+    })
+    var data = {
+        x: [
+            ["数据名称A", "数据名称B", "数据名称C", "数据名称D", "数据名称E", "数据名称A", "数据名称B", "数据名称C", "数据名称D", "数据名称E"],
+            ["数据名称A", "数据名称B", "数据名称C", "数据名称D", "数据名称x", "数据名称A", "数据名称B", "数据名称C", "数据名称D", "数据名称E"]
+        ],
+        y: [
+            [23, 31, 57, 44, 39, 23, 31, 57, 44, 39],
+            [-23, -31, -57, -44, -39, -23, -31, -57, -44, -39]
+        ]
+    }
+
+    var option = {
+            backgroundColor: 'rgba(0,0,0,0)',
+            grid:{
+//              left:'10%',
+//              right:'10%',
+                top:'10%',
+                bottom:'10%',
+                containLabel: true
+            },
+            title: {
+                text: ''
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} "
+           },
+            xAxis : [
+                {
+                    
+                    type : 'value',
+                    // inverse:true,
+//                  axisLabel:{show:false},
+//                  splitLine:{show:false},
+//                  axisLine:{show:false},
+//                  axisTick:{show:false},
+                    splitLine:{
+                        lineStyle:{
+                            color:'#516272'
+                        }
+                    },
+                    axisLine:{
+                        lineStyle:{
+                            color:'#516272'
+                        }
+                    },
+                    axisTick:{
+                        lineStyle:{
+                            color:'#516272'
+                        }
+                    },
+                    axisLabel:{
+                        color:'#bbb',
+                        formatter:function(x){
+                            return x>0?x:-x
+                        }
+                    }
+                }
+            ],
+            yAxis : [
+                {
+                    name:'单位',
+                    nameGap:5,
+                    nameTextStyle:{ color: '#ccc'},
+                    type : 'category',
+                    nameLocation:"center",
+                    data : data.x[0],
+                    axisLabel:{
+                        color:'#ccc',
+                    }
+                },
+                {
+                    name:'单位',
+                    nameGap:5,
+                    nameTextStyle:{ color: '#ccc'},
+                    type : 'category',
+                    data : data.x[1],
+                    axisLabel:{
+                        color:'#bbb',
+                    }
+                }
+            ],
+//          color:['#4FBEF3','44ff00'],
+//          color:['#4FBEF3','#67AC3F','#F6BE51','#349B6C','#f0f'],
+            color:["#4DB3CB","#34A872","#99C93A"],
+            series: [{
+                name:'关注数',
+                type:'bar',
+                stack:'A',
+                data:data.y[0],
+                label:{
+                    normal:{
+                        position:'inside',
+                        show:true
+                    }
+                },
+            },
+            {   
+                name:'访问数',
+                type:'bar',
+                stack:'A',
+                data:data.y[1],
+                label:{
+                    normal:{
+                        position:'inside',
+                        show:true,
+                        formatter:function(params){
+                                return 0-params.value
+                        }
+                    }
+                },
+            }]
+        };
+</script>

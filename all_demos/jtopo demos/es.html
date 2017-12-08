@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jtopo-0.4.08.js"></script>
+
+
+<style>
+	.nopa-col {
+		padding: 0
+	}
+
+	.select-div {
+		height: 26px;
+		margin-bottom: 10px
+	}
+
+	#moni-box {
+		margin-bottom: 0px;
+	}
+
+	#form-div {
+		border-bottom: 1px #eee solid;
+		padding-bottom: 20px
+	}
+
+	#form-div input, #form-div select {
+		height: 34px;
+		font-size: 13px;
+		padding: 6px 12px;
+		width: 200px
+	}
+	#canvas{
+		/*height:400px;
+		width:80%;*/
+
+	}
+</style>
+</head>
+<body>
+	
+
+<section class="content" onresize="res_body()">
+	<div class="box" id="moni-box">
+		<div class="box-body">
+			<div style="width:1000px; margin: 0 auto">
+				<canvas  id="canvas" width="1000" height="500"></canvas>
+			</div>
+			<div class="select-div">
+				<form class="form-inline pull-right">
+					<select class="form-control">
+						<option value="" id="defaultAction">操作</option>
+						<option value="33">启动监测</option>
+						<option value="11">禁止监测</option>
+						<option value="22">暂时忽略</option>
+						<option value="31">取消忽略</option>
+						<option value="1">移动</option>
+						<option value="2">删除</option>
+					</select> <select class="form-control">
+						<option value="0">不刷新</option>
+						<option value="1" selected="">1分钟</option>
+						<option value="2">2分钟</option>
+						<option value="5">5分钟</option>
+						<option value="10">10分钟</option>
+					</select>
+				</form>
+			</div>
+			<!--/select-div -->
+			<div>
+				<table class="table table-bordered table-hover dataTable"
+					style="margin-bottom:0">
+					<thead>
+						<tr>
+							<th>名称</th>
+							<th>描述信息</th>
+							<th>显示名称</th>
+							<th>角色</th>
+							<th>电子邮箱</th>
+							<th>移动号码</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Trident</td>
+							<td>Internet Explorer 4.0</td>
+							<td>Win 95+</td>
+							<td>4</td>
+							<td>4</td>
+							<td>X</td>
+							<td><a href="#" class="Button btn-delete"><i
+									class="fa fa-trash-o fa-lg"></i></a> <a href="#" class="Button"><i
+									class="fa fa-bar-chart fa-lg"></i></a></td>
+						</tr>
+						<tr>
+							<td>Trident</td>
+							<td>Internet Explorer 5.0</td>
+							<td>Win 95+</td>
+							<td>5</td>
+							<td>4</td>
+							<td>C</td>
+							<td><a href="#" class="Button"><i
+									class="fa fa-edit fa-lg"></i></a> <a href="#"
+								class="Button btn-delete"><i class="fa fa-trash-o fa-lg"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Trident</td>
+							<td>Internet Explorer 5.5</td>
+							<td>Win 95+</td>
+							<td>5.5</td>
+							<td>4</td>
+							<td>5.5</td>
+							<td><a href="#" class="Button"><i
+									class="fa fa-edit fa-lg"></i></a> <a href="#"
+								class="Button btn-delete"><i class="fa fa-trash-o fa-lg"></i></td>
+							</a>
+						</tr>
+						<tr>
+							<td>Trident</td>
+							<td>Internet Explorer 5.0</td>
+							<td>Win 95+</td>
+							<td>5</td>
+							<td>4</td>
+							<td>C</td>
+							<td><a href="#" class="Button"><i
+									class="fa fa-edit fa-lg"></i></a> <a href="#"
+								class="Button btn-delete"><i class="fa fa-trash-o fa-lg"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Trident</td>
+							<td>Internet Explorer 5.5</td>
+							<td>Win 95+</td>
+							<td>5.5</td>
+							<td>4</td>
+							<td>5.5</td>
+							<td><a href="#" class="Button"><i
+									class="fa fa-edit fa-lg"></i></a> <a href="#"
+								class="Button btn-delete"><i class="fa fa-trash-o fa-lg"></i></td>
+							</a>
+						</tr>
+
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+</section>
+
+<script>
+$(document).ready(function(){                    
+            var canvas = document.getElementById('canvas');
+            $(canvas).css('margin','0 auto')
+            var stage = new JTopo.Stage(canvas);
+            //显示工具栏
+            // showJTopoToobar(stage);
+            var scene = new JTopo.Scene(stage);    
+            scene.alpha = 1;
+            // stage.wheelZoom = 0.97
+            scene.mousedrag(function() {
+				this.translateX = 0;
+				this.translateY = 0;
+			})
+            
+            function addNode(name,text){
+                var node = new JTopo.Node(name);
+                node.setImage('img/img/'+ text +'.png');
+                node.setSize(100,80);
+                node.font = "18px Consolas"
+                node.fontColor = '0,0,0';
+                node.textPosition="Top_Center";
+                if(text!="server"){
+					node.textOffsetX=20;
+                }
+                node.textOffsetY=10;
+                node.dragable=false;
+                node.click(function(){
+                	alert(text)
+                })
+                scene.add(node);
+                return node;
+            }
+            
+            function addLink(nodeA, nodeZ){
+                var link = new JTopo.FlexionalLink(nodeA, nodeZ);
+                link.strokeColor = '0,0,0';
+                link.lineWidth = 1;
+                link.offsetGap=50;
+                scene.add(link);
+                return link;
+            }
+            
+            var rootNode = addNode('130','server');
+            
+            var icons = ['device', 'net','database'];
+            for(var i=0; i<icons.length; i++){         
+                var node = addNode('130', icons[i]);    
+                addLink(rootNode, node);            
+            }
+            
+            // 树形布局
+            scene.doLayout(JTopo.layout.TreeLayout('down', 300, 180));
+            scene.centerAndZoom();
+        });
+</script>
+<script>
+	//  var b = $(window).height();  
+	// /*  $('#tab-con').css("min-height", b-145+"px"); */
+	//  $('#moni-box').css("min-height", b-101+"px");
+	//  function res_body(){
+	//  	var b = $(window).height();
+	//  	$('#moni-box').css("min-height", b-101+"px");
+	//  	/* $('#tab-con').css("min-height", b-145+"px"); */
+	// } 
+	 
+	 
+	 
+	</script>
+
+	</body>
+	</html>
+
+

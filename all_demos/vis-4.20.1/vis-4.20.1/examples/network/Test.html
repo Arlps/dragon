@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Network基础用法</title>
+	
+	<script type="text/javascript" src="../../dist/vis.js"></script>
+  <link href="../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+	
+		<style type="text/css">
+			#mynetwork {
+				width: 600px;
+				height: 400px;
+				border: 1px solid lightgray;
+			}
+		</style>
+	</head>
+	<body onload="draw()">
+		<button id="edge-remove" onclick="removeNode();">Remove</button>
+		<button id="edge-remove" onclick="addNode();">Add</button>
+		<div id="mynetwork"></div>
+	
+		<script type="text/javascript">
+			var nodes, edges, network;
+			function draw(){
+				//创建一个数组的节点
+				nodes = new vis.DataSet();
+	            nodes.add([
+	                {id: 'ID1', label: 'Node 1', flag: 'true'},
+	                {id: 'ID2', label: 'Node 2'},
+	                {id: 'ID3', label: 'Node 3'},
+	                {id: 'ID4', label: 'Node 4'},
+	                {id: 'ID5', label: 'Node 5'}
+	            ]);
+	            
+	            //创建一个数组的边
+	            edges = new vis.DataSet();
+	            edges.add([
+	                {id: '1', from: 'ID1', to: 'ID2', label: 'Node A',arrows:'to'},
+	                {id: '2', from: 'ID1', to: 'ID3', label: 'Node B',arrows:'to'},
+	                {id: '3', from: 'ID2', to: 'ID4', label: 'Node C',arrows:'to'},
+	                {id: '4', from: 'ID2', to: 'ID5', label: 'Node D',arrows:'to'},
+	                {id: '5', from: 'ID2', to: 'ID5', label: 'Node E',arrows:'to'}
+	            ]);
+	            
+	            //创建网状物
+				var container = document.getElementById('mynetwork');
+				var data = {
+			    	nodes: nodes,
+			    	edges: edges
+				};
+				var options = {};
+				network = new vis.Network(container, data, options);
+				
+				//触发节点
+			    network.on ("click", function (params) {
+			    	console.log(params);
+					if(params.nodes.length == 1){
+						//alert("节点");
+//						var select_id = params.nodes;
+						var select_id = network.getSelectedNodes();
+						
+						var tmp = getNodeById(select_id);
+						debugger;
+						var flag = tmp.flag;
+						
+						console.log(flag);
+						if(flag == "true"){
+							console.log(flag);
+							nodes.update({id:select_id, flag:'ceshi'});
+						}
+					}
+			    });
+			    
+			    //触发线
+			    network.on ("click", function (params) {
+			    	//console.log(params);
+					if(params.edges.length == 1 && params.nodes.length == 0){
+						alert("线");
+						var edgeID = network.getSelectedEdges();
+						var tmp_edge = getEdgeById(edgeID);
+			        	var edge_label = tmp_edge.label;
+			        	console.log(edge_label);
+			        	
+			        	var selected = network.getConnectedNodes(edgeID);
+			        	console.log(selected);
+			        	
+			        	console.log(selected[0]);
+			        	var tmp_node1 = getNodeById(selected[0]);
+			        	var node_label1 = tmp_node1.label;
+			        	console.log(node_label1);
+			        	
+			        	console.log(selected[1]);
+			        	var tmp_node2 = getNodeById(selected[1]);
+			        	var node_label2 = tmp_node2.label;
+			        	console.log(node_label2);
+					}
+			    });
+			}
+		
+			function removeNode(){
+	            try {
+	                nodes.remove({id: '5'});
+	            } catch (err) {
+	                alert(err);
+	            }
+	        }
+
+			function addNode(){
+	            try {
+	                nodes.add({id: '7', label: 'Node 7'});
+	            } catch (err) {
+	                alert(err);
+	            }
+	        }
+	        
+	        //根据节点ID获取对象
+	        function getNodeById(node_id){
+		    	var tmp_nodes = nodes.get();
+		    	for(var i=0;i<tmp_nodes.length;i++){
+		    		var node = tmp_nodes[i];
+		    		if(node.id == node_id){
+		    			return node;
+		    		}
+		    	}
+		    	return null;
+		    }
+		    
+		    //根据线ID获取对象
+		    function getEdgeById(edge_id){
+		    	var tmp_edges = edges.get();
+		    	for(var i=0;i<tmp_edges.length;i++){
+		    		var edge = tmp_edges[i];
+		    		if(edge.id == edge_id){
+		    			return edge;
+		    		}
+		    	}
+		    	return null;
+		    }
+		</script>
+	</body>
+</html>

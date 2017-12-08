@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<script src="js/gauge.min.js"></script>
+</head>
+<body>
+	<div style="width:400px;" type="gauge">
+          <canvas id="foo1"></canvas>
+    <div style="width:400px;" type="gauge">
+          <canvas id="foo2"></canvas>
+    </div>
+	<script>
+		$(function(){
+
+			var opts = {
+		        lines: 12, // The number of lines to draw
+		        angle: 0, // The length of each line
+		        lineWidth: 0.44, // The line thickness
+		        pointer: {
+		            length: 0.93, // The radius of the inner circle
+		            strokeWidth: 0.053, // The rotation offset
+		            color: '#000000' // Fill color
+		        },
+		        limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
+		        colorStart: '#ff0',   // Colors
+		        colorStop: '#f00',    // just experiment with them
+		        strokeColor: '#E0E0E0',   // to see which ones work best for you
+		        generateGradient: true
+		    };
+		    var target1 = document.getElementById('foo1'); // your canvas element
+		    var gauge1 = new Gauge(target1).setOptions(opts); // create sexy gauge!
+		    gauge1.maxValue = 100; // set max gauge value
+		    gauge1.animationSpeed = 25; // set animation speed (32 is default value)
+		    gauge1.set(50); // set actual value
+
+		    var target2 = document.getElementById('foo2'); // your canvas element
+		    var gauge2 = new Gauge(target2).setOptions(opts); // create sexy gauge!
+		    gauge2.maxValue = 100; // set max gauge value
+		    gauge2.animationSpeed = 50; // set animation speed (32 is default value)
+		    gauge2.set(40); // set actual value
+		})
+
+	</script>
+</body>
+</html>

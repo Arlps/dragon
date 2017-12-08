@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/highcharts.js"></script>
+	<script src="js/highcharts-more.js"></script>
+	<script src="js/solid-gauge.js"></script>
+	<style>
+		*{ margin:0; padding:0;}
+		.chartBox{ position:relative;width:400px; height:400px;}
+		.selectBox{ position:absolute; width:auto; top:10px;right:0;z-index:20; box-shadow:1px solid black;}
+		.chart{ width:400px; height:400px; border:1px solid black}
+	</style>
+</head>
+<body>
+	<div class="chartBox">
+		<div id="div" class="chart"></div>
+	</div>
+	<script>
+		$(function () {
+		    var gaugeOptions = {
+		        chart: {
+		            type: 'solidgauge',
+		        },
+		        title: null,
+		        pane: {
+		            center: ['50%', '50%'],
+		            size: '100%',
+		            startAngle: -180,
+		            endAngle: 180,
+		            background: {
+		                backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+		                innerRadius: '90%',
+		                outerRadius: '100%',
+		                shape: 'arc'
+		            }
+		        },
+		        tooltip: {
+		            enabled: false
+		        },
+		        // the value axis
+		        yAxis: {
+		            stops: [
+		                [0.1, '#55BF3B'], // green
+		                [0.5, '#DDDF0D'], // yellow
+		                [0.9, '#DF5353'] // red
+		            ],
+		            lineWidth: 0,
+		            minorTickInterval: null,
+		            tickPixelInterval: 100,
+		            tickWidth: 0,
+		            title: {
+		                y: -0
+		            },
+		            labels: {
+		                y: 0
+		            }
+		        },
+		        plotOptions: {
+		            solidgauge: {
+		                dataLabels: {
+		                    y: 0,
+		                    borderWidth: 0,
+		                    useHTML: true
+		                }
+		            }
+		        }
+		    };
+		    // The speed gauge
+		    $('#div').highcharts(Highcharts.merge(gaugeOptions, {
+		        yAxis: {
+		            min: 0,
+		            max: 200,
+		            title: {
+		                text: '速度'
+		            }
+		        },
+		        credits: {
+		            enabled: false
+		        },
+		        series: [{
+		            name: '速度',
+		            data: [80],
+		            dataLabels: {
+		                format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+		                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+		                '<span style="font-size:12px;color:silver">km/h</span></div>'
+		            },
+		            tooltip: {
+		                valueSuffix: ' km/h'
+		            }
+		        }]
+		    }));
+		    
+		    // Bring life to the dials
+		    setInterval(function () {
+		        // Speed
+		        var chart = $('#container-speed').highcharts(),
+		            point,
+		            newVal,
+		            inc;
+		        if (chart) {
+		            point = chart.series[0].points[0];
+		            inc = Math.round((Math.random() - 0.5) * 100);
+		            newVal = point.y + inc;
+		            if (newVal < 0 || newVal > 200) {
+		                newVal = point.y - inc;
+		            }
+		            point.update(newVal);
+		        }
+		        // RPM
+		        chart = $('#container-rpm').highcharts();
+		        if (chart) {
+		            point = chart.series[0].points[0];
+		            inc = Math.random() - 0.5;
+		            newVal = point.y + inc;
+		            if (newVal < 0 || newVal > 5) {
+		                newVal = point.y - inc;
+		            }
+		            point.update(newVal);
+		        }
+		    }, 2000);
+		});
+
+	</script>
+</body>
+</html>

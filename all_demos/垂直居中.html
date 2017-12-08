@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<style>
+		html,body{ height: 100%; border: 1px solid black; margin: 0 ;}
+
+		/*1*/
+		.a{ height: 50%; width:100px; line-height:10; display: inline-block; vertical-align: middle; background: red;-webkit-transition: 0.2s linear;
+			-moz-transition:all 0.2s linear;
+		-o-transition: 0.2s linear;
+		transition:all 0.2s linear;}
+		/*body:after{ content:''; height:100%; display: inline-block; vertical-align: middle;}*/
+		.b{ height: 100%; display: inline-block; vertical-align: middle;}
+
+		/*2*/
+		/*body{
+		    display: flex;
+		    justify-content:center;
+		    align-items:Center;
+		}*/
+
+		/*3*/
+		body{position:relative;}
+		/*.a{
+            position: absolute;
+            width:100px;
+            height: 50px;
+            top:50%;
+            left:50%;
+            margin-left:-50px;
+            margin-top:-25px;
+            text-align: center;
+        }*/
+
+		/*4*/
+       /* .a{
+		  width: 50%; 
+		  height: 50%; 
+		  background: #000;
+		  overflow: auto; 
+		  margin: auto; 
+		  position: absolute; 
+		  top: 0; left: 0; bottom: 0; right: 0; 
+		}*/
+	</style>
+</head>
+<body>
+	<div class="a">哈哈哈哈哈</div>
+	<div class="b"></div>
+</body>
+<script>
+var flag=true;
+	setInterval(function(){
+		if (flag) {
+			$('.a').css('background','url(img/color0.png)').css('width','200px')
+		} else{
+			$('.a').css('background','url(img/radar.png)').css('width','100px')
+		};
+		flag=!flag;
+	},1000)
+</script>
+</html>

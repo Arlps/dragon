@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<style>
+    </style>
+</head>
+<body>
+	<div class="btn-group btn-group-sm time-group"></div>
+	<!-- 弹窗带表单 -->
+	<div class="modal fade" id="modal-time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:300px">
+			<div class="modal-content">
+				<div class="modal-body">
+					<table class="table table-border table-responsive" id="table-list">
+						<tbody>
+						</tbody>
+						
+					</table>
+					<div class="addbox form-inline">
+						<select name="num" id="" class="form-control input-sm"></select>
+						<select name="unit" id="" class="form-control input-sm">
+							<option value="month">个月</option>
+							<option value="week">周</option>
+							<option value="day">天</option>
+							<option value="hour">小时</option>
+							<option value="minute">分钟</option>
+						</select>
+						<div class="btn-group btn-group-sm pull-right">
+							<button class="btn btn-primary" id="confirm">
+								<i class="fa fa-plus"></i>
+							</button>
+							<button class="btn btn-primary" id="save">
+								<!-- <i class="fa fa-save"></i> -->
+								保存
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- 结束 -->
+	<script>
+		$(function(){
+			renderBtns(timeData)
+			// $('#modal-time').modal('show');
+			// 根据选择的单位变换数量
+			$('select[name=unit]').change(function(){
+				var htmlstr='';
+				var $num=$('select[name=num]');
+				$num.empty();
+				for (var i = 1; i <= maxNum($(this).val()); i++) {
+					htmlstr+="<option value="+i+">"+i+"</option>";
+				};
+				$num.html(htmlstr);
+			});
+			$('select[name=unit]').trigger('change');
+			// 添加新的条目到表格
+			$('#confirm').on('click',function(){
+				if($('#table-list tr').length>=5){
+					alert('自定义数量超过上限');return;
+				}
+				var $box=$(this).parents('.addbox');
+				var num=$box.find('select[name=num] option:selected').text();
+				var word=$box.find('select[name=unit] option:selected').text();
+				var unit=$box.find('select[name=unit] option:selected').val();
+
+				$('<tr/>').html('<td><input type="checkbox"></td>'+
+					'<td class="time" data-unit="'+unit+'"><span class="num">'+num+'</span><span class="word">'+word+'</span></td>'+
+					'<td><i class="close" data-flag=true>&times</i></td>').appendTo('#table-list');
+			})
+			// 表格删除条目
+			$('#modal-time table').on('click','i.close',function(){
+				if($(this).data('flag')){
+					$(this).parents('tr').remove()
+				}
+			})
+
+			// 最后保存
+			$('#save').click(function(){
+				$('#modal-time').modal('hide');
+				var timeData=[];
+				$('#table-list tr').each(function(idx,ele){
+					timeData.push({
+						num:$(this).find('td.time').find('.num').html(),
+						unit:$(this).find('td.time').data('unit'),
+						word:$(this).find('td.time').find('.word').html(),
+						check:$(this).find('input[type=checkbox]').prop('checked'),
+						default:$(this).find('input[type=checkbox]').prop('disabled')
+					})
+				})
+				console.log(timeData)//存入数据库
+				renderBtns(timeData)
+			})
+			
+			function renderBtns(timeData){
+				var $timeBtnGroup=$('.time-group');
+				$timeBtnGroup.empty();
+				for (var i = 0; i < timeData.length; i++) {
+					if(timeData[i].check){
+						$('<button class="btn btn-default" data-unit="'+timeData[i].unit+'">'+'<span>'+timeData[i].num+'</span>'+timeData[i].word+'</button>').appendTo($timeBtnGroup);
+					}
+				};
+				var $customBtn=$('<button class="btn btn-default" id="customTime">自定义</button>')
+				$customBtn.appendTo($timeBtnGroup);
+				$customBtn.click(function(){
+					$('#modal-time').modal('show');
+					renderTable(timeData)
+				})
+			}
+			function renderTable(timeData){
+				var $table=$('#table-list');
+				$table.empty();
+				for (var i = 0; i < timeData.length; i++) {
+					$('<tr/>').html('<td><input type="checkbox" '+(timeData[i].check?'checked':'')+' '+(timeData[i].default?'disabled':'')+'></td>'+
+					'<td class="time" data-unit="'+timeData[i].unit+'"><span class="num">'+timeData[i].num+'</span><span class="word">'+timeData[i].word+'</span></td>'+
+					'<td><i class="close" data-flag="'+(timeData[i].default?false:true)+'">&times</i></td>').appendTo($table);
+				};
+			}
+			//每个单位对应的最高数量
+			function maxNum(unit){
+				switch(unit){
+					case 'month': return 12;break;
+					case 'week': return 10;break;
+					case 'day': return 30;break;
+					case 'hour': return 24;break;
+					case 'minute': return 60;break;
+					default:break;
+				}
+			}
+		})
+		
+		var timeData=[{
+			num:1,
+			unit:'day',
+			word:'天',
+			check:true,
+			default:true
+		},{
+			num:1,
+			unit:'month',
+			word:'个月',
+			check:true,
+			default:false
+		},{
+			num:2,
+			unit:'hour',
+			word:'小时',
+			check:false,
+			default:false
+		}]
+	</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/jquery-1.9.1.js"></script>
+    <script src="code/highmaps.js"></script>
+    <script src="code/cn-with-city.js"></script>
+</head>
+<body>
+    <div id="container" style="width:400px; height:400px"></div>
+</body>
+</html>
+<script type="text/javascript">
+$(function() {
+    // Prepare random data
+    var data = [{
+        value: 7270,
+        name: "浙江",
+        href:'http://www.hcharts.cn'
+    }, {
+        value: 7270,
+        name: "北京",
+        href:'http://www.hcharts.cn'
+    }, {
+        value: 10000,
+        name: '广东',
+        href:'http://www.hcharts.cn'
+    }, {
+        value: 100,
+        name: '内蒙古',
+        href:'http://www.hcharts.cn'
+    }, {
+        value: 200,
+        name: "西藏"
+    },{
+        value:1000,
+        name:"台湾"
+    }];
+    var mapData = [{
+        z: 12,
+        name: '福州'
+    }, {
+        z: 120,
+        name: "厦门"
+    }, {
+        z: 1200,
+        name: '杭州'
+    }, {
+        z: 100,
+        name: "上海"
+    }, {
+        z: 1000,
+        name: '北京'
+    }, {
+        z: 1000088,
+        name: '广州',
+        color: '#00ccee'
+    }, {
+        z: 10,
+        name: '深圳'
+    }, {
+        z: 12000,
+        name: "重庆"
+    }, {
+        z: 20888,
+        name: "苏州"
+    }, {
+        z: 1000000,
+        name: '武汉'
+    }];
+    var mapArray = Highcharts.maps['cn-with-city'];
+    var mappoint = Highcharts.geojson(mapArray, 'mappoint');
+    $('#container').highcharts('Map', {
+        title: {
+            text: null
+        },
+        credits: {
+            enabled: false
+        },
+        // colors: function(color) {
+        //     return {
+        //         radialGradient: {
+        //             cx: 0.5,
+        //             cy: 0.3,
+        //             r: 0.7
+        //         },
+        //         stops: [
+        //             [0, color],
+        //             [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+        //         ]
+        //     };
+        // }(),
+        chart: {
+            // events: {
+            //     click: function(e) {
+            //         var x = Math.round(e.xAxis[0].value),
+            //             y = Math.round(e.yAxis[0].value);
+            //         this.get('clicks').addPoint({
+            //             x: x,
+            //             y: y,
+            //             name: '[' + x + ', ' + y + ']'
+            //         });
+            //     }
+            // }
+        },
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+        series: [{
+            //keys:keys,
+            data: mapData,
+            type: 'mapbubble',//'mapbubble',
+            mapData: mappoint,
+            joinBy: ['name', 'name'],
+            name: 'Random data',
+            states: {
+                hover: {
+                    color: '#BADA55'
+                }
+            },
+            // negativeColor:'#FF0022',
+            maxSize: '5%',
+            minSize: 5,
+            negativeColor: '#FF0022',
+            zThreshold: 120,
+            showInLegend: true,
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}',
+                style: {
+                    fontSize: '8px',
+                    color: '#000'
+                }
+            },
+            states: {
+                hover: {
+                    brightness: 0.8,
+                    borderWidth: 10
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return this.point.name + " \t" + this.point.z;
+                }
+            },
+            zIndex: 1000
+        }, {
+            type: 'mappoint',
+            id: 'clicks',
+            showInLegend: false,
+            name: 'Clicks'
+        }, {
+            // Basic China map
+            data: data,
+            mapData: mapArray,
+            joinBy: ['name', 'name'],
+            name: 'Random data',
+            //color: '#000',
+            negativeColor: 'rgba(255, 0, 0, 0.2)',
+            showInLegend: false,
+            events: {
+            },
+            states: {
+                hover: {
+                    color: '#BADA55'
+                }
+            },
+            events:{
+                click:function(e){
+                    var href = e.point.href;
+                    window.location.href = href;
+                    //console.log(e.point.href);
+                }
+            },
+            cursor:'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}',
+                style: {
+                    fontSize: '8px'
+                }
+            }
+        }, ]
+    }, function(map) {
+        console.log("Map init ok!");
+    });
+});
+
+</script>

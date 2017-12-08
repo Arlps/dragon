@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<script src="js/echarts.min.js"></script>
+	<style>
+		html,body{height:100%;}
+	</style>
+</head>
+<body>
+	<div id="chart" style="width:500px; height:500px; border:1px solid black; margin:100px auto 0"></div>
+</body>
+
+<script>
+	$(function(){
+		var data=makeData(10,500);
+		forceBlood($('#chart'),data)
+	})
+
+
+
+	
+	
+    
+
+    function forceBlood($dom,data){
+    	//配置兑对象
+    	option = {
+	        legend: {
+	            data: (function(){
+	            	var arr=[];
+	            	for (var i = 0; i < data.categories.length; i++) {
+	            		arr.push(data.categories[i].name);
+	            	};
+	            	return arr
+	            })()
+	        },
+	        tooltip : {
+		        trigger: 'item',
+		        position:'inside',
+		        formatter:'{a},{b},{c}',
+		    //     formatter:function(params){ //悬浮框内容
+		    //     	console.log(params.dataType)
+		    //     	if(params.dataType=='node'){
+		    //     		var html='<p>'+params.data.name+'</p>'+
+		    //     		'<p>表中文名称：<span>'+params.data.cname+'</span></p>'+
+						// '<p>来源分类：<span>'+params.data.source+'</span></p>'+
+						// '<p>主题分类：<span>'+params.data.theme+'</span></p>'+
+						// '<p>应用场景分类：<span>'+params.data.application+'</span></p>'+
+						// '<p>直接上游表数量：<span>'+params.data.upper+'</span></p>'+
+						// '<p>直接下游表数量：<span>'+params.data.lower+'</span></p>'
+		    //     		return html;
+		    //     	}else if(params.dataType=='edge'){
+		    //     		return '{a}'
+		    //     	}
+		    //     }
+		    },
+	        series: [{
+	            type: 'graph',
+	            layout: 'force',
+	            animation: false,
+	            label: {
+	                normal: {
+	                    position: 'right',
+	                    formatter: function(){ return ''}//'{b}'
+	                }
+	            },
+	            draggable: true,
+	            data:data.nodes.map(function (node, idx) {
+	                node.id = idx;
+	                return node;
+	            }),
+	            categories: data.categories,
+	            force: {
+	                // initLayout: 'circular'
+	                // repulsion: 20,
+	                edgeLength: 20,
+	                repulsion: 20,
+	                gravity: 0.2
+	            },
+	            edges: data.links
+	        }]
+	    };
+	    var myChart=echarts.init($dom[0]);//为JS原生对象
+		myChart.setOption(option);
+		myChart.on('click', function (params) {
+		    console.log(params.data.name)
+		});
+		$(window).resize(myChart.resize);
+    }
+
+    // 循环生成模拟数据
+    function makeData(typeNum,nodeNum){
+		var type='abcdefghijklmnopqrstuvwxyz';
+		var index=0;
+		var groupID=[];
+		var data={
+			categories:[],
+			nodes:[],
+			links:[]
+		};
+		for (var i = 0; i < typeNum; i++) {
+			data.categories.push({name:type[i]});
+			groupID.push(index)
+			for (var j = 0; j < parseInt(Math.random()*nodeNum+10); j++) {
+				data.nodes.push({
+					category:i,
+					id:index,
+					name:'NZWOT_BPMS_RU_DONE_TASK',
+					cname:'操作篇管理',
+					source:'营销系统/设备',
+					theme:'财务',
+					application:'台风分析/类目1',
+					upper:1,
+					lower:2
+				});
+				index++;
+			};
+		};
+		console.log('生成的节点总数为'+index)
+		// 每组的组长集合成groupID
+		// 创建连接关系
+		for (var i = 0; i < groupID.length; i++) {
+			for (var j = groupID[i]; j <groupID[i+1]; j++) {
+				data.links.push({
+					source:j,
+					target:parseInt(Math.random()*(groupID[i+1]-groupID[i]))+groupID[i]-1
+				})
+			};
+			
+		};
+		console.log(data);//最终数据
+		return data;
+    }
+
+    // 生成的数据格式示例
+	var data={
+		categories:[{name:'a'},{name:'b'},{name:'c'}],//所有种类名称
+		nodes:[{
+			category:0,//哪一组
+			id:0,//所有id必须从0开始，连续到结尾
+			name:'NZWOT_BPMS_RU_DONE_TASK',
+			cname:'操作篇管理',
+			source:'营销系统/设备',
+			theme:'财务',
+			application:'台风分析/类目1',
+			upper:1,
+			lower:2
+		},{
+			category:0,
+			id:1,
+			name:'NZWOT_BPMS_RU_DONE_TASK',
+			cname:'操作篇管理',
+			source:'营销系统/设备',
+			theme:'财务',
+			application:'台风分析/类目1',
+			upper:1,
+			lower:2
+		},{
+			category:0,
+			id:2,
+			name:'NZWOT_BPMS_RU_DONE_TASK',
+			cname:'操作篇管理',
+			source:'营销系统/设备',
+			theme:'财务',
+			application:'台风分析/类目1',
+			upper:1,
+			lower:2
+		},{
+			category:1,
+			id:3,
+			name:'NZWOT_BPMS_RU_DONE_TASK',
+			cname:'操作篇管理',
+			source:'营销系统/设备',
+			theme:'财务',
+			application:'台风分析/类目1',
+			upper:1,
+			lower:2
+		},{
+			category:1,
+			id:4,
+			name:'NZWOT_BPMS_RU_DONE_TASK',
+			cname:'操作篇管理',
+			source:'营销系统/设备',
+			theme:'财务',
+			application:'台风分析/类目1',
+			upper:1,
+			lower:2
+		},{
+			category:1,
+			id:5,
+			name:'NZWOT_BPMS_RU_DONE_TASK',
+			cname:'操作篇管理',
+			source:'营销系统/设备',
+			theme:'财务',
+			application:'台风分析/类目1',
+			upper:1,
+			lower:2
+		}],
+		links:[{
+			source:0,
+			target:1,
+		},{
+			source:2,
+			target:1,
+		},{
+			source:0,
+			target:2,
+		},{
+			source:3,
+			target:4,
+		},{
+			source:5,
+			target:4,
+		},{
+			source:3,
+			target:5,
+		},],
+	}
+</script>
+

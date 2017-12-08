@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jtopo-0.4.08.js"></script>
+      <style>
+            .box{ position:relative; width:700px; height:500px;background:url(img/bg1.png);z-index:0;}
+            #canvas{ z-index:100;}
+      </style>
+</head>
+<body><!--   -->
+      <div class="box">
+          <canvas id="canvas" width="700px" height="500px" style="border:1px solid black; "></canvas>  
+      </div>
+
+</body>
+<script>
+      $(document).ready(function() {  
+            //画布对象：canvas  
+            var canvas = document.getElementById('canvas');  
+            //抽象的舞台对象对应一个Canvas对象，所有图形展示的地方  
+            var stage = new JTopo.Stage(canvas);  
+            stage.width=500;
+            stage.height=500;
+            //场景对象  
+            var scene = new JTopo.Scene(stage);
+            var sceneX=0,sceneY=0;
+            scene.backgroundColor='255,255,255'; 
+            //背景颜色设置  
+            paint();
+            setTimeout(function(){paint();},3000)
+            function paint(){
+                  scene.clear();
+                  var host= new JTopo.Node('host');  //节点1：vm  
+                  host.setSize(200,200);
+                  host.setLocation(100,100);//节点1：vm位置设置  
+                  host.setImage('img/arrow.png');//设置图片
+                  host.mouseout(function(){console.log("out")})
+                  scene.add(host);//场景对象添加节点1：vm  
+                  console.log(host)
+            }
+            
+      })
+</script>
+</html>

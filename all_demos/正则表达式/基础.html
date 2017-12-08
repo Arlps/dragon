@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<script>
+
+		//g,全局匹配，i不区分大小写，m执行多行匹配，用最多的为g和i
+		var reg = new RegExp("abc","g");//type A
+		var reg = /abc/g;				//type B
+
+		var str = "Visit W3School";
+		var reg = new RegExp("W3School");
+		console.log( "test "+ reg.test(str) );
+		console.log( "match "+ str.match(reg) );
+		console.log( "exec "+ reg.exec(str) );
+	</script>
+</body>
+</html>

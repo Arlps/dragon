@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+	// 点击菜单加载页面
+	function EventOnclick(href){
+		$('#Appcontent').html(null);
+		$.ajax({
+			async: false, 
+		    type : "POST",
+		    dataType:"html",
+		    url : href,
+		    success : function(response) {
+		    	$('#Appcontent').html(response);
+		    } 
+		});
+	}
+
+	//菜单结构渲染
+	<ul class="nav navbar-nav" id="top-menu">
+		<s:iterator value="amenus" var="menu" status='st'>
+			<s:if test="#menu.hasSubMenu()">
+				<li class="dropdown"><a href="javascript:void(0)"
+					class="dropdown-toggle" data-toggle="dropdown"><i
+						class="<s:property value='#menu.style'/>"></i> <span><s:property
+								value="getText(#menu.name)" /> </span> <b class="caret"></b> </a>
+					<ul class="dropdown-menu">
+						<s:iterator value="#menu.submenu" var="submenu"
+							status="rowsIndex">
+							<li><a href="javascript:void(0)"
+								onclick="OneMenuOnclick('<s:property value='#submenu.href'/>','<s:property value='#submenu.functionCode'/>')"><i
+									class="<s:property value='#submenu.style'/>"></i> <span><s:property
+											value="getText(#submenu.name)" /> </span> </a>
+							</li>
+						</s:iterator>
+					</ul>
+				</li>
+
+			</s:if>
+			<s:else>
+
+				<li class="dropdown"><a href="javascript:void(0)"
+					class="dropdown-toggle" data-toggle="dropdown"
+					onclick="OneMenuOnclick('<s:property value='#menu.href'/>','<s:property value='#menu.functionCode'/>')"><i
+						class="<s:property value='#menu.style'/>"></i> <span><s:property
+								value="getText(#menu.name)" /> </span> </a>
+				</li>
+			</s:else>
+		</s:iterator>
+	</ul>
+
+	</script>
+</body>
+</html>

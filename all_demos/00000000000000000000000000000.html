@@ -1,0 +1,86 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<script type='text/javascript'
+	src='${ctx}/js/topology/createdevice.js'>	
+</script>
+<div id="createDevice">
+	<input type="hidden" id= "dataNodeId" value="${dataNodeId}"/>
+	<input type="hidden" id= "viewId" value="${viewId}"/>
+	<center><h4 style="margin-bottom:20px;">请填写设备信息</h4></center>
+	<div style="width:100%;height:30px;margin-bottom:20px;">
+	    <label class="col-sm-offset-3 col-sm-2 bode-label" style="padding: 8px 0px 10px 60px">设备名称:</label>
+	    <div class="col-sm-4">
+	    	<input id="nodeName" class="form-control" type="text"  dataType="Require"/>
+	    </div>
+	    <div class="col-sm-1" style="padding: 10px 0px 0px 0px;color: red">*</div>
+	</div>
+	<div style="width:100%;height:30px;margin-bottom:20px;">
+		<label class="col-sm-offset-3 col-sm-2 bode-label" style="padding: 8px 0px 10px 60px">设备类型:</label>
+		<div class="col-sm-4">
+			<select id="deviceType" name="" class="form-control">
+				  <option value="switch">交换机</option>
+				  <option value="router">路由器</option>
+				  <option value="os">终端</option>
+			</select>														
+		</div>
+	</div>
+	<!--改 from-->
+	<div id="portBox">
+	    <div style="width:100%;height:30px;margin-bottom:20px;">
+		    <label class="col-sm-offset-3 col-sm-2 bode-label" style="padding: 8px 0px 10px 60px">端口名:</label>
+		    <div class="col-sm-4">
+		    	<input id="adapterName" class="form-control" type="text" datatype="Require">
+		    </div>
+		    <span class="btn btn-sm btn-primary" style=""><i class="fa fa-plus"></i></span>
+		</div>
+		<div style="width:100%;height:30px;margin-bottom:20px;">
+		    <label class="col-sm-offset-3 col-sm-2 bode-label" style="padding: 8px 0px 10px 60px">端口名:</label>
+		    <div class="col-sm-4">
+		    	<input id="adapterName" class="form-control" type="text" datatype="Require">
+		    </div>
+		</div>
+	</div>
+	<!-- 改 to -->
+	<div style="width:100%;height:30px;margin-bottom:20px;">
+	    <label class="col-sm-offset-3 col-sm-2 bode-label" style="padding: 8px 0px 10px 60px">ip地址:</label>
+	    <div class="col-sm-4">
+	    	<input id="ipAddress" class="form-control" type="text"  dataType="Require"/>
+	    </div>
+	</div>
+	<table align="center" style="margin-top: 40px;">
+		<tr>
+			<td>
+				<div class="col-sm-2">
+					<button type="button" class="btn btn-primary btn-sm margin-btn" onclick="createDevice();">
+						<i class="fa fa-save"></i> 保存
+					</button>
+				</div>
+			</td>
+			<td>
+				<div class="col-sm-2">
+					<button type="button" class="btn btn-danger btn-sm margin-btn" onclick="modalClose();">
+						<i class="fa fa-times-circle"></i> 取消
+					</button>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<div style="position: relative;">
+	
+  <div style="width:100%;height:30px;margin-bottom:20px;">
+	    <label class="col-sm-offset-3 col-sm-2 bode-label" style="padding: 8px 0px 10px 60px">端口名:</label>
+	    <div class="col-sm-4">
+	    	<input id="adapterName" class="form-control" type="text" datatype="Require">
+	    </div>
+	    <span class="btn btn-sm btn-primary" style=""><i class="fa fa-plus"></i></span>
+	</div>
+	<div style="width:100%;height:30px;margin-bottom:20px;">
+	    <label class="col-sm-offset-3 col-sm-2 bode-label" style="padding: 8px 0px 10px 60px">端口名:</label>
+	    <div class="col-sm-4">
+	    	<input id="adapterName" class="form-control" type="text" datatype="Require">
+	    </div>
+	</div>
+</div>

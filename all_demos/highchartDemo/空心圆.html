@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<link rel="stylesheet" href="bootstrap.css">
+		<script src="js/jquery-1.9.1.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/highcharts.js"></script>
+
+		<style>
+			#container {
+				width: 400px;
+				height: 400px;
+				border: 1px solid black;
+				float: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="container" style="height: 400px; width: 400px; "></div>
+		<div class="btn-group btn-group-sm">
+			<button class="btn btn-default" data-time="day">1天</button>
+			<button class="btn btn-default" data-time="week">1周</button>
+			<button class="btn btn-default" data-time="month">1个月</button>
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				自定义<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="#">功能</a></li>
+				<li><a href="#">另一个功能</a></li>
+				<li><a href="#">其他</a></li>
+				<li class="divider"></li>
+				<li><a href="#">分离的链接</a></li>
+			</ul>
+		</div>
+		<script>
+			$(function() {
+				var data;
+				$('#container').highcharts({
+					chart: {
+						backgroundColor:null,
+					},
+					title: {
+						floating: true,
+						text: '调度总数:100',
+						style: {
+							fontSize:'14px',
+							fontWeight:'bold'
+						},
+					},
+					// xAxis:{
+					// 	type:'category'
+					// },
+					tooltip: {
+						pointFormat: '{series.name}: <b>{point.y}</b>'
+					},
+					plotOptions: {
+						series:{
+							events:{
+								click:function(e){
+									console.log(e)
+								}
+							}
+						},
+						pie: {
+							allowPointSelect: true,
+							cursor: 'pointer',
+							dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.y} ',
+								style: {
+									color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+									fontSize:'14px',
+									fontWeight:'normal'
+								},
+//								connectorColor:'#fff',
+								connectorPadding:1,
+								connectorWidth:0.5,
+								connectorLen:1,
+								distance:10
+							},
+							point: {
+			                    events: {
+			                        mouseOver: function(e) {  // 鼠标滑过时动态更新标题
+			                            chart.setTitle({
+			                                text: e.target.name+ '\t'+ e.target.y
+			                            });
+			                        },
+
+			                    }
+				            }
+						}
+					},
+					credits:{
+						enabled:false
+					},
+					series: data
+				}, function(c) {c
+					// 环形图圆心
+					// var centerY = c.series[0].center[1],
+					// 	titleHeight = parseInt(c.title.styles.fontSize);
+					// c.setTitle({
+					// 	y: centerY + titleHeight / 2
+					// });
+					// chart = c;
+				});
+			});
+		</script>
+	</body>
+
+</html>

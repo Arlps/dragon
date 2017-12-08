@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src='js/jquery-1.9.1.js'></script>
+	<script src="js/highcharts.js"></script><!--highcharts -->
+		<script src="js/highcharts-more.js"></script><!--highcharts -->
+		<script src="js/solid-gauge.js"></script><!--highcharts -->
+	<script src='js/amcharts.js'></script>
+	<script src='js/serial.js'></script>
+	
+	<style>
+	html,body{ height: 100%}
+		#chart-div{ width: 70%; height: 50%}
+	</style>
+</head>
+<body>
+	<div id="chart-div"></div>
+    <script>
+ //['#006298','#AD232F','#00AEA5','#009CE7','#F76603']
+
+    var chartData = [
+        {
+            "range": "中级",
+            "visits": 40,
+            "color": "#006298"
+        },
+        {
+            "range": "紧急",
+            "visits": 82,
+            "color": "#AD232F"
+        },
+        {
+            "range": "一般",
+            "visits": 19,
+            "color": "#00AEA5"
+        },
+        {
+            "range": "低级",
+            "visits": 22,
+            "color": "#009CE7"
+        }
+    ];
+
+console.log(chartData)
+    AmCharts.ready(function () {
+        //创建对象-----------------------------------
+        chart = new AmCharts.AmSerialChart();
+        chart.dataProvider = chartData;
+        chart.categoryField = "range";
+        chart.columnWidth=0.3
+        // the following two lines makes chart 3D
+        chart.depth3D = 15;
+        chart.angle = 20;
+        chart.startDuration=1;
+        // chart.rotate=true;
+
+        // x轴------------------------------------
+        var categoryAxis = chart.categoryAxis;
+        console.log(categoryAxis)
+        categoryAxis.labelRotation = 0;
+        categoryAxis.width=12
+        categoryAxis.gridPosition = "start";
+        // 网格虚线长度
+        categoryAxis.dashLength = 10;
+        //轴的粗
+        categoryAxis.axisThickness = 3;
+        //刻度的长度
+        categoryAxis.tickLength =0;
+        //字的颜色
+        categoryAxis.color = "#666";
+        //字的大小
+        categoryAxis.maxPeriod=10;
+        //x轴的颜色
+        categoryAxis.axisColor = "#ccc";
+        //单位
+        categoryAxis.unit = "";
+        categoryAxis.position="left"
+
+        // y轴--------------------------------
+        var valueAxis = new AmCharts.ValueAxis();
+        console.log(valueAxis)
+        valueAxis.dx=10
+        valueAxis.title = "Visitors";
+        // 网格虚线长度
+        valueAxis.dashLength = 10;
+        chart.addValueAxis(valueAxis);
+        //设置y轴标题
+         valueAxis.title ="";
+        //y轴的颜色
+         valueAxis.color = "#666";
+         //设置y轴的最小值、起始值
+         valueAxis.minimum =0;
+        //y轴标题颜色
+        valueAxis.titleColor = "#666";
+        //y轴颜色
+        valueAxis.axisColor = "#ccc";
+        //y轴靠右
+        valueAxis.position = "left";
+        //
+        valueAxis.unit = "";
+
+
+        // GRAPH-----------------------------
+        var graph = new AmCharts.AmGraph();
+
+        graph.type = "column";
+        //graph.title = "线条的名称";
+        graph.valueField = "visits";
+        //graph.fillColors=['#f20','#f60']
+        //设置数组时为渐变
+        graph.colorField = "color";
+        graph.balloonText = "<span style='font-size:10px'>[[category]]: <b>[[value]]</b></span>";
+        //柱体边透明度
+        graph.lineAlpha = 0;
+        //柱体透明度
+        graph.fillAlphas = 1;
+        chart.addGraph(graph);
+
+        // 十字光标
+        var chartCursor = new AmCharts.ChartCursor();
+        chartCursor.cursorAlpha = 0.3;
+        chartCursor.zoomable = false;
+        chartCursor.categoryBalloonEnabled = false;
+        chart.addChartCursor(chartCursor);
+
+
+        chart.creditsPosition = "top-right";
+        chart.write("chart-div");
+        setInterval('reloadData()',1000);
+    });
+   </script>
+
+	<button onclick="doing()">111</button>
+    <div id="chart_cpu" style="height: 200px;"></div>
+        <script>
+       
+            var chart;
+            var chartData = [
+                {
+                    "device": "设备A",
+                    "visits": 58,
+                    "color": "#006298"
+                },
+                {
+                    "device": "设备B",
+                    "visits": 70,
+                    "color": "#AD232F"
+                },
+                {
+                    "device": "设备C",
+                    "visits": 95,
+                    "color": "#00AEA5"
+                },
+                {
+                    "device": "设备D",
+                    "visits": 84,
+                    "color": "#009CE7"
+                },
+                {
+                    "device": "设备E",
+                    "visits": 66,
+                    "color": "#E46603"
+                }
+            ];
+        
+            //AmCharts.ready(function () {
+                //创建对象-----------------------------------
+                chart = new AmCharts.AmSerialChart();
+                chart.dataProvider = chartData;
+                chart.categoryField = "device";
+                chart.columnWidth=0.6;
+                // the following two lines makes chart 3D
+                chart.depth3D = 10;
+                chart.angle = 20;
+                chart.startDuration=1;
+        
+                // x轴------------------------------------
+                var categoryAxis = chart.categoryAxis;
+                console.log(categoryAxis);
+                categoryAxis.labelRotation = 90;
+                categoryAxis.inside=true;
+        //       categoryAxis.position='right bottom'
+                categoryAxis.gridPosition = "start";
+                // 网格虚线长度
+                categoryAxis.dashLength = 0;
+                //网格的透明度
+                categoryAxis.gridAlpha = 0.2;
+                //网格的粗细
+                categoryAxis.Alpha = 0.5;
+                //轴的粗
+                categoryAxis.axisThickness = 1;
+                //刻度的长度
+                categoryAxis.tickLength =0;
+                //是否显示项的名称
+                //categoryAxis.labelsEnabled = false;
+                //字的颜色
+                categoryAxis.color ="#aaa";
+                categoryAxis.fontSize=15;
+                //字的大小
+                categoryAxis.maxPeriod=30;
+                //x轴的颜色
+                categoryAxis.axisColor = "#000";
+                //单位
+                categoryAxis.unit = "";
+        
+                // y轴--------------------------------
+                var valueAxis = new AmCharts.ValueAxis();
+                chart.addValueAxis(valueAxis);
+        
+                valueAxis.title = "Visitors";
+                // 网格虚线长度
+                valueAxis.dashLength = 0;
+                //网格的透明度
+                valueAxis.gridAlpha = 0.4;
+                //网格的粗细
+                valueAxis.axisAlpha = 1;
+                //刻度的长度
+                valueAxis.tickLength =0;
+                //无效
+                valueAxis.step=10;
+                //设置y轴标题
+                 valueAxis.title ="";
+                //y轴的颜色
+                valueAxis.color = "#379176";
+                //设置y轴的最小值、起始值
+                valueAxis.minimum =0;
+                valueAxis.maxmum =0;
+                //y轴标题颜色
+                valueAxis.titleColor = "#666";
+                //y轴颜色
+                valueAxis.fontSize=4;
+                valueAxis.axisColor = "#000";
+                //y轴靠右
+                valueAxis.position = "left";
+                //单位
+                valueAxis.unit = "";
+                //刻度值在里面
+                //valueAxis.inside = true;
+        
+                // GRAPH-----------------------------
+                var graph = new AmCharts.AmGraph();
+                graph.type = "column";
+                //graph.title = "线条的名称";
+                graph.valueField = "visits";
+                //graph.fillColors=['#f20','#f60']
+                //设置数组时为渐变
+                graph.colorField = "color";
+                graph.balloonText = "<span style='font-size:10px'>[[category]]: <b>[[value]]</b></span>";
+                //柱体边透明度
+                graph.lineAlpha = 0;
+                //柱体透明度
+                graph.fillAlphas = 0.6;
+                chart.addGraph(graph);
+        
+                // 十字光标
+                var chartCursor = new AmCharts.ChartCursor();
+                chartCursor.cursorAlpha = 0.3;
+                chartCursor.zoomable = false;
+                chartCursor.categoryBalloonEnabled = false;
+                chart.addChartCursor(chartCursor);
+                console.log(chartCursor)
+        
+        
+                chart.creditsPosition = "top-right";
+                chart.write("chart_cpu");
+
+                
+                setInterval('reloadData()',1000);
+        </script>
+</body>
+ 
+   <script>
+
+    function reloadData(url) {  
+                    chartData[0].visits+=10;
+                    chart.dataProvider = chartData;  
+                    chart.validateNow();  
+                    chart.validateData();  
+                }  
+   </script>
+</html>

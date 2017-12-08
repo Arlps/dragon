@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<style>
+	*,ul{ margin:0; padding:0;}
+		li{ list-style:none;}
+		.fa{ color:#666;}
+		#multi-select{
+			width:200px; box-shadow:0 0 1px;
+			position:relative;
+		}
+		.select-value{ height:30px; position:relative;}
+		.select-value input{ padding-right:25px;text-indent:5px;}
+		.select-value .fa{ position:absolute; right:10px ; top :5px; cursor: pointer;}
+		.value{ height:100%; width:100%;}
+		.select-option{
+			position:absolute;
+			width:100%;
+			display:none;
+			box-sizing:border-box;
+			border:1px solid #ccc;
+			border-radius:5px;
+			top:31px;
+			padding:3px 0;
+		}
+		.select-option li{
+			border-bottom:1px solid #fff;
+			line-height:22px;
+			height: 22px;
+		}
+		.select-option li:hover{ background:#eee;}
+		.select-option li span{ width:85%; text-indent:5px; float:left; overflow:hidden;}
+		.select-option li .fa{ display:none;margin-right:5px; margin-top:3px;}
+	</style>
+</head>
+<body>
+	
+	<div id="multi-select">
+		<div class="select-value" id="select-value">
+			<input class="value" type="text">
+			<i class="fa fa-sort-down pull-right"></i>
+		</div>
+		<div class="select-option">
+			<ul>
+			</ul>
+		</div>
+	</div>
+	<script>
+		// 数据列表
+		var data=['A','B','C','D'];
+		$(function(){
+			// 上拉下拉
+			$('.select-value').click(function(){
+				$('.select-option').slideToggle(100);
+			});
+			// 点击元以外上拉
+			$(document).bind("click",function(e){
+	            //id为menu的是菜单，id为open的是打开菜单的按钮            
+	            if($(e.target).closest(".select-option").length == 0 && $(e.target).closest(".select-value").length == 0){
+	            //点击id为menu之外且id不是不是open，则触发
+	                $('.select-option').slideUp(100);
+	            }
+	        })
+			// 渲染列表
+			var str='';
+			$.each(data,function(idx,item){
+				str+='<li data-select=false><span title="'+item+'">'+item+'</span><i class="fa fa-check pull-right"></i></li>';
+				console.log(str)
+			});
+			$('.select-option ul').html(str);
+			// 填空
+			$('.select-option').on('click','li',function(){
+				// 点击一次取反值
+				$(this).data('select',!$(this).data('select'));
+				if($(this).data('select')){
+					$(this).find('.fa').show();
+				}else{
+					$(this).find('.fa').hide();
+				}
+				// 遍历哪些被选中，填到输入框
+				var valueStr='';
+				$('.select-option li').each(function(idx,ele){
+					if($(this).data('select')==true){
+						if(valueStr!=''){valueStr+=','}
+						valueStr+=$(this).find('span').html();
+					}
+				})
+				// valueStr.substring(0,valueStr.length-3)
+				$('.select-value input').val(valueStr).attr('title',valueStr);
+				// 输出值
+				var value_arr=valueStr.split(',');
+				console.log(value_arr)
+			});
+			
+
+		})
+
+	</script>
+</body>
+</html>

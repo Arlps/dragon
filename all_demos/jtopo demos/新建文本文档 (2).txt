@@ -1,0 +1,55 @@
+读树级
+
+
+FoldLink
+CurveLink
+FlexionalLinkd
+
+
+-------画点-------------------------------------------------------
+            //画布对象：canvas  
+            var canvas = document.getElementById('canvas');  
+            //抽象的舞台对象对应一个Canvas对象，所有图形展示的地方  
+            var stage = new JTopo.Stage(canvas);  
+            //场景对象  
+            var scene = new JTopo.Scene(stage);  
+            //背景颜色设置  
+            scene.backgroundColor='#000000';   
+            //scene.background='img/bg1.png'; 
+            //节点添加  
+            var node = new JTopo.Node("EMC");  
+            //设置节点位置  
+            node.setLocation(150, 100);  
+            //节点填充颜色  
+            node.fillColor='#CD0000';  
+            //场景对象添加节点  
+            scene.add(node);  
+
+-------连线-------------------------------------------------------
+	    //画布对象：canvas  
+            var canvas = document.getElementById('canvas');  
+            //抽象的舞台对象对应一个Canvas对象，所有图形展示的地方  
+            var stage = new JTopo.Stage(canvas);  
+            stage.width=500;
+            stage.height=500;
+            //场景对象  
+            var scene = new JTopo.Scene(stage);  
+
+            //背景颜色设置  
+            scene.background='img/bg1.png';  
+            //节点之间------------连线  
+            var vm= new JTopo.Node('vm');  //节点1：vm  
+            vm.setLocation(100,180);//节点1：vm位置设置  
+            vm.fillcolor='#000000';//
+            vm.setImage('img/arrow.png');//设置图片
+            scene.add(vm);//场景对象添加节点1：vm  
+  
+            var physical=new JTopo.Node('physical');//节点2：physical  
+            physical.setLocation(100,20);//节点2:physical 位置设置  
+            scene.add(physical);//场景对象添加节点2：physical  
+  
+            var link=new JTopo.Link(vm,physical);//连线对象  
+            link.lineWidth = 3;//连线大小  
+            link.lineJoin  = 'round';  
+            link.name='Link';//连线名称  
+            scene.add(link);//场景对象添加连线对象：link.  

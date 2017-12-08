@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页拖拽</title>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" href="css/AdminLTE.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/alarm.css">
+    <link rel="stylesheet" href="dist/gridstack.css"/>
+    <link rel="stylesheet" href="css/index.css">
+	<script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/jquery-ui-1.10.3.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- gridstack -->
+    <script src="js/lodash.min.js"></script>
+    <script src="dist/gridstack.js"></script>
+    <!-- highcharts -->
+    <script src="js/highcharts.js"></script>
+    <!-- vis -->
+    <script src="js/vis.min.js"></script>
+    <!-- nicescroll -->
+    <script src="js/jquery.nicescroll.js"></script>
+</head>
+<body>
+	<div class="grid-wrap">
+		<div class="btn-group btn-group-xs" id="btns">
+			<button class="btn btn-primary">
+				<i class="fa fa-angle-double-left"></i>
+			</button>
+			<button class="btn btn-primary" title="设置" onclick="modalOpen()">
+				<i class="fa fa-cog"></i>
+			</button>
+			<button class="btn btn-primary" title="保存布局" onclick="saveLayout()">
+				<i class="fa fa-save"></i>
+			</button>
+		</div>
+
+		<div class="grid-stack"></div>  
+
+		<!-- 弹窗start -->
+		<div class="modal fade" id="modal-layout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 600px;">
+				<div class="modal-content">
+					<div class="modal-body" style="overflow: hidden;min-height: 100px;">
+						<ul class="nav nav-tabs">
+							<li class="active">
+								<a href="#normal_block" data-toggle="tab">常用模块</a>
+							</li>
+							<li class="">
+								<a href="#custom_block" data-toggle="tab">自定义模块</a>
+							</li>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="normal_block">
+								<form class=" form-inline" id="form-search">
+									<table class="table table-striped table-responsive table-bordered table-hover" id="block_normal">
+										<thead>
+											<tr>
+												<td>
+													<span>模块</span>
+													<span class="btn btn-primary btn-sm pull-right" title="新增行" onclick="addRow('block_normal')">
+														<i class="fa fa-plus"></i>
+													</span>
+												</td>
+												<td>刷新时间</td>
+												<td>操作</td>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</form>
+							</div>
+							<div class="tab-pane" id="custom_block">
+								<form class=" form-inline" id="form-search">
+									<table class="table table-striped table-responsive table-bordered table-hover" id="block_custom">
+										<thead>
+											<tr>
+												<td>
+													<span>模块</span>
+													<span class="btn btn-primary btn-sm pull-right" title="新增行" onclick="addRow('block_custom')">
+														<i class="fa fa-plus"></i>
+													</span>
+												</td>
+												<td>标题</td>
+												<td>数据域</td>
+												<td>功能域</td>
+												<td>刷新时间</td>
+												<td>操作</td>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-default" onclick="if(confirm('是否重置为已保存的数据')){resetSetting(layout)}">重置</button>
+						<button type="button" class="btn btn-primary" onclick="saveSetting()">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 弹窗end -->
+	</div>
+	<script src="js/myDrag2.js"></script>
+</body>
+
+</html>
+
+

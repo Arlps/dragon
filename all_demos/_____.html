@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<script src="js/jquery-1.9.1.js"></script>
+		<style>
+			body {
+				height: 1000px;
+			}
+			
+			.cover {
+				position: absolute;
+				top: 0;
+				background: pink;
+				opacity: 0.7;
+				z-index: 100;
+				width: 100%;
+			}
+			
+			.color {
+				width: 100px;
+				height: 100px;
+				background: red;
+				filter: Alpha(opacity=20);
+				background: rgba(255, 255, 255, 0.2);
+			}
+			
+			.inner {
+				position: relative
+			}
+			
+			.a {
+				width: 100px;
+				height: 100px;
+				position: relative;
+				background: red;
+				margin-top: 100px;
+				overflow: visible
+			}
+			
+			.b {
+				width: 50px;
+				height: 50px;
+				position: absolute;
+				top: -25px;
+				background: black;
+				display: none;
+			}
+			
+			.info-box{  width:100px; height:50px; background:red;border:none;transition:width 1s}
+	      	.info-box:hover{rotateY(180deg); width: 200px;}
+	      	
+	      	
+	      	.bstap{
+	      		height: 100px; background: red; box-shadow: 0 0 10px;
+	      	}
+			.div2{ height:100px;}
+		</style>
+		<style>
+			hr{height:14px; size} 
+			.title{ text-align:center; background:#aaa; height:25px;;}
+			.title div{ display:inline-block; width:25px; height:25px;vertical-align: top;}
+			.title p{ display:inline-block; margin:0; line-height:25px;}
+			.x{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+		</style>
+
+	
+	</head>
+
+	<body>
+		<div style="width:500px; height:500px; border:1px solid ">
+			<iframe src="http://www.runoob.com" height="100%" width='100%'></iframe>
+		</div>
+			
+			<p class="as">
+				<span class="aa">111111111</span>
+				<span class="bb" onclick="dod(this)">22222222222</span>
+			</p>
+			<script>
+			console.log(location.hash)
+			var date = new Date(2013,08,30);
+			// alert(date.getTime());
+				var $inner=$('<div class="innerbox" style="width:100px; height:300px; border:1px solid" ></div>');
+				$inner.appendTo('body').load('https://www.baidu.com');
+				console.log($inner)
+				function dod(dom){
+					console.log($(dom).siblings('span').html());
+					// return 1;
+					alert(1)
+				}
+			</script>
+
+
+			<input type="text" id="keydown">
+			<script>
+				$('#keydown').keyup(function(){
+					return false;
+				})
+			</script>
+			<div id="hhh"></div>
+			<script>
+				var str="哈哈";
+				$('#hhh').html('<button onclick="move(\''+str+'\')">哈哈</button>')
+				function move(str){
+					alert(str)
+				}
+			</script>
+				<p>
+					<label class="control-label">已选标注：</label>
+					<div class="selectbox" style=""></div>
+				</p>
+
+		<p class="x" style="width:20%;overflow: hidden;text-overflow:ellipsis;white-space: nowrap">第三方哈迪斯哈佛和搜房后恢复hi哦都是对方会回复奥分红as</p>
+		<div class="title">
+			<div>asf</div>
+			<p>阿萨夫咖啡阿萨夫客户</p>
+		</div>
+		<hr>
+		<div id="div">
+			<div class="div2" style="text-align:center; width:300px; border:1px solid gray">
+				<img src="img/arrow.png" height="30" width="30" alt=""><br>
+				<a href="">asfa</a><br>
+				<span>asfaff</span>
+			</div>
+		</div>
+		<div class="bstap col-md-3 col-xs-3">1</div>
+		<div class="bstap col-md-3 col-xs-3">2</div>
+		<div class="bstap col-md-3 col-xs-3">3</div>
+		<div class="bstap col-md-3 col-xs-3">4</div>
+		
+		<div class="info-box"></div>
+		<button onclick="doit(this)"><i class="fa fa-arrow-down"></i>asd </button>
+		<script type="text/javascript">
+		$(function(){
+
+			console.log('1'.split(','))
+			// console.log(decodeURI(encodeURI('C:\Users\10758\Desktop\配色\3.jpg')))
+			// window.open('C:\\Users\\10758\\Desktop\\配色\\3.jpg')
+			var num=3;
+			$("<button onclick='"+xxx(num)+"'>asfafa</button>").appendTo('body')
+			function xxx(data){
+				// alert(data)
+			}
+			var aaa=encodeURI("哈哈哈");
+			console.log(aaa);
+			console.log(decodeURI('%E7%BB%BF%E8%89%B2%E7%BB%B4%E5%BA%A6'))
+
+			console.log(triangles(3,4));
+			function triangles(column,row){
+			   var num=0;
+			   for(var i=1;i<=column;i++){
+			       num+= i * row;
+			   }
+			   return num;
+			}
+			for (var i = 0; i < 100; i++) {
+				console.log(parseInt(Math.random() * 10))
+			};
+			var arr=['a','b','c'];
+			console.log(arr[parseInt(Math.random()*arr.length)]);
+
+			var array = [1,2,2,4,5];
+			array.splice(2,1);
+			console.log(array)
+
+
+			$('body .bstap').click(function(){
+				alert($(this).html())
+			})
+			var as={s:1};
+			console.log(as)
+			var obj={};
+			for (var i = 0; i < 10; i++) {
+				obj["0_"+i]=i;
+			};
+			
+			console.log(obj)
+			console.log(localStorage.getItem('aaa')==null)
+		})
+			function doit(a){
+				$(a).css('width',100)
+			}
+//			$(function() {
+//				$('button').click(function (){
+//					if($(this).find("i").hasClass('fa-arrow-down')){
+//						$(this).find("i").removeClass('fa-arrow-down').addClass('fa-arrow-up')
+//					}else{
+//						$(this).find("i").removeClass('fa-arrow-up').addClass('fa-arrow-down')
+//					}
+//				});
+//			})
+			
+			//全排列
+//			var count=0;  
+//			perm(["A","B","C","D"]);
+			function perm(arr) {  
+			    (function fn(n) { //为第n个位置选择元素  
+			        for(var i=n;i<arr.length;i++) {  
+			            swap(arr,i,n);  
+			            if(n+1<arr.length-1) //判断数组中剩余的待全排列的元素是否大于1个  
+			                fn(n+1); //从第n+1个下标进行全排列  
+			            else 
+			                show(arr); //显示一组结果  
+			            swap(arr,i,n);  
+			        }  
+			    })(0);  
+			}  
+			function swap(arr,i,j) {  
+			    if(i!=j) {  
+			        var temp=arr[i];  
+			        arr[i]=arr[j];  
+			        arr[j]=temp;  
+			    }  
+			}  
+			function show(arr) {  
+			    console.log("P"+ ++count+": "+arr);  
+			}  
+			//从数组中删掉指定元素
+			function deleteFromArr(item, arr) {
+				for(var z = 0; z < arr.length; z++) {
+					if(arr[z] == item) {
+						arr.splice(z, 1);
+						break;
+					}
+				}
+			}
+			//不定参数
+			function param(a, b, c) {
+				//c=c||b;
+				if(!c) {
+					c = b;
+					b = undefined;
+				}
+				//没有传的参数为undefined
+				console.log(a, b, c);
+				//传入了几个参数，数组形式
+				console.log(arguments);
+
+			}
+
+			//递归读取JSON
+			function loop(data) {
+				for(var i = 0; i < data.length; i++) {
+					//console.log(data[i].name);
+					if(typeof(data[i].son) == 'object') {
+						loop(data[i].son);
+
+					}
+				}
+			}
+
+			//处理掉带括号IP
+			function removeIP2(str) {
+				var ip = str.substring(str.indexOf('(') + 1, str.indexOf(')'));
+				console.log(ip);
+				var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+				if(reg.test(ip)) {
+					str = str.substring(0, str.indexOf('('));
+					removeIP(str)
+				}
+				return str;
+			}
+
+			//处理掉字符串中的所有带括号的IP字符串
+			function removeIP(str) {
+				var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+				var arr = str.split('(');
+				var newstr = '';
+				for(var i = 0; i < arr.length; i++) {
+					if(arr[i].indexOf(')') > 0) {
+						var a = arr[i].substring(0, arr[i].indexOf(')'));
+						console.log(a);
+						if(reg.test(a)) {
+							arr[i] = '';
+						} else {
+							arr[i] = '(' + arr[i];
+						}
+					}
+					newstr += arr[i];
+				}
+				return newstr;
+			}
+
+			//if(str.indexOf('(')){}
+		</script>
+
+	</body>
+
+</html>

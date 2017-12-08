@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+</head>
+<body>
+	<div id="box" style="width:100px; height:100px; background:red"></div>
+	<script>
+		$('#box').mousedown(function(e){ 
+			e.preventDefault();e.stopPropagation();
+			$('#box').unbind("mouseup");
+	        if(3 == e.which){ 
+          		$('#box').mouseup(function(){
+          			// 在这个div点击右键它会自动触发下面的左键点击click事件，也就是以右键的形式去触发左键点击 
+          			$(this).trigger('click');
+          		})		
+	        }     
+        })
+        // 左键点击触发
+        $('#box').click(function(){
+        	alert('弹窗')
+        })
+	</script>
+</body>
+</html>

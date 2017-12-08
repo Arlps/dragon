@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+</head>
+<body>
+	
+</body>
+<script>
+	//http://www.hcharts.cn/datas/jsonp.php?filename=analytics.csv&callback=?
+	$(function(){
+		$.getJSON('http://www.hcharts.cn/datas/jsonp.php?filename=analytics.csv&callback=?',function(res){
+			console.log(res)
+		})
+		$.ajax({
+			url:'http://www.hcharts.cn/datas/jsonp.php?filename=analytics.csv&callback=?',
+			dataType:'JSON',
+			success:function(result){
+				console.log(result)
+			}
+		})
+	})
+</script>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<script type="text/javascript" src="./Treetable_files/jquery.min.js"></script>
+		<script type="text/javascript" src="./Treetable_files/jQTreeTable.js"></script>
+		<link rel="stylesheet" type="text/css" href="./Treetable_files/jqtreetable.css" />
+		    <script type="text/javascript" charset="utf-8">
+		$(function(){
+
+			 var map = [0,1,1,1];
+			//声明参数选项
+			var options = {openImg: "images/TreeTable/tv-collapsable.gif", shutImg: "images/TreeTable/tv-expandable.gif", leafImg: "images/TreeTable/tv-item.gif", lastOpenImg: "images/TreeTable/tv-collapsable-last.gif", lastShutImg: "images/TreeTable/tv-expandable-last.gif", lastLeafImg: "images/TreeTable/tv-item-last.gif", vertLineImg: "images/TreeTable/vertline.gif", blankImg: "images/TreeTable/blank.gif", collapse: false, column: 0, striped: true, highlight: true,  state:false};
+
+		   if(map!=null&&map.length>0)
+			{
+			  // 注意treet1这个名字是 下文中 tbody 的名字
+			  $("#treet1").jqTreeTable(map, options);
+			}
+        }
+		);
+
+    </script>
+
+	</head>
+	<body>
+		<table class="treetable">
+			<thead><tr>
+				<th>名称</th>
+				<th>描述</th>
+				<th>是否主节点</th>
+				<th>IP地址</th>
+				<th>端口</th>
+				<th>用户名</th>
+				<th>CPU</th>
+				<th>内存</th>
+				<th>磁盘空间</th>
+				<th>当前状态</th>
+				<th>剩余比例</th>
+				<th>操作</th>
+			</tr></thead>
+			<tbody id="treet1">
+				<tr>
+					<td>GP1</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>60%</td>
+					<td><a class="btn edit"></a></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td>是</td>
+					<td>192.168.2.222</td>
+					<td>22</td>
+					<td>admin</td>
+					<td>10核</td>
+					<td>20G</td>
+					<td>20T</td>
+					<td>正在运行</td>
+					<td></td>
+					<td><a class="btn edit"></a></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td>是</td>
+					<td>192.168.2.222</td>
+					<td>22</td>
+					<td>admin</td>
+					<td>10核</td>
+					<td>20G</td>
+					<td>20T</td>
+					<td>正在运行</td>
+					<td></td>
+					<td><a class="btn edit"></a></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td>是</td>
+					<td>192.168.2.222</td>
+					<td>22</td>
+					<td>admin</td>
+					<td>10核</td>
+					<td>20G</td>
+					<td>20T</td>
+					<td>正在运行</td>
+					<td></td>
+					<td><a class="btn edit"></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+	
+</html>

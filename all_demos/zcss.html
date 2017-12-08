@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{ }
+	</style>
+</head>
+<body>
+</body>
+</html>
+
+<!-- CSS条件注释 -->
+	<!--[if IE]> 
+		<link rel="stylesheet" href="">
+	<![endif]--> 
+
+	<!--[if (IE 6)|(IE 7)|(IE 8)]>
+		<link rel="stylesheet" type="text/css" href="ie6-7-8.css">
+	<![endif]-->
+
+	<!--[if gt IE 8]>
+		<link rel="stylesheet" type="text/css" href="ie9-and-up.css">
+	<![endif]-->
+
+	<!--[if gte IE 9]>
+		<link rel="stylesheet" type="text/css" href="ie9-and-up.css">
+	<![endif]-->
+
+<!-- 引入文件解决兼容问题
+	1.对于各种元素margin和padding的默认值不一样。
+	2.ie和其他浏览器的css盒模型不一样，ie的width和height包括了padding和border，而其他浏览器的css盒模型才是标准的盒模型，height和width是指content的宽和高。
+	3.对于css3的支持程度不一样。
+	4.对于ES5和ES6的支持程度不一样。
+	5.html5的标签。
+	6.css3的媒体查询
+
+	对应解决方法：
+	1.引入normalize.css，可以统一各种元素的margin和padding等属性。
+	2.css3的一个属性box-sizing可以定义该元素以哪种盒模型进行渲染。content-box为标准盒模型，border-box为IE的盒模型。
+	3.引入PIE.htc或者其他的能够使IE兼容css3的文件，但是都有局限性，无法完全兼容css3的所有特性，具体的请自行度娘。
+	4.IE8是部分支持es5的，可以引入es5-shim.js。ps：不小心看到了es5-sham查了下他们的区别。es5-shim就是实现的是原生的ES5，而sham中实现了一些新的API。这样就可以使用es6编程再利用babel编译了。
+	5.引入html5shiv.js，可以让ie支持html5的标签。
+	6.可以引入Respond.js，使ie可以使用媒体查询，实现响应式开发。
+ -->

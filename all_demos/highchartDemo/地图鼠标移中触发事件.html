@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/jquery-1.9.1.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/drilldown.js"></script>
+    <script src="js/GDmapdata.js"></script>
+    
+</head>
+<body>
+    <div id="myMap" style="width:600px; height:600px; border:1px solid black"></div>
+</body>
+</html>
+<script>
+var map = null;
+// 获取中国地图数据并初始化图表
+// $.getJSON('https://data.jianshukeji.com/jsonp?filename=geochina/guangdong.json&callback=?', function(mapdata) {
+    console.log(mapdata);
+    // console.log(JSON.stringify(mapdata))
+    var data = [];
+    // 随机数据
+    Highcharts.each(mapdata.features, function(md, index) {
+        data.push({
+            name: md.properties.name, //广州
+            drilldown: md.properties.filename, // guangzhou  赋值 drilldown
+            value:Math.floor((Math.random() * 100) + 1) // 生成 1 ~ 100 随机值  根据此值来产生颜色的变化，值相同颜色相同
+        });
+    });
+    map = new Highcharts.Map('myMap', {
+        chart: {
+            events: {
+                drilldown:function(e){
+                    alert(e.point.drilldown)
+                },
+            }
+        },
+        title: {
+            text: '广东地图'
+        },
+        subtitle: {
+            text: '<a href="https://www.hcharts.cn/mapdata">点击查看地图数据及详情</a>'
+        },
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+        tooltip: {
+            useHTML: true,
+            headerFormat: '<table><tr><td>{point.name}</td></tr>',
+            pointFormat: '<tr><td>全称</td><td id="xxx" data-area={point.properties.fullname}>{point.properties.fullname}</td></tr>' +
+            '<tr><td>行政编号</td><td>{point.properties.areacode}</td></tr>' +
+            '<tr><td>父级</td><td>{point.properties.parent}</td></tr>' +
+            '<tr><td>经纬度</td><td>{point.properties.longitude},{point.properties.latitude}</td></tr>'+area(),
+            footerFormat: '</table>',
+            useHTML:true
+        },
+        colorAxis: {
+            min: 0,
+            minColor: '#fff',
+            maxColor: '#003CDE',//'#006cee',
+            labels:{
+                style:{
+                    "color":"red","fontWeight":"bold"
+                }
+            }
+        },
+        series: [{
+            data: data,
+            mapData: mapdata,
+            joinBy: 'name',
+            name: '广东地图',
+            states: {
+                hover: {
+                    color: '#ff0'
+                }
+            }
+        }]
+    });
+// });
+
+    var aaa='';
+    function area(){
+        $('#myMap').mousemove(function(){
+            if(aaa!=$('#xxx').data('area')){
+                aaa=$('#xxx').data('area')
+                console.log(aaa);
+            }
+        });
+        return ''
+    }
+</script>

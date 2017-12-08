@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+
+// 将当前时间换成时间格式字符串
+var timestamp3 = 1403058804;
+var newDate = new Date();
+newDate.setTime(timestamp3 * 1000);
+// Wed Jun 18 2014 
+console.log(newDate.toDateString());
+// Wed, 18 Jun 2014 02:33:24 GMT 
+console.log(newDate.toGMTString());
+// 2014-06-18T02:33:24.000Z
+console.log(newDate.toISOString());
+// 2014-06-18T02:33:24.000Z 
+console.log(newDate.toJSON());
+// 2014年6月18日 
+console.log(newDate.toLocaleDateString());
+// 2014年6月18日 上午10:33:24 
+console.log(newDate.toLocaleString());
+// 上午10:33:24 
+console.log(newDate.toLocaleTimeString());
+// Wed Jun 18 2014 10:33:24 GMT+0800 (中国标准时间)
+console.log(newDate.toString());
+// 10:33:24 GMT+0800 (中国标准时间) 
+console.log(newDate.toTimeString());
+// Wed, 18 Jun 2014 02:33:24 GMT
+console.log(newDate.toUTCString());
+
+		function formatter(str, fmt) {  //格式化毫秒为：年月日 时分秒
+	        // str 毫秒数 fmt需要的格式
+	        fmt = fmt || 'yyyy-MM-dd hh:mm:ss';
+	        var date = new Date(str),
+	            rules = {
+	                'M+': date.getMonth() + 1, //月份
+	                'd+': date.getDate(), //日
+	                'h+': date.getHours(), //  小时
+	                'm+': date.getMinutes(), //分
+	                's+': date.getSeconds(), //秒
+	                'q+': Math.floor((date.getMonth() + 3) / 3), //季度
+	                'S': date.getMilliseconds(), //毫秒
+	                'T': 'T'
+	            };
+	        if (/(y+)/i.test(fmt)) {
+	            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+	        }
+	        for (var key in rules) {
+	            if (new RegExp("(" + key + ")").test(fmt)) {
+	                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (rules[key]) : (("00" + rules[key]).substr(("" + rules[key]).length)));
+	            }
+	        }
+	        return fmt;
+	    }
+	    console.log(formatter(1483075424000,'yyyy年MM月dd日'));  var asadasd = '2017-01-17 22:00:47.0';
+	    var cccc = asadasd.split('.')[0];
+	    console.log(cccc); // 2017-01-17 22:00:47
+	</script>
+</body>
+</html>

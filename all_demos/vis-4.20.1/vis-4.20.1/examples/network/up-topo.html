@@ -1,0 +1,337 @@
+<!doctype html>
+<html>
+<head>
+  <title>拓扑demo</title>
+  <link href="../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../../dist/jQuery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="../../dist/vis.js"></script>
+  <script src="../../dist/highcharts.js"></script>
+  <script src="../../dist/highcharts-more.js"></script>
+  <script src="../../dist/solid-gauge.js"></script>
+  <style type="text/css">
+  *{ margin:0; padding: 0;}
+  .netbox{ position: relative; width: 80%;height: 600px;}
+  #search-box{ position:absolute; top: 0; right: 0;}
+  #mynetwork {
+    width: 100%;
+    height:100%;
+    border: 1px solid lightgray;
+    background: #fafafa;
+  }
+  .chart-wrap{
+    height: 300px; width: 600px; box-shadow: 0 0 2px;
+  }
+  .chart{
+    height: 300px; width: 300px; float: left;box-shadow: 0 0 1px;
+  }
+  
+
+  /*移中显示信息*/
+  #chart-container{width:250px;height:120px; position:absolute; top:-40px; left:-40px; border-radius:10px; background:#fafafa; background:rgba(255,255,255,0.9); z-index:10; overflow:hidden; box-shadow:0 0 10px #666; display: none;}
+  #chart-container .text{ position:absolute; top:0;}
+    #chart-container .chart{ width:50%; float:left; height:100%; box-shadow:0 0 0px; overflow:hidden;}
+    #chart-container h6{ margin:4px 0 0; font-weight:bold; font-size:12px; text-indent:10px;}
+    #chart-container p{ font-size:10px;text-indent:10px;}
+    #chart-container p span{ padding:0px 3px; margin-right:3px; border-radius:5px; color:#fff; display:inline-block; width:25px; text-indent:0; text-align:center;}
+    span.red{ background:#B94A48; } 
+    span.green{ background:#5B955B;} 
+    span.orange{ background:#FA9300;}
+    span.light{ background: #CCCC00;}
+  </style>
+</head>
+<body>
+  <div class="netbox">
+    <div id="mynetwork"></div>
+    <p id="search-box">
+      <input id="nodeID" type="text" placeholder="输入ID" size=5>
+      <button id="search">Search it</button>
+      <button id="reset">Reset</button>
+    </p>
+    <div id="chart-container"></div>
+  </div>
+  
+  <script type="text/javascript">
+
+  // 节点数据
+  var nodes = new vis.DataSet([
+    {id: 1, label: '电票数据库服务器1\n192.68.1.103'},
+    {id: 2, label: '电票数据库服务器1\n192.68.1.103'},//,color: '#7BE141'
+    {id: 3, label: '电票数据库服务器1\n192.68.1.103'},
+    {id: 4, label: '电票数据库服务器1\n192.68.1.103'},
+    {id: 5, label: '电票数据库服务器1\n192.68.1.103'},
+    ]);
+  // 连线数据
+  var edges = new vis.DataSet([
+    {from: 1, to: 3, label:"1"},
+    {from: 1, to: 2, label:"2"},
+    {from: 2, to: 4, label:"3"},
+    {from: 2, to: 5, label:"4"},
+    {from: 3, to: 5, label:"5"},
+    {from: 1, to: 4, label:"6"}
+    ]);
+
+  $(function(){
+    //初始化
+    var network=null;
+    network=createTopo(nodes,edges,$('#mynetwork')[0],network);
+    // afterSelect(network,chart_data,1)
+
+    // 按钮事件
+    $('#search').click(function(){
+      var id=$('#nodeID').val();
+      (/\d/).test(id)?afterSelect(network,id):alert('error');
+    })
+    $('#reset').click(function(){
+      reset(network)
+    })
+  })
+
+  // 初始化函数
+  function createTopo(nodes,edges,$dom,network){
+    var data = {
+      nodes: nodes,
+      edges: edges
+    };
+    var options = {
+      // 点样式
+      nodes: {
+        label:"sadasf",
+        shape:'image',//'circularImage',//'dot',
+        image:'../../dist/img/network/host.png',
+        // image: {
+        //   unselected: './unselected.svg',
+        //   selected: './BROKEN_LINK/selected.svg',
+        // }
+        borderWidth:2,
+        size:20,
+        color: {border: '#bbb',background: '#eee'},
+        font:{
+          color:'#666',
+          strokeWidth:0.2,//字体边缘
+          strokeColor:'#fff',
+        },
+        shadow:true,
+        widthConstraint: {maximum: 20},
+        fixed:false,//固定节点
+      },
+      // 线样式
+      edges: {
+        color: '#aaa',//'lightgray',
+        font: {
+          align: 'middle',//线上文字的位置 horizontal
+        },
+        length:300,
+        dashes:true,
+        width:1.9,
+        smooth:false, //false为直线
+        shadow:true,
+        arrows: {from:true,to:true}, //middle
+        widthConstraint: {maximum: 10 }
+      },
+      // 图层
+      layout: {
+        // hierarchical: {
+        //     direction: 'RL',//树状布局 并规定方向RL UD DU LR
+        //     sortMethod: 'directed',
+        //   },
+        //   randomSeed:1, //一旦设置则固定初始化布局
+      },
+      // 互动效果
+      interaction: {
+        hover: true,// hover移中高亮
+        dragNodes :true, //是否支持拖动
+      },
+      // 物理效果
+      physics: {
+        enabled:false, //是否支持物理运动
+        stabilization: false,//false弹性不稳定增强
+      }, 
+      // -----------------------------
+    };
+    network = new vis.Network($dom, data, options);
+    // 双击聚焦
+    network.on("doubleClick", function (params) {
+      var id=params.nodes[0];
+      afterSelect(network,id)
+    });
+    // 单击
+    network.on("click",function(params){
+
+      console.log(params);
+      console.log(this.getNodeAt(params.pointer.DOM));
+      // eagleEye(network,this.getNodeAt(params.pointer.DOM))
+    });
+    // 移中
+    network.on("hoverNode", function (params) {
+      console.log(this)
+      showChart(params)
+    });
+    network.on("blurNode", function (params) {
+      hideChart()
+    });
+    return network;
+  }
+
+// -----------------------------------------------
+  // 清除空间
+  function destroy(network) {
+    if (network !== null) {
+      network.destroy();
+      network = null;
+    }
+  }
+  function reset(network){
+    network.fit();
+    $('#nodeID').val(null);
+  }
+  function afterSelect(network,id,params){
+      eagleEye(network,id);
+  }
+  // 鹰眼效果
+  function eagleEye(network,id){
+    network.fit();//恢复视图至原比例
+    var options = {
+      scale: 1.3,//放大倍数，1.0不放大
+      offset: {x:0,y:0},//偏移值
+      animation: {
+        duration: 800,//动画时长
+        easingFunction: 'easeInOutQuad'
+      }
+    }
+    network.focus(id,options);//聚焦函数
+  }
+
+  //出现信息框
+  function showChart(params){
+    // var $node=this.body.nodes[params.node];
+    // var nodename=DataSet_data[params.node].label;
+    $('#chart-container').show();
+    $('body').css('cursor','pointer');
+    var htmlStr='<div class="text"><h4>'+'电票数据库服务器'+'</h6><p><strong>态：</strong>'+rnd(5)+'<span class="light">'+rnd(5)+'</span><span class="green">'+rnd(40)+'</span></p></div><div class="chart" data-num='+rnd(30)+' data-title="CPU使用率"></div><div class="chart" data-num='+rnd(30)+' data-title="内存使用率"></div>';
+    $('#chart-container').html(htmlStr)
+    $('#chart-container .chart').each(function(){ makeChart($(this)); })
+    
+    // 跟随鼠标移动
+    $('#mynetwork').mousemove(function(event){
+      var x=event.offsetX,y=event.offsetY;
+      $('#chart-container').css({left:x+10,top:y});
+    })
+  }
+  function hideChart(){
+    $('#chart-container').hide();
+    $('body').css('cursor','default');
+  }
+
+  // 随机数
+  function rnd(num){
+    if(num<20){
+      var rnd=parseInt(Math.random()*num);
+      if(rnd==0){rnd=1}
+    }else{
+      var rnd=parseInt(Math.random()*num);
+      if(rnd<10){rnd+=10}
+    }
+    return rnd;
+  }
+
+  // 图表函数
+  function makeChart($dom){ 
+      $dom.highcharts({
+          chart: {
+              type: 'solidgauge',
+              backgroundColor:null
+          },
+          title:null,//{ text:$dom.data('title')},
+          tooltip:{ enabled:false},
+          pane: {
+              center: ['50%', '85%'],
+              size:'100%',
+              startAngle: -90,
+              endAngle: 90,
+              background: {
+                  backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                  innerRadius: '60%',
+                  outerRadius: '100%',
+                  shape: 'arc'
+              }
+          },
+          yAxis: {
+              min: 0,
+              max: 100,
+              title: {
+                  text:$dom.data('title'),
+                  style:{
+                      color:'#333',
+                      fontSize:'14px',
+                      fontWeight:'bold'
+                  },
+                  y:40
+              },
+              stops: [
+                  [0.1, '#55BF3B'], // green
+                  [0.5, '#DDDF0D'], // yellow
+                  [0.9, '#DF5353'] // red
+              ],
+              lineWidth: 0,
+              minorTickInterval: null,
+              tickPixelInterval: 400,
+              tickWidth: 0,
+              labels: {
+                  y: -7,
+                  style:{
+                    color:'rgba(0,0,0,0)'
+                  }
+              },
+          },
+          plotBands: [{
+            from: -50,
+            to: 50,
+            innerRadius: 103,
+            outerRadius: 116,
+            color: '#d3e9f7' // light blue
+          }, {
+              from: 20,
+              to: 50,
+              innerRadius: 103,
+              outerRadius: 116,
+              color: '#6fbe6b' // green
+          }, {
+              from: -50,
+              to: -20,
+              innerRadius: 103,
+              outerRadius: 116,
+              color: '#e7797d' // yellow
+          }],
+          plotOptions: {
+              gauge: {
+                cursor:'pointer',
+                  dataLabels: {
+                      y: 5,
+                      borderWidth: 0,
+                      useHTML: true
+                  },
+                  dial : {
+                     backgroundColor: '#000',
+                    // 半径：指针长度
+                    radius : '100%'
+                  }
+              }
+          },
+          credits: {
+              enabled: false
+          },
+          series: [{
+              name: $dom.data('title'),
+              data: [$dom.data('num')],
+              tooltip: {
+                  valueSuffix: $dom.data('title')
+              }
+          }]
+      });
+  }
+
+  </script>
+
+
+</body>
+</html>

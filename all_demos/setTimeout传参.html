@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+	// var __sto = setTimeout; 
+	// 　　window.setTimeout = function(callback,timeout,param) 
+	// 　　{ 
+	// 	　　var args = Array.prototype.slice.call(arguments,2); 
+	// 	　　var _cb = function() 
+	// 	　　{ 
+	// 		　　callback.apply(null,args); 
+	// 	　　} 
+	// 	　　__sto(_cb,timeout); 
+	// 　　} 
+	// 　　//测试代码 
+	// 　　function aaaa(a) 
+	// 　　{ 
+	// 	　　alert(a); 
+	// 　　} 
+	// 　　function aaaaa(a,b,c) 
+	// 　　{ 
+	// 	　　alert(a + b + c); 
+	// 　　} 
+	// 　　var a = new Object(); 
+	// 　　window.setTimeout(aaaa,1000,a); 
+	// 　　window.setTimeout(aaaaa,2000,a,6,7); 
+
+	setTimeout("a("+1+")",4000);
+	function a(str){
+		alert(str)
+	}
+	</script>
+</body>
+</html>

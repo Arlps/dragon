@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<style>
+		.box{ margin: 100px 100px; width: 300px; height: 300px; border-radius: 150px; box-shadow: 0 0 10px; background-image: url(img/color1.png); background-size:100% 100%; transition:0.8s linear;}
+		.line{ width:200px; height:1px; background:red; position:relative; margin-top:100px;float:left; transform:rotate(-45deg);}
+		.arrow{ position:absolute; height:50px; width:50px;top:-25px; box-shadow:0 0 10px;}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+
+	<button>哈哈哈</button>
+
+	<div class="line">
+		<div class="arrow"></div>
+	</div>
+</body>
+<script>
+	$(function(){
+		var i=1;
+		setInterval(function(){
+			if (i==1) {i=0} else{i=1};
+			console.log(i)
+			$('.box').css('backgroundImage','url(img/green'+i+'.png)')
+		},900);
+		$('button').click(function(){
+			$('.box').css('backgroundImage','url(img/green'+i+'.png)')
+		})
+
+		var speed=0;
+		setInterval(function(){
+			speed+=1;
+			if (speed>=150) { speed=0}
+			$('.arrow').css('left',''+speed+'px')
+		},10)
+	})
+
+</script>
+</html>

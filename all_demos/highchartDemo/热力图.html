@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="bootstrap.css">
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/highcharts.js"></script>
+	<script src="js/heatmap.js"></script>
+	
+	<style>
+
+	.chart{ width:400px; height:400px; border:1px solid black; float:left;}
+	</style>
+</head>
+<body>
+	<div id="container" style="height: 400px; min-width: 310px; max-width: 800px; margin: 0 auto"></div>
+	<div class="btn-group btn-group-sm">
+		<button class="btn btn-default" id="TBDS">TBDS</button>
+		<button class="btn btn-default" id="SmartDBM">SmartDBM</button>
+		<button class="btn btn-default" id="sandBox">沙箱</button>
+	</div>
+		
+	</p>
+	
+	<script>
+	$(function () {
+		var data=makeJson();
+		$('#TBDS,#SmartDBM,#sandBox').click(function(){
+			$(this).attr('disabled','disabled').siblings('button').removeAttr('disabled');
+			heatmap.highcharts().series[0].update({data: makeHeatData(makeJson())})
+		})
+		var heatmap=$('#container').highcharts({
+			chart: {
+				type: 'heatmap',
+				marginTop: 40,
+				marginBottom: 80
+			},
+			title: {
+				text: '应用系统访问热度统计'
+			},
+			xAxis: {
+				categories: makeHeatX(data),
+				title:{
+					text:'时'
+				}
+			},
+			yAxis: {
+				categories: ['周一', '周二', '周三', '周四', '周五', '周六','周日'],
+				title: null
+			},
+			colorAxis: {
+				min: 0,
+				minColor: '#FFFFFF',
+				maxColor: '#337AB7'
+			},
+			legend: {
+				align: 'right',
+				layout: 'vertical',
+				margin: 0,
+				verticalAlign: 'top',
+				y: 25,
+				symbolHeight: 280
+			},
+			tooltip: {
+				formatter: function () {
+					return '<b>'+ this.point.value + '</b> 次 <br>'+
+					'<span>' + this.series.yAxis.categories[this.point.y] + '</span>  '+
+					'<span>' + this.series.xAxis.categories[this.point.x] + '时</span>';
+				}
+			},
+			series: [{
+				name: '每日访问热度',
+				borderWidth: 0.3,
+				data: makeHeatData(data),
+				dataLabels: {
+					enabled: true,
+					color: '#fff'
+				}
+			}],
+			credits:{
+				enabled:false
+			}
+		});
+	});
+	
+	// 生成热力图X轴数据格式
+	function makeHeatX(data){
+		var arr=[];
+		for (var i = 0; i < data.length; i++) {
+			arr.push(data[i].name)
+		};
+		return arr;
+	}
+	// 将随机数据组装成热力图的数据格式
+	function makeHeatData(data){
+		var dataArr=[];
+		for (var i = 0; i < data.length; i++) {
+			for (var j = 0; j < data[i].heat.length; j++) {
+				dataArr.push([i,j,data[i].heat[j]])
+			};
+		};
+		// console.log(dataArr)
+		return dataArr;
+	}
+
+	// 生成随机数据----每个系统的7天随机记录
+	//生成的数据格式为 data:[{name:'a',heat:[10,20,30,40,50,60,70]},{name:'b',heat:[10,20,30,40,50,60,70]}]
+	function makeJson(){
+		var data=[];
+		for (var i = 0; i < 24; i++) {
+			data.push({
+				name:i+'',
+				heat:(function weekHeat(){
+					var arr=[];
+					for (var i = 0; i < 7; i++) {
+						arr.push(parseInt(Math.random()*100))
+					}
+					return arr;
+				})()
+			})
+		};
+		// console.log(data)
+		return data;
+	}	
+</script>
+</body>
+</html>

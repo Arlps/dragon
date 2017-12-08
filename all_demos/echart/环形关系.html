@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<script src="js/echarts.min.js"></script>
+	<script src="js/LES_data.js"></script>
+	<style>
+		html,body{height:100%;}
+	</style>
+</head>
+<body>
+	<div id="chart" style="width:100%; height:100%; border:0px solid black"></div>
+	<script>
+	$(function(){
+		var myChart=echarts.init(document.getElementById('chart'));
+		myChart.setOption(option);
+		console.log(myChart);
+		myChart.on('click', function (params) {
+		    console.log(params)
+		});
+   	    $(window).resize(function(){
+            myChart.resize();
+            // myChart.dispose();
+            var obj=echarts.getInstanceByDom($('#chart').get(0));
+            console.log(obj)
+        });
+	})
+
+	var color=["#3c8dbc","#f56954","#00a65a","#00c0ef","#f39c12","#0073b7","#001F3F","#39CCCC","#3D9970","#01FF70","#FF851B","#F012BE","#8E24AA","#D81B60","#222222","#d2d6de"];
+
+	//原始数据
+	var theme=[
+		{
+			id:0,
+			title: '客户',
+			bloodID:[{id:1,title:'购买产品'},{id:2,title:'电力输入和输出'},{id:4,title:'电力需求'},{id:10,title:'电费结算'}],
+			url:"xxxxxxxxx",
+			level:1
+		},{
+			id:1,
+			title: '产品',
+			bloodID:[{id:2,title:'产品支持'},],
+			url:"xxxxxxxxx",
+			level:2
+		},{
+			id:2,
+			title: '电网',
+			bloodID:[{id:3,title:'电网结果,运行安全'},],
+			url:"xxxxxxxxx",
+			level:1
+		},{
+			id:3,
+			title: '安全',
+			bloodID:[{id:5,title:'设备安全'},{id:11,title:'人生安全'}],
+			url:"xxxxxxxxx",
+			level:1
+		},{
+			id:4,
+			title: '市场',
+			bloodID:[{id:10,title:'交易结算'},],
+			url:"xxxxxxxxx",
+			level:2
+		},{
+			id:5,
+			title: '设备',
+			bloodID:[{id:6,title:'拼装'},],
+			url:"xxxxxxxxx",
+			level:2
+		},{
+			id:6,
+			title: '物质',
+			bloodID:[{id:10,title:'资产核算'},{id:7,title:'项目物资'}],
+			url:"xxxxxxxxx",
+			level:3
+		},{
+			id:7,
+			title: '项目',
+			bloodID:[{id:8,title:'规划'},{id:10,title:'项目成本控制'},],
+			url:"xxxxxxxxx",
+			level:3
+		},{
+			id:8,
+			title: '综合管理',
+			bloodID:[],
+			url:"xxxxxxxxx",
+			level:3
+		},{
+			id:9,
+			title: '资产',
+			bloodID:[{id:10,title:''},],
+			url:"xxxxxxxxx",
+			level:4
+		},{
+			id:10,
+			title: '财务',
+			bloodID:[{id:11,title:'经营管理费用'},],
+			url:"xxxxxxxxx",
+			level:4
+		},{
+			id:11,
+			title: '人员与组织',
+			bloodID:[],
+			url:"xxxxxxxxx",
+			level:4
+		}
+	]
+
+	var theme2=[{"id":9,"title":"客户","bloodID":[{"id":"10","title":"购买产品"},{"id":"12","title":"电力输入和输出"},{"id":"13","title":"电费结算"},{"id":"17","title":"电力需求"}],"url":"","level":0},{"id":10,"title":"产品","bloodID":[{"id":"13","title":"产品支持"},{"id":"17","title":"购买产品"}],"url":"","level":0},{"id":19,"title":"综合管理","bloodID":[{"id":"16","title":"规划"}],"url":"","level":0},{"id":20,"title":"安全","bloodID":[{"id":"11","title":""},{"id":"12","title":""},{"id":"18","title":""}],"url":"","level":0},{"id":12,"title":"电网","bloodID":[{"id":"9","title":"电力输入和输出"},{"id":"10","title":"产品支持"},{"id":"11","title":"运行"},{"id":"20","title":"电网结果、运行安全"}],"url":"","level":1},{"id":17,"title":"市场","bloodID":[{"id":"9","title":"电力需求"},{"id":"13","title":"交易结算"}],"url":"","level":1},{"id":11,"title":"设备","bloodID":[{"id":"12","title":"运行"},{"id":"15","title":"拼装"},{"id":"16","title":"项目设备"},{"id":"20","title":"设备安全"}],"url":"","level":2},{"id":13,"title":"财务","bloodID":[{"id":"9","title":"电费结算"},{"id":"14","title":"资产核算"},{"id":"15","title":"物资核算"},{"id":"16","title":"项目成本控制"},{"id":"17","title":"交易结算"},{"id":"18","title":"经营管理费用"}],"url":"","level":2},{"id":14,"title":"资产","bloodID":[{"id":"13","title":"资产核算"}],"url":"","level":3},{"id":15,"title":"物资","bloodID":[{"id":"11","title":"拼装"},{"id":"13","title":"物资核算"},{"id":"16","title":"项目成本控制"}],"url":"","level":3},{"id":16,"title":"项目","bloodID":[{"id":"11","title":"项目设备"},{"id":"13","title":"项目成本控制"},{"id":"15","title":"项目物资"},{"id":"19","title":"规划"}],"url":"","level":3},{"id":18,"title":"人员与组织","bloodID":[{"id":"13","title":"经营管理费用"},{"id":"20","title":"人身安全"}],"url":"","level":3}]
+
+	// 处理数据
+	var data={nodes:[],links:[],itemStyle:{}};
+	$.each(theme,function(idx,item){
+		// 节点
+		data.nodes.push({
+			id:item.id,
+			name:item.title,
+			value:parseInt(Math.random()*1000000),
+			// itemStyle:{normal:{color:color[idx]}}
+		});
+		//线
+		for (var i = 0; i < item.bloodID.length; i++) {
+			data.links.push({
+				id:item.id,
+				name:idx+'-'+i,
+				source:item.id,
+				target:item.bloodID[i].id,
+				value:item.bloodID[i].title
+			})
+		};
+	});
+    console.log(data)
+
+
+    option = {
+        series : [{
+            name: 'xxx',
+            type: 'graph',
+            layout: 'force',  // force/none/circular
+            force:{
+            	repulsion:2000,
+            	layoutAnimation:false,
+            	// edgeLength: 500,// gravity:0,
+            },
+            hoverAnimation:false,
+            circular: { rotateLabel: true },
+            data: data.nodes,
+            links: data.links,
+            roam: true,
+            symbol:'roundRect',
+            symbolSize:20,
+            symbolRotate:0,//45,
+            edgeSymbol:['arrow','arrow'],
+            edgeSymbolSize:7,
+            label: {
+                normal: {
+                	show:true,
+                    position: 'right',
+                    formatter: '{b}',
+                    textStyle:{
+                    	color:'#111',
+                    	fontSize:14,
+                    	fontWeight:'normal'
+                    }
+                },
+                emphasis:{
+                	textStyle:{
+                    	color:'#111',
+                    	fontSize:14,
+                    	fontWeight:'bold'
+                    }
+                }
+            },
+            edgeLabel:{
+            	normal:{
+            		show:true,
+            		formatter:'{c}',
+            		position:'middle',
+            		textStyle:{
+                    	color:'#888',
+                    	fontSize:9,
+                    	fontWeight:'normal'
+                    }
+            	}
+            },
+            lineStyle: {
+                normal: {
+                    color: '#72CFAC',//'source',
+                    width:1,
+                    curveness: 0.3
+                },
+                emphasis:{
+                	width:1,
+                }
+            },
+            itemStyle:{
+            	normal:{
+            		color:'#5FBDB7'//'#72CFAC'
+            	}
+            },
+            animationDuration: 1000,//function (idx) {return idx * 200;},
+			animationEasing:'exponentialOut'
+        }]
+    };
+    console.log(option)
+
+    
+	</script>
+</body>
+</html>

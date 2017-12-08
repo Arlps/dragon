@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jquery-1.9.1.js"></script>
+	<style>
+	html,body{ height:100%;}
+		.side{ width:300px; height:100%; float:right; box-shadow:0 0 1px; padding:10px;position:relative; }
+		.panel{ width:280px; height:150px; margin:0 auto; border:0px solid black; position:absolute; box-shadow:-5px 5px 5px; border-radius:5px; background:url(img/bottomShadow+.png) 100% 100%; background:rgba(255,255,0,0.5); cursor: pointer}
+		.panel:nth-child(0){ top:-5%;}
+		.panel:nth-child(1){ top:30%;}
+		.panel:nth-child(2){ top:60%; }
+		.title{ height:20%; border-bottom:0px solid black;}
+	</style>
+</head>
+<body>
+	<div class="side">
+		<div class="panel">
+			<div class="title"></div>
+			<div class="content"></div>
+		</div>
+		<div class="panel">
+			<div class="title"></div>
+			<div class="content"></div>
+		</div>
+		<div class="panel">
+			<div class="title"></div>
+			<div class="content"></div>
+		</div>
+	</div>
+</body>
+<script>
+	$(function(){
+		$('.panel').mouseenter(function(){
+			$(this).stop().animate({
+				width:'300px',
+				height:'170px',
+				left:'-20px',
+			}).css({
+				zIndex:100
+			})
+		}).mouseleave(function(){
+			$(this).stop().animate({
+				width:'280px',
+				height:'150px',
+				left:'10px'
+			},function(){
+				$(this).css({
+					zIndex:0
+				})
+			})
+		})
+	})
+
+
+</script>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jtopo-change.js"></script>
+</head>
+<body><!--   -->
+	<canvas id="canvas" width="1400px" height="600px" style="border:1px solid black; "></canvas>
+</body>
+<script>
+	$(document).ready(function(){                    
+        var canvas = document.getElementById('canvas');
+        var stage = new JTopo.Stage(canvas);
+        stage.wheelZoom = 0.97
+        var scene = new JTopo.Scene();
+        scene.background = 'img/bg1.png';
+        stage.add(scene);
+        
+    //设置参数   
+        // 根节点大小rootSize,根节点坐标(rootX,rootY)     
+        var rootSize=50,rootX=500;
+        // 子节点数量numI,孙节点数量numJ
+        var rootY=500,numI=30,numJ=2;
+        // 大圆半径radiusI,小圆半径radiusJ
+        var radiusI=200,radiusJ=70;
+
+        // 设置根节点
+        var cloudNode = new JTopo.CircleNode('Oracle');
+        cloudNode.dragable=false;
+        // cloudNode.setImage('img/radar.png');
+        // cloudNode.fillColor="200,160,0"
+        cloudNode.setSize(rootSize, rootSize);
+        cloudNode.setLocation(rootX-rootSize/3,rootY-rootSize/3);            
+        scene.add(cloudNode);
+        console.log(cloudNode)
+        // 获取根节点在页面的坐标（centerX，centerY）
+        var centerX=cloudNode.getBound().left;
+        var centerY=cloudNode.getBound().top;
+        
+        // 渲染子节点
+        var numI=Oracle.son.length;
+        for(var i=0; i<numI; i++){
+            var nodeX=rootX-Math.cos(2*Math.PI/numI*i)*radiusI;
+            var nodeY=rootY-Math.sin(2*Math.PI/numI*i)*radiusI; 
+            // var testNode= new JTopo.CircleNode("实例"+i);
+            var testNode= new JTopo.CircleNode(Oracle.son[i].name);
+            testNode.dragable=false;
+            testNode.radius =10;
+            testNode.textPosition="Middle_Center"
+            testNode.setLocation(nodeX,nodeY);
+            scene.add(testNode);
+            linking(cloudNode, testNode, 0.8)
+
+            var beginPI=(2*Math.PI/numI*i-Math.PI/2+Math.PI/4);//Math.PI/4的作用：从45度开始
+
+            var numJ=Oracle.son[i].visiter.length;
+            for(var j=0;j<numJ;j++){
+                // var sonNode=new JTopo.CircleNode("设备"+j);
+                var sonNode=new JTopo.CircleNode(Oracle.son[i].visiter[j].ip);
+                sonNode.dragable=false;
+                sonNode.radius =5;
+                sonNode.fillColor="200,200,0"
+                sonNode.textPosition="Middle_Center"
+                sonX=nodeX-Math.cos(beginPI+Math.PI/2/(numJ+1)*(j+1))*radiusJ;//范围限制90度：/2
+                sonY=nodeY-Math.sin(beginPI+Math.PI/2/(numJ+1)*(j+1))*radiusJ;
+                sonNode.setLocation(sonX,sonY);
+                scene.add(sonNode);
+                linking(testNode, sonNode, 0.4,"255,255,0")
+            }
+        }
+        // 自动调整画面大小并且居中
+        scene.centerAndZoom();
+        function linking(a,b,size,color){
+            var link=new JTopo.Link(a, b);
+            if (color) {
+                link.strokeColor=color;
+            };
+            link.lineWidth=size; 
+            scene.add(link);
+        }
+    });  
+    
+    // 数据模型
+    var Oracle={
+        son:[{
+            name:"实例1",
+            visiter:[{
+                ip:"192.168.1.100"
+            },{
+                ip:"192.168.1.101"
+            }]
+        },{
+            name:"实例2",
+            visiter:[{
+                ip:"192.168.2.100"
+            },{
+                ip:"192.168.2.101"
+            }]
+        }]
+    }
+
+    // 模拟数据
+    var Oracle={
+        son:[]
+    }
+    for (var i = 0; i < 40; i++) {
+        Oracle.son.push({
+            name:"实例"+i,
+            visiter:[]
+        })
+        var numRnd=parseInt(Math.random()*2+1);
+        for (var j =0; j < numRnd; j++) {
+            Oracle.son[i].visiter.push({
+                ip:"192.168."+j+"."+i
+            })
+        };
+    };
+    console.log(Oracle)
+
+
+</script>
+</html>

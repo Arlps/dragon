@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	
+    <script src="js/jtopo-0.4.08.js"></script>
+</head>
+<body><!--   -->
+	<canvas id="canvas" width="1000px" height="600px" style="border:1px solid black; "></canvas>
+</body>
+<script>
+	$(document).ready(function(){                    
+        var canvas = document.getElementById('canvas');
+        var stage = new JTopo.Stage(canvas);
+        stage.wheelZoom = 0.97
+        var scene = new JTopo.Scene();
+
+        scene.background = 'img/bg1.png';
+        stage.add(scene);
+        
+        // 子节点数量；孙节点数量
+        var numI=21; var numJ=3;
+        // 设置根节点
+        var cloudNode = new JTopo.Node('root');
+        cloudNode.dragable=false;
+        cloudNode.setImage('img/radar.png');
+        cloudNode.setSize(50, 50);
+        cloudNode.setLocation(360,230);            
+        cloudNode.layout = {type: 'circle', radius: 400};
+        scene.add(cloudNode);
+
+        // 获取根节点在页面的坐标（centerX，centerY）
+        var centerX=cloudNode.getBound().left;
+        var centerY=cloudNode.getBound().top;
+        
+        // 渲染子节点
+        for(var i=0; i<numI; i++){
+            var node = new JTopo.CircleNode('host' + i);
+            node.dragable=false;
+            node.fillColor = '0,0,255';
+            node.radius =10;
+            node.setLocation(nodeX,nodeY)
+            node.layout = {type: 'circle', radius: 70};
+            scene.add(node);console.log(node.x,node.getBound().left)
+
+            // 连线：根节点--子节点
+            var link = new JTopo.Link(cloudNode, node);
+            link.strokeColor="255,255,0";
+            link.lineWidth=0.51; 
+            scene.add(link)
+            // ===========================================================
+            var nodeX=360-Math.cos(2*Math.PI/numI*i)*400;
+            var nodeY=230-Math.sin(2*Math.PI/numI*i)*400; 
+            var testNode= new JTopo.CircleNode(i);
+            testNode.dragable=false;
+            testNode.setLocation(nodeX+20,nodeY+20);
+            testNode.radius =1;
+            scene.add(testNode);
+
+            var beginPI=(2*Math.PI/numI*i-Math.PI/2);
+            for(var j=0;j<numJ;j++){
+                var sonNode=new JTopo.Node(j);
+                sonNode.dragable=false;
+                sonX=nodeX-Math.cos(beginPI+Math.PI/(numJ+1)*(j+1))*100;
+                sonY=nodeY-Math.sin(beginPI+Math.PI/(numJ+1)*(j+1))*100;
+                sonNode.setLocation(sonX,sonY);
+                scene.add(sonNode);
+                scene.add(new JTopo.Link(testNode, sonNode));
+            }
+            // ===========================================================
+
+            // 渲染孙子节点
+            // for(var j=0; j<3; j++){
+            //     var vmNode = new JTopo.CircleNode('vm-' + i + '-' + j);
+            //     vmNode.setImage('img/arrow.png');
+            //     vmNode.radius = 5;
+            //     vmNode.fillColor = '255,255,0';
+            //     // vmNode.setLocation(scene.width * Math.random(), scene.height * Math.random());
+            //     // scene.add(vmNode); 
+
+            //     // 连线：子节点--孙节点
+            //     var link=new JTopo.Link(node, vmNode)
+            //     link.lineWidth=0.5;                          
+            //     // scene.add(link);                            
+            // }
+        }
+        //var allNodes=scene.getDisplayedNodes();
+
+        JTopo.layout.layoutNode(scene, cloudNode, true);      
+        scene.addEventListener('mouseup', function(e){
+            if(e.target && e.target.layout){
+                JTopo.layout.layoutNode(scene, e.target, true);    
+            }                
+        });
+        scene.centerAndZoom();
+    });  
+</script>
+</html>

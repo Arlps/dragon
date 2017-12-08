@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="js/jquery-1.9.1.js"></script>
+		<style>
+			.box{ width:400px; height:400px; position:relative; box-shadow:0 0 10px;}
+			.son{ width:100px; height:100px; position:absolute; background-color:red; top:100px; left:100px;}
+			.boy{ width:50px; height:50px; box-shadow:0 0 10px;display:inline-block; vertical-align:middle;}
+			.girl{ width:0px; height:100%; display:inline-block; vertical-align:middle; }
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="son">
+				<div class="boy"></div>
+				<div class="girl"></div>
+			</div>
+		</div>
+
+		<button name="a">asf </button>
+	</body>
+	<script>
+		$(function(){
+			// $('button[name=a]').click(function(){
+			// 	alert()
+			// })
+			$("button[name='a']").click(function(){
+				alert()
+			})
+		})
+	</script>
+</html>

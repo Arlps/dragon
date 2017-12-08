@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<style>
+		*{ padding:0;margin:0;}
+		li{ list-style:none; box-shadow:0 0 1px;}
+		button{ width:50px; height:20px;}
+		.box{ width: 500px; height:300px; position:relative; box-shadow:0 0 10px; overflow:hidden; margin-left:400px;}
+		ul#box1{ width:2000px; height:300px; position:absolute; background: #eee; }
+		li.page{ width:500px; height:300px; float:left; font-size:40px; }
+	</style>
+</head>
+<body>
+	<button id="pre">pre</button><button id="next">next</button>
+	<div class="box">
+		<ul id="box1">
+			<li class="page"></li>
+			<li class="page"></li>
+			<li class="page"></li>
+		</ul>
+	</div>
+	<script>
+		$(function(){
+			// 设置随机颜色以及序号
+			$('#box1 .page').each(function(idx,ele){
+				$(ele).html(idx+1).css('background','#'+parseInt(Math.random()*16777215).toString(16)+'')
+			});
+			// 复制多一张
+			$("#box1").append($("#box1 .page").eq(0).clone(true));
+
+			var i=0; var stop=false;
+				var move=setInterval(function(){
+					if(!stop){
+						run("next");
+					}
+				},2000);
+			
+			function run(direction){
+				stop=true;
+				if (direction=="next") {
+					i--;
+					if(i<-3){ 
+						$('#box1').css('left',0);i=-1;
+					}
+				} else if(direction=="pre"){
+					i++;
+					if(i>-0){
+						$('#box1').css('left',-1500);i=-2
+					}
+				};
+				
+				$('#box1').animate({left:i*500},function(){
+					stop=false;
+				});
+			}
+			$("#next").click(function(){ run("next"); });
+			$("#pre").click(function(){ run("pre"); });
+
+		})
+
+		
+//--------------------------------------------------------------
+		$(function(){
+			return;
+		   var i = 0
+		   var size = $("#show-area ul li").size();//得到所有li的个数
+		   
+		   
+		   /*第一步*/
+		   //一开始循环添加按钮
+		   for(var j = 0 ; j<size - 1 ; j++){
+		     $("#controler").append("<div></div>");   
+		       
+		   }
+		   //为什么要size - 1？因为最后一张图片只是作一个过渡效果我们显示的始终还是4张图片
+		  //所以添加按钮的时候我们也应该添加4个按钮
+		   $("#controler div").eq(0).addClass("onclick");
+		   
+		   
+		   
+		   
+		   // 点击事件
+		   $("#button-left").click(function(){  Toleft();  })   
+		   $("#button-right").click(function(){  Toright();  })
+		   
+		  
+		  
+		  
+		  
+		  
+		   /*第3步*/
+		   //按钮移出移入事件
+		   $("#controler div").hover(function(){
+		    i = $(this).index();  
+		    clearInterval(timer);
+		    $("#show-area ul").stop().animate({left:-i * imgWidth});
+		    $(this).addClass("onclick").siblings().removeClass("onclick");
+		    $("#index").html("index的值：" + index);
+		    
+		    
+		    
+		   },
+		   function(){
+		     timer = setInterval(function(){ Toleft();},3000)         
+		   })      
+		   
+		   
+		   //ul鼠标移出移入事件
+		   $("#show-area ul").hover(function(){
+		     clearInterval(timer);
+		     
+		   },function(){
+		      timer = setInterval(function(){
+		     Toleft();    
+		       
+		   },3000)     
+		       
+		   })
+		   
+		   //两个方向按钮鼠标移出移入事件
+		   $("#button-left,#button-right").mouseover(function(){
+		       clearInterval(timer);
+		       
+		   }).mouseout(function(){
+			     timer = setInterval(function(){
+			        Toleft();    
+			     },3000)    
+		   })
+		   
+
+		   //定时器
+		   var timer = setInterval(function(){  Toleft(); },3000)   
+		   
+		   /*第2.1步*/
+		   //左按钮实现的函数
+		   function Toleft(){
+		       
+		     i++;
+		     if(i==size){
+		        //当当前图片为最后一张图片的时候（我们一开始复制并且添加到ul最后面的图片）并且再点击了一次左按钮，这时候我们就利用css的快速转换效果把ul移动第一张图片的位置并且第二张图片滑入达到无缝效果（css的变换效果很快我们肉眼是很难看见的）
+		        $("#show-area ul").css({left:0});
+		        i = 1;     
+		     }
+		     $("#show-area ul").stop().animate({left:-i*imgWidth},1000);
+		     
+		     if(i == size -1){
+		        $("#controler div").eq(0).addClass("onclick").siblings().removeClass("onclick"); 
+		           
+		     }else{
+		       $("#controler div").eq(i).addClass("onclick").siblings().removeClass("onclick");      
+		           
+		    }
+		       
+		     
+		     
+		     
+		   }
+		   
+		   
+		   /*第2.2步*/
+		   //右按钮实现的函数
+		   function Toright(){
+		       
+		       //同理，如果当前图片位置是第一张图片我再按一下右按钮那么我们也利用css的快速变换使它的位置来到最后一张图片的位置（size-1），并且让倒数第二张图片滑动进来
+		      i--;
+		      if(i==-1){
+		         $("#show-area ul").css({left:-(size - 1)*imgWidth});
+		         i=size-2;    
+		          
+		      }   
+		      $("#show-area ul").animate({left:-i*imgWidth},1000);  
+		      $("#controler div").eq(i).addClass("onclick").siblings().removeClass("onclick"); 
+		       
+		   } 
+		});
+	</script>
+</body>
+</html>

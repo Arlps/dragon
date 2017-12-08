@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	// 构造函数原型对象=------------------------------
+		function HDHG(){
+			this.text="创造了一个实例",
+			this.run=function(){
+				console.log(this.text)
+			}
+		}
+		var a=new HDHG();
+		a.run();//创造了一个实例
+
+		// 增加原型对象内容，实例也受到影响,由始至终只有一个原型，没有类
+		// 使用prototype的优势：所有实例使用同样的内存，提高效率
+		HDHG.prototype.say=function(){ alert();}
+		a.say();  //alert();
+
+		//实例和原型对象的关系
+		console.log("实例a的构造器是"+a.constructor); //HDHG；
+		console.log(a instanceof HDHG);//true
+
+
+	// 工厂模式----------------------------------------------
+		// 没有大写/return/参数/运行不是new
+		function makeObj(name,age){
+			var obj=new Object();
+			obj.name=name;
+			obj.age=age;
+			obj.say=function(){
+				console.log(this.name+" is "+this.age)
+			}
+			return obj;
+		}
+		var he=makeObj("Jack",23);  he.say();
+		var she=makeObj("Sarah",23);  she.say();
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

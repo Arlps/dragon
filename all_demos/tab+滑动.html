@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jQuery-2.1.4.min.js"></script>
+		<style>
+			*{ margin:0; padding: 0;}
+			body{ height:2000px}
+			#tab{ height: 30px; position: fixed;top:0; background: #fff; width: 100%; padding-bottom: 20px;}
+			#tab li{ float:left; height: 100%; line-height: 1; width:50px; margin: 0 10px; border: 1px solid red; box-shadow:0 0 2px;list-style: none;} 
+			#tab li a{ display: inline-block; height: 100%; width: 100%; font-size: 20px; font-weight: bold;}
+			#tab li a:hover{ background: #F0B300; color: #fff;}
+			#tab li a.on{ background: #F0B300; color: #fff;}
+			#content{ margin-top: 50px; }
+			#content li{ height: 300px; margin-bottom: 10px; box-shadow: 0 0 10px; font-size: 50px; border: 1px solid red;}
+			#content
+		</style>
+	</head>
+	<body>
+		<ul id="tab">
+			<li><a href="javascript:void(0);" class="on">1</a></li>
+			<li><a href="javascript:void(0);">2</a></li>
+			<li><a href="javascript:void(0);">3</a></li>
+			<li><a href="javascript:void(0);">4</a></li>
+		</ul>
+		<ul id="content">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+		<script type="text/javascript">
+			$(function(){
+				var flag=true;
+				$('#tab').on('click','li',function(){
+					flag=!flag;
+					$(this).find('a').addClass('on').parents('li').siblings('li').find('a').removeClass('on');
+					var $li=$('#content li').eq($(this).index());
+//					$(window).scrollTop($li.offset().top-50)
+					$('body').animate({scrollTop: $li.offset().top-50},100,function(){
+						flag=!flag;
+					})
+				})
+				
+				$(window).scroll(function(){
+					if(flag){
+						$('#content li').each(function(idx,ele){
+							console.log(idx)
+							if($(window).scrollTop()>$(ele).offset().top-150 && $(window).scrollTop()<$(ele).offset().top+300){
+								$('#tab li a').eq(idx).addClass('on').parents('li').siblings('li').find('a').removeClass('on');
+							}
+						})
+					}
+				})
+			})
+		</script>
+	</body>
+</html>

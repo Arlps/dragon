@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/highcharts.js"></script>
+	<style>
+		*{ margin:0; padding:0;}
+		.chartBox{ position:relative;width:400px; height:400px;}
+		.selectBox{ position:absolute; width:auto; top:10px;right:0;z-index:20; box-shadow:1px solid black;}
+		.chart{ width:400px; height:400px; border:1px solid black}
+	</style>
+</head>
+<body>
+	<div class="chartBox">
+		<div id="div" class="chart"></div>
+	</div>
+	<script>
+		$(document).ready(function(){
+
+			createChart($('#div'),data,1)
+
+		})
+		
+		// 主函数:ID标签,数据,图标类型,刷新时间
+	   	function createChart(dom,data,time,type){
+	   		//type： 'line'折线, 'column'圆柱, 'spline'曲线, 'area'折线域, 'areaspline'曲线域, 'scatter'点, 'pie'饼
+	   		type=type||'column';
+	   		console.log(dom.attr('id'))
+	   		var chart=Highcharts.chart(dom.attr('id'),{
+	   			chart: {
+		            type: type,
+		            backgroundColor: 'rgba(0,0,0,0)',
+		            marginTop:50
+		        },
+		        xAxis: {
+		            // categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+		            labels: {
+		                // staggerLines: 2,//分两行显示
+		                // rotation: 90,//旋转90度
+		                // step:2,//省略式显示
+		                // style: {
+		                //     color: 'red'
+		                // },
+		                // x: 16,
+		                // y: 0,
+		                // lineColor:'#000',//轴颜色
+		                // lineWidth: 10,
+		                // maxPadding: 0.01,
+		            }
+		        },
+		        yAxis: {
+		            // alternateGridColor: '#FDFFD5',//隔行显色
+		            // ceiling: 10,//最大
+		            // gridLineColor: '#2ac7d8',//网格线颜色
+		            // gridLineWidth: 2,//网格线宽度
+		            // gridZIndex: 1,//网线Z深度
+		            // opposite:false,//y轴在右侧
+		            // showFirstLabel: false,//不显示第一个标签
+		            
+		        },
+		        //浮标
+		        tooltip: {
+		   //      	animation:false,
+		   //          backgroundColor: '#000',
+		   //          borderColor: '#2ac7d8',
+		   //          borderRadius:2,
+		   //          borderWidth:1,
+		   //          crosshairs: [true, true],//基线
+		   //          enabled:true,
+		   //          hideDelay:1000,//延迟消失
+		   //          //positioner: function () {
+		   //              //return { x: 80, y: 50 };
+		   //          //},//固定
+		   //          shadow: true,
+		   //          style:{
+					// 	color: '#fff',
+					// 	fontSize: '12px',
+					// 	padding: '8px'
+					// }
+		        },
+		        //标识信息
+		        legend: {
+		        	x:0,
+		        	y:0,
+		        	rtl: false,//左右？
+		        	symbolHeight:10,//图标大小
+		        	symbolWidth: 10,//图宽
+		        	symbolPadding: 1,//图字间距
+		            align: 'center',
+		            verticalAlign: 'bottom',
+		            //backgroundColor:'#06151A',
+		            borderColor:"#2ac7d8",
+		            //borderWidth:"1",
+		            borderRadius:'3px',
+		            enabled:true,//是否显示
+		            floating:false,//可以重叠
+		            //width: 200,//每一项宽度
+		            layout: 'horizontal',//垂直还是水平排列 horizontal
+		            itemDistance: 10,//间距
+		            padding: 2,
+		            itemMarginBottom: 0,//下编剧
+		            itemHoverStyle: {color: '#FFf'},//鼠标悬浮颜色
+		            itemStyle: { cursor: 'pointer', color: '#3E576F',fontWeight:'normal',color:'#bbb'},//默认样式
+		            //maxHeight:50,
+		            navigation: {  //箭头
+		                activeColor: '#3E576F',
+		                animation: true,
+		                arrowSize: 6,
+		                inactiveColor: '#CCC',
+		                style: {
+		                    fontWeight: 'bold',
+		                    color: '#000',
+		                    fontSize: '9px'
+		                }
+		            },
+		//          x: 0,
+		//          y: 100
+		        },
+		        title: {
+				    text: ''
+				},
+		        plotOptions: {
+		            pie: {
+		                //cursor: 'pointer',
+		                dataLabels: {
+		                    enabled: false,
+		                    style: {
+		                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+		                    },
+		                    connectorColor: 'silver'
+		                },
+		                showInLegend: true
+		            },
+		            series:{
+		            	borderWidth: 0.5,
+		            	borderColor:'#2ac7d8',
+		            	shadow: true,
+		            }
+		        },
+		        credits: {  
+		          enabled:false  
+				}, 
+		        series: data,
+		    });
+		    //添加下拉
+		    createSelect(dom,chart,data,type,time)
+	   	}
+	   	// 刷新
+	   	function refresh(data,chart,time){
+	   		setInterval(function(){
+	   			for(var i=0;i<data.length; i++){
+					chart.series[i].addPoint( parseInt(Math.random() * 20));
+				    chart.series[i].removePoint(0);
+	   			}
+	   		},time)
+	   	}
+	   	// 下拉
+	   	function createSelect(dom,chart,data,type,time){
+			//定义下拉选项数据-------------------------------
+			var selectObj={	
+				typeArr:['line', 'column', 'spline', 'area', 'areaspline', 'scatter', 'pie'],
+				timeArr:[1,2,10],
+			}
+			//渲染下拉选项结构-------------------------------
+			var $selectBox=$('<div class="selectBox">');
+			$.each(selectObj,function(i,arr){
+				var $select=$('<select>');
+				$.each(arr,function(j,name){
+					$('<option>').attr('value',name).html(name).appendTo($select)
+				});
+				$select.appendTo($selectBox);
+			})
+			dom.append($selectBox);
+			;
+			
+			// 改变下拉选项触发-------------------------------
+			$('select:nth-child(1)').change(function(){
+				for(var i=0;i<data.length; i++){
+					chart.series[i].update({type: $(this).val()});
+				}
+		    })
+		    var chartTimer={};
+		    $('select:nth-child(2)').change(function(){
+		    	if(chartTimer){ clearInterval(chartTimer)}
+		    	chartTimer=setInterval(function(){
+				// 每次刷新最后一个数据 //X轴依次+1
+					for(var i=0;i<data.length; i++){
+						chart.series[i].addPoint(parseInt(Math.random() * 10));
+					    chart.series[i].removePoint(0);
+					}
+			    },$(this).val()*1000)
+		    });
+
+		    //初始化触发
+		    $('select:nth-child(1)').val(type);
+		    $('select:nth-child(2)').val(time);
+		    $('select').trigger('change')
+		}
+
+		// 定义数据
+	   	var data=[{
+        	id:"a",
+            data: [7.0, 6.9, 9.5, 14.5, 18.2]
+        },{
+        	id:"b",
+            data: [4.0, 9, 19.5, 4.5, 8.2]
+        }];
+	</script>
+</body>
+</html>

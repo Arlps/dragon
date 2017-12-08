@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/highcharts.js"></script>
+</head>
+<body>
+	<div id="chart" style="width:500px; height:500px; border:1px solid black"></div>
+	<script>
+        $(function() {
+new Highcharts.Chart({
+chart : {
+renderTo : 'chart', // 放置图表的DIV容器对应页面的id属性
+},
+title : {
+text : '全国各大城市降雨量综合统计图' // 图表标题
+},
+subtitle : {
+text : '2012年度' // 副标题
+},
+// x轴
+xAxis : {
+categories : [ '第一季度', '第二季度', '第三季度', '第四季度', ]
+},
+// 右下角显示的LOGO
+credits : {
+text : 'demo', // 设置LOGO区文字
+href : 'http://www.javakfz.com' // 设置LOGO链接地址
+},
+// 是否启用导出功能，默认为true
+exporting : {
+enabled : true
+},
+// y轴
+yAxis : {
+min : 0,
+title : {
+text : '降雨量 (L)'
+}
+},
+legend : {
+layout : 'vertical',
+backgroundColor : '#FFFFFF',
+align : 'left',
+verticalAlign : 'top',
+x : 100,
+y : 70,
+floating : true,
+shadow : true
+},
+// 当鼠标悬置数据点时的格式化提示
+tooltip : {
+formatter : function() {
+var temp;
+if (this.point.name) { // 饼状图
+temp = '<b>' + this.point.name + '</b>: <br>(' + this.y
++ '%)';
+} else {
+temp = '' + this.x + ': ' + this.y + 'L';
+}
+return temp;
+}
+},
+plotOptions : {
+column : {
+dataLabels : {
+enabled : true
+},
+pointPadding : 0.2,
+borderWidth : 0
+}
+},
+// 图表标签
+labels : {
+items : [ {
+html : '年度降雨量分布比例',
+style : {
+left : '228px',
+top : '8px'
+}
+} ]
+},
+// 显示的数据,JSON数据格式，最重要的是name和data元素
+series : [ {
+type : 'column',
+name : '成都',
+data : [ 1000, 600, 3000, 900 ]
+}, {
+type : 'column',
+name : '深圳',
+data : [ 2000, 1200, 5500, 1000 ]
+}, {
+type : 'column',
+name : '上海',
+data : [ 1500, 1400, 4000, 1200 ]
+}, {
+type : 'spline',
+name : '平均值',
+data : [ 1500, 1066.67, 4166.67, 1033.33 ]
+}, {
+// 饼图
+type : 'pie',
+name : '年度降雨量分布',
+data : [ {
+name : '第一季度',
+y : 19.31
+}, {
+name : '第二季度',
+y : 13.73,
+}, {
+name : '第三季度',
+y : 53.65,
+}, {
+name : '第四季度',
+y : 13.31,
+} ],
+// 饼状图坐标
+center : [ 260, 60 ],
+// 饼状图直径大小
+size : 100,
+dataLabels : {
+// 不显示饼状图数据标签
+enabled : false
+}
+}]
+});
+});
+		
+	</script>
+</body>
+</html>

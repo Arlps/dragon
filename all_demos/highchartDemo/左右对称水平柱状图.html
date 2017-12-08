@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/highcharts.js"></script>
+</head>
+<body>
+	<div id="container" style="width:500px;height:400px"></div>
+	<script>
+		$(function () {
+		    var arr = ['表111111111111111111111111111111','表2','表3','表4','表5','表6','表7','表8','表9','表10'];
+		    var arr2 = ['sheet1','sheet2','sheet3']
+
+		    var data=[{
+		    	xxx:12,
+		    	y:10
+		    },{
+		    	xxx:123,
+		    	y:20
+		    },{
+		    	xxx:1234,
+		    	y:30
+		    },{
+		    	xxx:12345,
+		    	y:40
+		    }]
+		    $(document).ready(function () {
+		        $('#container').highcharts({
+		            chart: {
+		                type: 'bar',
+		                zoomType: 'y',
+		                events: { 
+				            click: function() { 
+				                // alert(e.xxx); 
+				                console.log(this)
+				            } 
+				        } 
+		            },
+		            title: {
+		                text: ''
+		            },
+		            xAxis: [{
+		                categories: arr,
+		                reversed: false,
+		                labels: {
+		                    step: 1,
+		                    x:0,
+		                    align:'left',
+		                    formatter:function(){
+						      if(this.value.length>5){
+						      	return this.value.substr(0,5)+'...'
+						      }else{
+						      	return this.value
+						      }
+						    },
+						    // useHTML:true
+		                }
+		            }, { // mirror axis on right side
+		                opposite: true,
+		                reversed: false,
+		                categories: arr2,
+		                linkedTo: 0,
+		                labels: {
+		                    step: 1,
+		                    align:'right',
+		                    x:0
+		                }
+		            }],
+		            yAxis: {
+		                title: {
+		                    text: null
+		                },
+		                labels: {
+		                    formatter: function () {
+		                        return (Math.abs(this.value) ) ;
+		                    }
+		                },
+		                min: -15,
+		                max: 15
+		            },
+					plotOptions: {
+					    series: {
+					    	cursor: 'pointer',
+					        stacking: 'normal',
+					        colorByPoint: true,
+					        events: { 
+					            click: function(e) { 
+					                console.log(e.point.y)
+					            } 
+					        } 
+					    }
+					},
+		            tooltip: {
+		            	enabled:true,
+		                formatter: function () {
+		                	console.log(this.point)
+		                	console.log(this.series)
+		                    return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
+		                        'ratio: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
+		                }
+		            },
+		            series: [{
+		                name: 'A',
+		                data: [-1,-2,-3,-4,-5,-6,-7,-7.1,-8.7,-10]
+		            }, {
+		                name: 'V',
+		                data: data//[1,2,3,4,5,6,7,7.1,8.7,10]
+		            }]
+		        });
+		    });
+		});
+
+	</script>
+</body>
+</html>

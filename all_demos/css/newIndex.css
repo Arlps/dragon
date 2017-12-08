@@ -1,0 +1,23 @@
+/*64.2*/
+.wrap{ min-width: 467px; height: 100%; min-height: 300px; background: url(../img/newbg.png) no-repeat; background-size: 100% 100%; margin: 0 auto; box-shadow: 0 0 10px; position: relative;}
+.title{ width: 160px; height: 40px; background: rgba(255,0,0,0); position: absolute; left: 42%; top: 13%;overflow: hidden; cursor: pointer;}
+.box{ width: 16.5%; height: 29.5%; background: url(../img/newsix.png); transition:0.2s;
+background: url(../img/six!.png) center center no-repeat; background-size: 100% 100%; box-shadow:0 0 0px rgba(255,255,0,1); position: absolute; border-radius: 20px;}
+.left1{ left: 19.5%; top: 4% }
+.left2{ left: 5%; top: 29% }
+.left3{ left: 23.5%; top: 45% }
+.right1{ right: 19.5%; top: 4% }
+.right2{ right: 5%; top: 29% }
+.right3{ right: 23.5%; top: 45% }
+.bottom{ left: 42%; top: 65%}
+
+.inner{ width: 100%; height: 50%; top: 25%; border:0px solid black; position: absolute;z-index: 10;background: rgba(0,0,0,0.5); background: #fff; cursor: pointer;}
+.rect{ width: 100%; height: 50%; border:0px solid black; position: absolute; top: 25%; background: white;z-index: 9; cursor: pointer; 
+	box-shadow:0 0 10px;}
+.hex{ width: 100%; height: 100%; border:0px solid black; position: absolute; background: inherit; box-shadow: inherit}
+.hex1{ transform:rotate(60deg);}
+.hex2{ transform:rotate(-60deg);}
+
+.flash{
+	position: absolute; width: 200%; height: 100px; transform:rotate(45deg); background-color: rgba(255,255,255,.2); top:0 ;left: -200%;
+}

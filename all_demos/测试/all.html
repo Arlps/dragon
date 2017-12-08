@@ -1,0 +1,3136 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>主站端</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/Unipower_Web/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Unipower_Web/dist/css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Unipower_Web/plugins/ionicons/css/ionicons.min.css"> 
+    <link rel="stylesheet" href="/Unipower_Web/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/Unipower_Web/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/Unipower_Web/plugins/iCheck/flat/blue.css">
+    <link rel="stylesheet" href="/Unipower_Web/plugins/morris/morris.css">
+    <link rel="stylesheet" href="/Unipower_Web/plugins/jvectormap/jquery-jvectormap-1.2.2.css"> 
+    <link rel="stylesheet" href="/Unipower_Web/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="/Unipower_Web/plugins/daterangepicker/daterangepicker-bs3.css">
+    <link rel="stylesheet" href="/Unipower_Web/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link rel="stylesheet" href="/Unipower_Web/plugins/timepicker/bootstrap-timepicker.css">
+	<link rel="stylesheet" href="/Unipower_Web/dist/css/style.css">
+	
+  </head>
+  
+  <body id="lwlTest" class="skin-blue sidebar-mini wysihtml5-supported" onresize="res_body();" style="min-width:1080px !important;min-height:800px !important;_width:1280px !important;_height:800px !important;OVERFLOW-x: auto !important;overflow-y:hidden">
+  <div class="wrapper">
+	     <!-- head -->
+	     <div id="apptop">
+
+
+
+
+
+
+
+
+ <header class="main-header" id="app-header">
+        <!-- Logo -->
+        <a href="#" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>优普</b></span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>Unipower</b></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          <a class="sidebar-toggle" onclick="sidebartoggle()" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">            
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding:12px 10px" aria-expanded="false">
+                 <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                  
+                  管理员
+               </a>  
+               <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <p>
+                      Alexander Pierce - Web Developer
+                      <small>Member since Nov. 2012</small>
+                    </p>
+                  </li>
+                  <!-- Menu Body -->
+                  <li class="user-body">
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Followers</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Sales</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Friends</a>
+                    </div>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    </div>
+                  </li>
+                </ul>             
+              </li> 
+               <li style="color: #fff;font-size:16px;">          
+                 <a style="padding:11px 3px 13px 3px;"> <div id="timeslide">2016/12/7 16:13:44</div></a>                     
+              </li>
+           
+              <!-- <li  class="dropdown tasks-menu" style="color: #fff; font-size:16px;">
+                   <a><div id="timeslide" style="height:auto;width:50px;"></div> </a>             
+              </li>  -->
+              <li>
+                <a id="LoginOut" onclick="logOut()" style="padding:12px 15px"><i class="glyphicon glyphicon-off"></i></a>
+              </li>
+            </ul>
+            
+          </div>
+        </nav>
+      </header>  
+      <script type="text/javascript">
+      	$(function() {
+            getTime();
+            setInterval("getTime();", 1000); //每隔一秒执行一次 
+        })
+    
+        function getTime() {
+            var myDate = new Date();
+            var date = myDate.toLocaleDateString();
+            var hours = myDate.getHours();
+            var minutes = myDate.getMinutes();
+            var seconds = myDate.getSeconds();
+            $("#timeslide").html(date + " " + (hours>10?hours:Number('0'+hours))  + ":" + (minutes>10?minutes:'0'+minutes) + ":" + (seconds>9?seconds:'0'+seconds)); //将值赋给div 
+        }
+      	
+      
+      
+      	
+		/*function startTime(){
+			
+			
+		   var today=new Date();
+		  var h=today.getHours();
+		  var m=today.getMinutes();
+		  var s=today.getSeconds();
+		  // add a zero in front of numbers<10
+		  m=checkTime(m);
+		  s=checkTime(s);
+		  //alert(m);
+		  document.getElementById('timeslide').innerHTML=h+":"+m+":"+s;
+		  
+		  t=setTimeout('startTime()',500); 
+		} */
+	
+		function checkTime(i){
+		 if (i<10) 
+		   {i="0" + i;}
+		   return i;
+		} 	
+         /* $(document).ready(function() {
+       
+			var d = new Date()
+			var vYear = d.getFullYear()
+			var vMon = d.getMonth() + 1
+			var vDay = d.getDate()
+			var h = d.getHours(); 
+			var m = d.getMinutes(); 
+			var se = d.getSeconds(); 
+			s=vYear+(vMon<10 ? "0" + vMon : vMon)+(vDay<10 ? "0"+ vDay : vDay)+(h<10 ? "0"+ h : h)+(m<10 ? "0" + m : m)+(se<10 ? "0" +se : se);
+			document.write(s);//输出时间
+			document.getElementById('timeslide').innerHTML=vYear+"年"+vMon+"月"+vDay+"日  "+h+":"+m+":"+s;
+		  t=setTimeout('startTime()',500);
+
+		 var today=new Date();
+		  var h=today.getHours();
+		  var m=today.getMinutes();
+		  var s=today.getSeconds();
+		  // add a zero in front of numbers<10
+		  m=checkTime(m);
+		  s=checkTime(s);
+		  //alert(m);
+		  document.getElementById('timeslide').innerHTML=h+":"+m+":"+s;
+		  t=setTimeout('startTime()',500);
+
+        });  */ 
+		
+		function logOut(){
+		   if(confirm("确定退出系统吗？")){
+		       $('#LoginOut').attr('href','Logout.action');
+		   }
+		}
+    </script>   
+
+</div>
+	     <!--  左边一二级菜单 -->
+	      <div id="appleft">
+
+
+
+      <aside class="main-sidebar">
+        <section class="sidebar">
+        	<input type="hidden" id="NodeType3" value="">
+			<input type="hidden" id="managerId3" value="">
+			<input type="hidden" id="show_id3" value="">
+			<input type="hidden" id="treeid3" value="">
+			<input type="hidden" id="timevalue3" value="">
+          <input type="hidden" id="selectedmenu" value="null">       
+          <ul class="sidebar-menu">        
+           
+            
+				
+				 <li style="cursor: pointer;" class="treeview  onetreeview active" id="10"> 
+					<a onclick="oneMenu(this,'unipower_index.action')">             
+                       <i class="fa fa-home"></i>
+                       <span>主页</span>
+                    </a>
+                  </li>
+				
+				
+		   
+            
+             <li style="cursor: pointer;" class="treeview" id="11">             
+					<a>             
+                       <i class="fa fa-sitemap"></i>
+                       <span>监测视图</span>
+                       <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+					<ul class="treeview-menu" id="ul1" style="display: none;">
+						
+							
+						  		<li class="thridtreeview" id="1101">
+						  		  <a id="ta" onclick="zzz('treeMain.action?functionCode=1101','1101')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>资源</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+							
+							
+								<li class="thridtreeview" id="1103">
+								 <a id="ta" onclick="zzz('resourceSearch_findKeyByPage.action?functionCode=1103','1103')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>资源检索</span> 
+								 </a>
+								</li>						
+							
+						
+					</ul>
+				  </li>
+				
+				
+				
+		   
+            
+             <li style="cursor: pointer;" class="treeview" id="12">             
+					<a>             
+                       <i class="fa fa-support"></i>
+                       <span>拓扑视图</span>
+                       <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+					<ul class="treeview-menu" id="ul1" style="display: none;">
+						
+							
+						  		<li class="thridtreeview" id="1201">
+						  		  <a id="ta" onclick="zzz('physicalTopoShow.action?functionCode=1201','1201')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>拓扑展示</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+							
+						  		<li class="thridtreeview" id="1202">
+						  		  <a id="ta" onclick="zzz('Physical.action?functionCode=1202','1202')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>拓扑配置</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+					</ul>
+				  </li>
+				
+				
+				
+		   
+            
+             <li style="cursor: pointer;" class="treeview" id="13">             
+					<a>             
+                       <i class="fa fa-list"></i>
+                       <span>数据中心</span>
+                       <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+					<ul class="treeview-menu" id="ul1" style="display: none;">
+						
+							
+						  		<li class="thridtreeview" id="1301">
+						  		  <a id="ta" onclick="zzz('datanode.action?functionCode=1301','1301')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>数据节点管理</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+							
+							
+								<li class="thridtreeview" id="1302">
+								 <a id="ta" onclick="zzz('dataout_backup.action?functionCode=1302','1302')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>备份恢复</span> 
+								 </a>
+								</li>						
+							
+						
+							
+						  		<li class="thridtreeview" id="1303">
+						  		  <a id="ta" onclick="zzz('dataout_downloadPage.action?functionCode=1303','1303')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>数据导出</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+					</ul>
+				  </li>
+				
+				
+				
+		   
+            
+				
+				 <li style="cursor: pointer;" class="treeview  onetreeview" id="14"> 
+					<a onclick="oneMenu(this,'improving.action')">             
+                       <i class="fa fa-shield"></i>
+                       <span>安全视图</span>
+                    </a>
+                  </li>
+				
+				
+		   
+            
+             <li style="cursor: pointer;" class="treeview" id="15">             
+					<a>             
+                       <i class="fa fa-pie-chart"></i>
+                       <span>报表视图</span>
+                       <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+					<ul class="treeview-menu" id="ul1" style="display: none;">
+						
+							
+							
+								<li class="thridtreeview" id="1501">
+								 <a id="ta" onclick="zzz('allReportList.action?reportType=1','1501')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>通用</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1502">
+								 <a id="ta" onclick="zzz('allReportList.action?reportType=2','1502')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>系统维护</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1503">
+								 <a id="ta" onclick="zzz('allReportList.action?reportType=3','1503')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>设备报表</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1504">
+								 <a id="ta" onclick="zzz('allReportList.action?reportType=4','1504')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>业务报表</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1505">
+								 <a id="ta" onclick="zzz('allReportList.action?reportType=5','1505')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>定制报表</span> 
+								 </a>
+								</li>						
+							
+						
+					</ul>
+				  </li>
+				
+				
+				
+		   
+            
+             <li style="cursor: pointer;" class="treeview" id="16">             
+					<a>             
+                       <i class="fa fa-stethoscope"></i>
+                       <span>管理视图</span>
+                       <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+					<ul class="treeview-menu" id="ul1" style="display: none;">
+						
+							
+						  		<li class="thridtreeview" id="1601">
+						  		  <a id="ta" onclick="zzz('UserList.action?functionCode=1601','1601')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>用户管理</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+							
+						  		<li class="thridtreeview" id="1602">
+						  		  <a id="ta" onclick="zzz('Ping.action?functionCode=1602','1602')">
+						  		   <i class="fa fa-circle-o"></i>
+						  		   <span>诊断工具</span> 
+						  		  </a>
+						  		</li>											
+							
+							
+						
+							
+							
+								<li class="thridtreeview" id="1603">
+								 <a id="ta" onclick="zzz('timedtask_list.action?functionCode=1603','1603')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>定时任务</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1604">
+								 <a id="ta" onclick="zzz('netconfig_getConf.action','1604')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>网卡设置</span> 
+								 </a>
+								</li>						
+							
+						
+							
+							
+								<li class="thridtreeview" id="1605">
+								 <a id="ta" onclick="zzz('version_uploadPage','1605')">
+								  <i class="fa fa-circle-o"></i>
+								  <span>系统升级</span> 
+								 </a>
+								</li>						
+							
+						
+					</ul>
+				  </li>
+				
+				
+				
+		    
+		 </ul>	
+		  <input type="hidden" id="loginuser" value="1">	               
+        </section>           
+      </aside>
+      
+      <script type="text/javascript">
+  	$(document).ready(function(){ 	
+	  $("#10").addClass("active");
+	  $(".treeview").click(function(){
+	  if( $(this).children("ul").is(":visible")){
+	     $(this).children("ul").hide();
+	  }else{
+	  $(this)			
+			.children("ul").show().end()			//将子节点的ul元素显示出来并重新定位到上次操作的元素
+		.siblings()	                                //获取元素的兄弟元素
+			.children("ul").hide();				//将兄弟元素下的ul元素隐藏
+	    }		
+	   });
+	  $(".treeview > ul").click(function(event) {
+            event.stopPropagation();
+        }); 
+      $(".thridtreeview").click(function(){
+          $(this).siblings("li").removeClass("active");
+          $(this).parent("ul").parent("li").siblings("li").children("ul").children("li").removeClass("active");
+          $(this).parent("ul").parent("li").siblings("li").removeClass("active");
+          $(this).parent("ul").parent("li").addClass("active");
+          $(this).addClass("active");        
+      });
+       $(".onetreeview").click(function(){
+          $(this).siblings("li").removeClass("active");
+          $(this).siblings("li").children("ul").children("li").removeClass("active");
+      	  $(this).addClass("active");
+      }); 
+});       
+    </script>  
+    <script src="/Unipower_Web/js/frame/top.js" type="text/javascript"></script>
+      <script type="text/javascript">
+     function zzz(href,fn){ //有三级菜单的点击事件
+         stop_refresh();//主页停止刷新
+         $('#appmain').html(null); 
+          var href2="contentop_"+href;
+          setDateLeft();
+          if(fn==1101 || fn==1102){//判断是否为树
+           $('#appcontentop').hide();
+           $('#appcontent').hide();
+           $('#appmain').hide();  
+           $('#device_appcon').show();
+           $('#appcontentop').html(null);
+           $('#appcontent').html(null);
+           $('#device_appcon').html(null);
+         	var id3=$('#show_id3').val();
+         	var NodeType3=$('#NodeType3').val();
+         	var managerId3=$('#managerId3').val();
+         	var treeid3=$('#treeid3').val();
+         	var timevalue3=$('#timevalue3').val();
+         	var href3="showDeviceStatus.action?TreeId=1";
+         	if(id3!=null && id3!='' && NodeType3!=null && NodeType3!='' && 
+         		managerId3!=null && managerId3!='' && treeid3!=null && treeid3!=''){
+         		href3=href3+"&id="+id3+"&NodeType="+NodeType3+"&managerId="+managerId3+"&treeid="+treeid3+"&timevalue="+timevalue3;
+         	}
+         
+            $('#device_appcon').load(href,function(response,status,xhr){
+			$('#device_appcon').html(response);
+			$('#table_appcontent').load(href3,function(response,status,xhr){
+			 		 $('#table_appcontent').html(response);
+		 		});
+	          
+	        });
+          }else if(fn==1601){
+           var louser = $("#loginuser").val();
+           var userid = parseInt($("#loginuser").val());
+             if(louser==1){
+	            $('#device_appcon').hide();
+	            $('#appmain').hide();  
+	            $('#appcontentop').html(null);
+	            $('#appcontent').html(null); 
+	            $('#appcontentop').show();
+	            $('#appcontent').show();
+	            $('#device_appcon').html(null);
+	            $('#appcontent').load(href,function(response,status,xhr){
+		        $('#appcontent').html(response);
+		        });	    
+	            $('#appcontentop').load(href2,function(response,status,xhr){
+		        $('#appcontentop').html(response);
+		        $('#lilili').addClass("active");//点击二级菜单li时，默认三级菜单第一个li为acttive类型
+		        });
+             }else{
+           //     alert("我不是管理员");
+                $('#device_appcon').hide();
+	            $('#appmain').hide();  
+	            $('#appcontentop').html(null);
+	            $('#appcontent').html(null); 
+	            $('#appcontentop').show();
+	            $('#appcontent').show();
+	            $('#device_appcon').html(null);
+	            $('#appcontent').load("GeneralUserEdit.action?user.id="+userid,function(response,status,xhr){
+		        $('#appcontent').html(response);
+		        });	
+		       /*  $('#appcontentop').load(href2,function(response,status,xhr){
+		        $('#appcontentop').html(response);
+		        $('#lilili').addClass("active");//点击二级菜单li时，默认三级菜单第一个li为acttive类型
+		        }); */
+             };
+            /* var louser = com.unipower.unipower.db.vo.system.usermanager.User@2c956859;
+            alert(louser); */
+          }else{
+            $('#device_appcon').hide();
+            $('#appmain').hide();  
+            $('#appcontentop').html(null);
+            $('#appcontent').html(null); 
+             $('#appcontentop').show();
+            $('#appcontent').show();
+            $('#device_appcon').html(null);
+            
+             if(fn==1201){
+	         	  var b = $(window).height();
+             	 $('#appcontent').css("height", b-149+"px");
+	         	  /* $('#appcontent').css("height","90.5%"); */
+	         }
+            
+             $('#appcontent').load(href,function(response,status,xhr){
+	          $('#appcontent').html(response);
+	        });	    
+           $('#appcontentop').load(href2,function(response,status,xhr){
+	          $('#appcontentop').html(response);
+	          $('#lilili').addClass("active");//点击二级菜单li时，默认三级菜单第一个li为acttive类型
+	        });
+            
+          };              
+       };
+       
+        function zzz2(href,fn){ //无三级菜单的点击事件
+        	$('#device_appcon').hide();
+            $('#appmain').hide();  
+            $('#appcontentop').hide();
+            $('#appcontentop').html(null);
+            $('#appcontent').html(null); 
+             $('#appcontentop').html(null);
+            $('#appcontent').show();
+            $('#device_appcon').html(null);
+             $('#appcontent').css("height","500px");
+             $('#appcontent').load(href,function(response,status,xhr){
+	          $('#appcontent').html(response);
+	        });	    
+        }
+       
+        function oneMenu(obj,href){
+        	setDateLeft();
+            $('#appcontentop').hide();
+            $('#appcontent').hide();  
+            $('#device_appcon').hide();
+            $('#device_appcon').html(null);   
+	        $('#appcontentop').html(null);
+            $('#appcontent').html(null);
+            $('#appmain').html(null);     
+            $('#view-detail-window').html(null);       
+            $('#appmain').show(); 
+            $('#appmain').load(href,function(response,status,xhr){
+	          $('#appmain').html(response);
+	        });
+        }
+        
+        //实现本地保存
+        function setDateLeft(){
+        	var id3=$('#show_id').val();
+         	var NodeType3=$('#NodeType').val();
+         	var managerId3=$('#managerId').val();
+         	var treeid3=$('#treeid').val();
+         	var timevalue3=$('#timevalue').val();
+         	
+         	var id2=$('#show_id2').val();
+         	var NodeType2=$('#NodeType2').val();
+         	var managerId2=$('#managerId2').val();
+         	var treeid2=$('#treeid2').val();
+			var timevalue2=$('#timevalue2').val();
+        	if(id3!=null && id3!='' && NodeType3!=null && NodeType3!='' && 
+         		managerId3!=null && managerId3!='' && treeid3!=null && treeid3!=''
+         		&& timevalue3!=null && timevalue3!=''){
+         		document.getElementById("show_id3").value=id3;
+    			document.getElementById("NodeType3").value=NodeType3;
+    			document.getElementById("managerId3").value=managerId3;
+    			document.getElementById("treeid3").value=treeid3;
+    			document.getElementById("timevalue3").value=timevalue3;
+         	}else if(id2!=null && id2!='' && NodeType2!=null && NodeType2!='' && 
+         		managerId2!=null && managerId2!='' && treeid2!=null && treeid2!=''
+         		&& timevalue2!=null && timevalue2!=''){
+         		document.getElementById("show_id3").value=id2;
+    			document.getElementById("NodeType3").value=NodeType2;
+    			document.getElementById("managerId3").value=managerId2;
+    			document.getElementById("treeid3").value=treeid2;
+    			document.getElementById("timevalue3").value=timevalue2;
+         	}else{
+         		var	id3=$('#show_id3').val();
+    			var	NodeType3=$('#NodeType3').val();
+    			var	managerId3=$('#managerId3').val();
+    			var	treeid3=$('#treeid3').val();
+    			var	timevalue3=$('#timevalue3').val();
+    			document.getElementById("show_id3").value=id3;
+    			document.getElementById("NodeType3").value=NodeType3;
+    			document.getElementById("managerId3").value=managerId3;
+    			document.getElementById("treeid3").value=treeid3;
+    			document.getElementById("timevalue3").value=timevalue3;
+         	}
+        
+        }
+        
+        
+        
+      </script>
+ </div>
+	       <div class="content-wrapper" id="appcon" style="overflow-x: hidden; background: rgb(255, 255, 255); height: 556px;">
+	       
+	    	<div id="appmain" style="">
+
+
+
+
+
+
+ 
+
+
+
+
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>主站端</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <style>
+    	
+    	.box-body > .row{
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			.col-lg-1,
+			.col-lg-10,
+			.col-lg-11,
+			.col-lg-12,
+			.col-lg-2,
+			.col-lg-3,
+			.col-lg-4,
+			.col-lg-5,
+			.col-lg-6,
+			.col-lg-7,
+			.col-lg-8,
+			.col-lg-9,
+			.col-md-1,
+			.col-md-10,
+			.col-md-11,
+			.col-md-12,
+			.col-md-2,
+			.col-md-3,
+			.col-md-4,
+			.col-md-5,
+			.col-md-6,
+			.col-md-7,
+			.col-md-8,
+			.col-md-9,
+			.col-sm-1,
+			.col-sm-10,
+			.col-sm-11,
+			.col-sm-12,
+			.col-sm-2,
+			.col-sm-3,
+			.col-sm-4,
+			.col-sm-5,
+			.col-sm-6,
+			.col-sm-7,
+			.col-sm-8,
+			.col-sm-9,
+			.col-xs-1,
+			.col-xs-10,
+			.col-xs-11,
+			.col-xs-12,
+			.col-xs-2,
+			.col-xs-3,
+			.col-xs-4,
+			.col-xs-5,
+			.col-xs-6,
+			.col-xs-7,
+			.col-xs-8,
+			.col-xs-9 {
+				position: relative;
+				min-height: 1px;
+				padding-right: 10px;
+				padding-left: 10px
+			}
+			
+			/*.info-box-content{
+				margin-top: 5px;
+			}*/
+			/*.info-box-text{
+				margin-top: 10px;
+			}*/
+			
+			
+			
+			
+			.appmodal {
+				width: 40%;
+				margin: 15px 15%;
+				background: #fff;
+				position: absolute;
+				z-index: 1066;
+				opacity: 0;
+				
+				
+				/*透明度为0*/
+				top: -550px;
+				
+				/*放到最顶*/
+				
+				height: 83%;
+				border: #35a5e5 1px solid;
+				box-shadow: 0 0 3px rgba(81, 203, 238, 0.7);
+				-webkit-box-shadow: 0 0 3px rgba(81, 203, 238, 0.7);
+				-moz-box-shadow: 0 0 3px rgba(81, 203, 238, 0.7);
+				
+			}
+			.modal-dialog {
+					width: 60%;
+					margin: 30px auto;
+					overflow-y: auto;
+					border: #35a5e5 1px solid;
+					box-shadow: 0 0 5px rgba(81, 203, 238, 0.7);
+					-webkit-box-shadow: 0 0 5px rgba(81, 203, 238, 0.7);
+					-moz-box-shadow: 0 0 5px rgba(81, 203, 238, 0.7);
+			}
+			.modal-body {
+					min-height: 350px;
+					max-height: 450px;
+					overflow-y: auto;
+			}
+			.modal-header {
+					padding-bottom: 10px;
+					padding-top: 12px;
+			}
+			.modal-footer{
+				padding:8px;
+			}
+			.business-row p{
+				margin-top: 10px;
+			}
+			.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+				padding:7px;
+			}
+		.rslides li{
+			width:100%;
+		}
+		.focus{height:267px;border:1px solid #EEE;position:relative;margin-top:6px;float:center}
+		.f426x240{height:267px;overflow:hidden}
+		.f426x240 img{height:267px}
+		
+		.rslides{width:100%;position:relative;list-style:none;padding:0}
+		.rslides_nav{
+			 height:18px;
+			 width:25px;
+			 position:absolute;
+			 -webkit-tap-highlight-color:rgba(0,0,0,0);
+			 bottom:0%;
+			 left:93%;
+			 opacity:0.4;
+			 text-indent:-9999px;
+			 overflow:hidden;
+			 border-radius:4px;
+			 text-decoration:none;
+			 /* background:url(images/index/i.png) no-repeat 0 -573px; */
+			 background:url(images/index/Left-20.png) no-repeat 0;
+			 background-size:23px 16px;
+			 background-color:#bebebe;
+			 margin-top:-28px
+			 }
+		.rslides_nav:active{opacity:1}
+		.rslides_nav:hover{opacity:0.8}
+		.rslides_nav.next{ 
+			left:auto;
+			background:url(images/index/Right-20.png) no-repeat 0;
+			background-color:#cccccc;
+			background-size:23px 16px;
+			/* background-position:-31px -573px; */
+			right:0;
+			border-radius:4px;}
+		/* .rslides_tabs{margin:5px auto;clear:both;text-align:center}
+		.rslides_tabs li{display:inline;float:none;_float:left;*float:left;margin-right:5px}
+		
+		.rslides_tabs a{text-indent:-9999px;overflow:hidden;-webkit-border-radius:15px;-moz-border-radius:15px;border-radius:15px;background:rgba(0,0,0, .2);background:#DDD;display:inline-block;_display:block;*display:block;width:9px;height:9px}
+		.rslides_tabs .rslides_here a{background:rgba(0,0,0, .6);background:#390} */
+			
+    </style>
+    
+    <link type="text/css" href="/Unipower_Web/plugins/select/css/jquery.mcdropdown.min.css" rel="stylesheet" media="all">
+  
+  
+  	<!--弹框-->
+		
+<div id="modal0" class="appmodal" style=" display: block; position: fixed;">
+	<input type="hidden" id="topN_id0" value="">
+    <input type="hidden" id="topN_parentId0" value="">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="modalclose2(false)">×</button>
+		<h4 class="modal-title" id="myModalLabel">设置</h4>
+	</div>
+	<div class="modal-content" style="overflow-y: auto; height: 73%; overflow-x: hidden; padding: 10px 10px 0px 10px;">
+
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">名称：</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control down-ip-adress" id="top_name0" placeholder="请输入名称" value="top_cpu">
+			</div>
+			<p style="color: red">*</p>
+		</div>
+
+		<!--form-group row-->
+		<!-- <div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label"
+				style="text-align: right;">上级对象：</label>
+			<div class="col-sm-8">
+				<input type="text" id="parent_body0" value=""
+					class="form-control down-ip-adress" readonly="readonly">
+			</div>
+		</div> -->
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">上级对象：</label>
+			<div class="col-sm-8">
+				<select class="form-control" id="parentObject0">
+				    
+					<option value="/">/</option>
+					 
+					<option value="/资源视图">/资源视图</option>
+					 
+					<option value="/资源视图/网络设备">/资源视图/网络设备</option>
+					 
+					<option value="/资源视图/网络设备/路由器">/资源视图/网络设备/路由器</option>
+					 
+					<option value="/资源视图/网络设备/路由器/Huawei">/资源视图/网络设备/路由器/Huawei</option>
+					 
+					<option value="/资源视图/网络设备/交换机">/资源视图/网络设备/交换机</option>
+					 
+					<option value="/资源视图/网络设备/交换机/Huawei">/资源视图/网络设备/交换机/Huawei</option>
+					 
+					<option value="/资源视图/操作系统">/资源视图/操作系统</option>
+					 
+					<option value="/资源视图/操作系统/Linux">/资源视图/操作系统/Linux</option>
+					 
+					<option value="/资源视图/操作系统/Windows">/资源视图/操作系统/Windows</option>
+					 
+					<option value="/资源视图/数据库">/资源视图/数据库</option>
+					 
+					<option value="/资源视图/数据库/SQL Server">/资源视图/数据库/SQL Server</option>
+					 
+					<option value="/资源视图/网络设备/路由器/Huawei/Huawei">/资源视图/网络设备/路由器/Huawei/Huawei</option>
+					 
+					<option value="/资源视图/网络设备/交换机/Huawei/Quidway">/资源视图/网络设备/交换机/Huawei/Quidway</option>
+					 
+					<option value="/资源视图/网络设备/交换机/Huawei/Quidway2">/资源视图/网络设备/交换机/Huawei/Quidway2</option>
+					 
+					<option value="/资源视图/操作系统/Linux/TestGroup">/资源视图/操作系统/Linux/TestGroup</option>
+					 
+					<option value="/资源视图/操作系统/Linux/TestGroup">/资源视图/操作系统/Linux/TestGroup</option>
+					 
+					<option value="/资源视图/操作系统/Windows/WIN-ME6FVAS3LQP">/资源视图/操作系统/Windows/WIN-ME6FVAS3LQP</option>
+					 
+					<option value="/资源视图/操作系统/Windows/FlyLikeWind-PC">/资源视图/操作系统/Windows/FlyLikeWind-PC</option>
+					 
+					<option value="/资源视图/数据库/SQL Server/SQLServer(192.168.2.138)">/资源视图/数据库/SQL Server/SQLServer(192.168.2.138)</option>
+					
+				</select>
+			</div>
+			<p style="color: red">*</p>
+		</div>
+
+		<div class="form-group row" style="height:34px">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">监测器类型：</label>
+			<div class="col-sm-8">
+
+				<div class="mcdropdown">
+					<input type="text" class=" down-ip-adress" name="category" id="category0" autocomplete="off" value="" readonly="readonly"> <a href="#" tabindex="-1"></a>
+				</div>
+
+				<ul id="categorymenu0" class="mcdropdown_menu">
+					
+						
+							<li rel="1" class="mc_root mc_parent">操作系统
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'Aix')" class="mc_root">
+											AIX</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'Linux')" class="mc_root">
+											Linux/Unix</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'Windows')" class="mc_root">
+											Windows</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'as400device')" class="mc_root">
+											AS400</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hpux')" class="mc_root">
+											HP Unix</li>
+									
+								</ul></li>
+						
+					
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">数据库
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'db2device')" class="mc_root">
+											DB2</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'informixdevice')" class="mc_root">
+											Informix</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'mongodevice')" class="mc_root">
+											Mongo</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'mysqldevice')" class="mc_root">
+											MySQL</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'oracledevice')" class="mc_root">
+											Oracle</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'sqlserverdevice')" class="mc_root">
+											SQL Server</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'sybasedevice')" class="mc_root">
+											SyBase</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">服务器硬件
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hmcdevice')" class="mc_root">
+											HMC</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hpc7000device')" class="mc_root">
+											HP C7000</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hpchassis')" class="mc_root">
+											HP刀箱</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hpoadevice')" class="mc_root">
+											HP OA</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hpomsnmpdevice')" class="mc_root">
+											HP带内</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hpoutofbanddevice')" class="mc_root">
+											HP带外</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hprx7640device')" class="mc_root">
+											HP RX7640</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hpsd1device')" class="mc_root">
+											HP SD1</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hpsd2device')" class="mc_root">
+											HP SD2</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'huaweiserverhardware')" class="mc_root">
+											华为</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'ibmchassis')" class="mc_root">
+											IBM刀箱</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'ibmoutofbandhardware')" class="mc_root">
+											IBM带外</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'ibmoutofbandhardwaretelnet')" class="mc_root">
+											IBM带外(Telnet)</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'ibmserverhardware')" class="mc_root">
+											IBM带内</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'aixdevice')" class="mc_root">
+											AIX小机(带内)</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'dellidracdevice')" class="mc_root">
+											DELL带外(SSH)</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'dellserverhardware')" class="mc_root">
+											DELL带内</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">存储
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'sunstorage')" class="mc_root">
+											Sun</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'HP3par')" class="mc_root">
+											HP 3PAR</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'HitachistorageDevice')" class="mc_root">
+											Hitachi</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'IBMDS8000StorageDevice')" class="mc_root">
+											IBM DS8000</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'IBMStorageDevice')" class="mc_root">
+											IBM DS系列存储</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'NetAppDevice')" class="mc_root">
+											NetApp</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'dellCompellent')" class="mc_root">
+											Dell Compellent</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'dellmd')" class="mc_root">
+											Dell MD</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'emcstorage')" class="mc_root">
+											EMC</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'emcvmaxdmx')" class="mc_root">
+											EMC VMAX/DMX</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'equallogicMember2')" class="mc_root">
+											Dell EqualLogic</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hpevastorage')" class="mc_root">
+											HP EVA</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'huaweiraid')" class="mc_root">
+											Huawei</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'ibmv7000storage')" class="mc_root">
+											IBM V7000</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">备份设备
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'datadomain')" class="mc_root">
+											DataDomain EMC</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'hpvlsstorage')" class="mc_root">
+											HP VLS</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'ibmts3500storage')" class="mc_root">
+											IBM TS3500</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'ibmts7650storage')" class="mc_root">
+											IBM TS7650</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'adic')" class="mc_root">
+											ADIC</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">应用软件
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'tomcatdevice')" class="mc_root">
+											Tomcat</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'tuxedodevice')" class="mc_root">
+											Tuxedo</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'weblogicdevice')" class="mc_root">
+											WebLogic</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'webspheredevice')" class="mc_root">
+											WebSphere</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'AD')" class="mc_root">
+											AD域</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'Apache')" class="mc_root">
+											Apache</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'Nginx')" class="mc_root">
+											Nginx</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'URLRecored')" class="mc_root">
+											UrlRecored</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'aixhacmpdevice')" class="mc_root">
+											HACMP</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'exchangedevice')" class="mc_root">
+											Exchange</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'iisdevice')" class="mc_root">
+											IIS</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'jbossdevice')" class="mc_root">
+											JBoss</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'jbosseapdevice')" class="mc_root">
+											JBoss EAP</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'lotusdevice')" class="mc_root">
+											Lotus</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">机房
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'emerson')" class="mc_root">
+											Emerson</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'liebert')" class="mc_root">
+											Liebert</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'upsdevice')" class="mc_root">
+											UPS</li>
+									
+										<li rel="2" onclick="getSubMenu(0,1,'akcp')" class="mc_root">
+											Akcp</li>
+									
+								</ul></li>
+						
+					
+						
+					
+
+					<li rel="1" class="mc_root mc_parent">网络设备
+						<ul>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'neusoftmonitor')" class="mc_root">
+									Neusoft</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'nokiamonitor')" class="mc_root">
+									Nokia</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'nortelmonitor')" class="mc_root">
+									Nortel</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'paloalto')" class="mc_root">
+									Paloalto</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'radwaremonitor')" class="mc_root">
+									Radware</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'riverbedmonitor')" class="mc_root">
+									RiverBed</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'ruijiemonitor')" class="mc_root">
+									Ruijie</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'sinform540monitor')" class="mc_root">
+									SinForMX</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'sinformonitor')" class="mc_root">
+									深信服</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'sslmonitor')" class="mc_root">
+									Koal SSL</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'topsecmonitor')" class="mc_root">
+									TOPSEC</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'tpipsmonitor')" class="mc_root">
+									TippingPointIPS</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'uttmonitor')" class="mc_root">
+									UTT</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'venustechmonitor')" class="mc_root">
+									Venustech</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'watchguardmonitor')" class="mc_root">
+									WatchGuard</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'Aruba')" class="mc_root">
+									Aruba</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'F5monitor')" class="mc_root">
+									F5</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'FortigateMonitor')" class="mc_root">
+									FortiGate</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'NRmonitor')" class="mc_root">
+									NRmonitor</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'Sonicwall')" class="mc_root">
+									Sonicwall</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'avaya')" class="mc_root">
+									Avaya</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'barracudamonitor')" class="mc_root">
+									Barracuda</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'bluecoatmonitor')" class="mc_root">
+									Bluecoat</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'brocademonitor')" class="mc_root">
+									Brocade</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'checkpointmonitor')" class="mc_root">
+									CheckPoint</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'cisco')" class="mc_root">
+									Cisco</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'dellpwcsmonitor')" class="mc_root">
+									DellPWConnSwitch</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'dlinkmonitor')" class="mc_root">
+									DLink</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'enterasysmonitor')" class="mc_root">
+									Enterasys</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'foundrymonitor')" class="mc_root">
+									Foundry</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'genericnetworkmonitor')" class="mc_root">
+									通用网络</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'h3cmonitor')" class="mc_root">
+									H3C</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'hillstonemonitor')" class="mc_root">
+									HillStone</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'hitchistoragemonitor')" class="mc_root">
+									HAC</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'hp')" class="mc_root">
+									HP</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'huaweiddosmonitor')" class="mc_root">
+									Huawei DDOS</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'huaweimonitor')" class="mc_root">
+									华为</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'ironportmonitor')" class="mc_root">
+									IronPort</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'junipermonitor')" class="mc_root">
+									Juniper</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'maipumonitor')" class="mc_root">
+									迈普</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'mcafeemonitor')" class="mc_root">
+									MCAFEE</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'netscreenmonitor')" class="mc_root">
+									NetScreen</li>
+							
+						</ul></li>
+
+					<li rel="1" class="mc_root mc_parent">通用
+						<ul>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'ping')" class="mc_root">
+									Ping</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'ftplogin')" class="mc_root">
+									FTP登录状态</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'TCPPortMonitor')" class="mc_root">
+									TCP端口</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'URLMonitor')" class="mc_root">
+									URL</li>
+							
+								<li rel="2" onclick="getSubMenu(0,2,'UrlVBSMonitor')" class="mc_root">
+									Agent URL</li>
+							
+						</ul></li>
+
+					<li rel="1" class="mc_root mc_parent">自定义监测器
+						<ul>
+							<li rel="2" onclick="getSubMenu(0,3,'userdefined_jdbc_monitor')" class="mc_root">
+								JDBC监测器</li>
+							<li rel="2" onclick="getSubMenu(0,3,'userdefined_snmp_monitor')" class="mc_root">
+								SNMP监测器</li>
+						</ul></li>
+
+				</ul>
+			</div>
+			<p style="color: red">*</p>
+		</div>
+
+		<div class="form-group row" style="height:34px;" id="sub_target0">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">监测指标：</label>
+			<div class="col-sm-8">
+
+				<div class="mcdropdown">
+					<input type="text" class="down-ip-adress" name="category" id="sub_category0" autocomplete="off" value="" readonly="readonly">
+					<a href="#" tabindex="-1"></a>
+				</div>
+
+				<ul id="sub_categorymenu0" class="mcdropdown_menu">
+
+
+				</ul>
+			</div>
+			<p style="color: red">*</p>
+		</div>
+		<input id="perf_name0" value="" type="hidden"> 
+		<input id="top_nodeClass0" value="" type="hidden">
+		<input id="top_unit0" value="" type="hidden">
+		<input id="top_tittle0" value="" type="hidden">
+		<!--form-group row-->
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">top-N：</label>
+			<div class="col-sm-8">
+				<select class="form-control" id="top_n0">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3" selected="selected">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</select>
+			</div>
+		</div>
+		<!--form-group row-->
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">选择颜色：</label>
+			<div class="col-sm-8">
+				<select class="form-control" id="top_color0">
+					<option selected="selected" value="#008B00">绿色</option>
+					<option value="#7CB5EC">蓝色</option>
+					<option value="#F39C12">橙色</option>
+					<option value="#f00">红色</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" onclick="change_topN(0)">保存
+		</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" onclick="modalclose2(false)">取消</button>
+	</div>
+</div>
+<div id="modal1" class="appmodal" style=" display: block; position: fixed;">
+	<input type="hidden" id="topN_id1" value="">
+    <input type="hidden" id="topN_parentId1" value="">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="modalclose2(false)">×</button>
+		<h4 class="modal-title" id="myModalLabel">设置</h4>
+	</div>
+	<div class="modal-content" style="overflow-y: auto; height: 73%; overflow-x: hidden; padding: 10px 10px 0px 10px;">
+
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">名称：</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control down-ip-adress" id="top_name1" placeholder="请输入名称" value="top_memory">
+			</div>
+			<p style="color: red">*</p>
+		</div>
+
+		<!--form-group row-->
+		<!-- <div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label"
+				style="text-align: right;">上级对象：</label>
+			<div class="col-sm-8">
+				<input type="text" id="parent_body1" value=""
+					class="form-control down-ip-adress" readonly="readonly">
+			</div>
+		</div> -->
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">上级对象：</label>
+			<div class="col-sm-8">
+				<select class="form-control" id="parentObject1">
+				    
+					<option value="/">/</option>
+					 
+					<option value="/资源视图">/资源视图</option>
+					 
+					<option value="/资源视图/网络设备">/资源视图/网络设备</option>
+					 
+					<option value="/资源视图/网络设备/路由器">/资源视图/网络设备/路由器</option>
+					 
+					<option value="/资源视图/网络设备/路由器/Huawei">/资源视图/网络设备/路由器/Huawei</option>
+					 
+					<option value="/资源视图/网络设备/交换机">/资源视图/网络设备/交换机</option>
+					 
+					<option value="/资源视图/网络设备/交换机/Huawei">/资源视图/网络设备/交换机/Huawei</option>
+					 
+					<option value="/资源视图/操作系统">/资源视图/操作系统</option>
+					 
+					<option value="/资源视图/操作系统/Linux">/资源视图/操作系统/Linux</option>
+					 
+					<option value="/资源视图/操作系统/Windows">/资源视图/操作系统/Windows</option>
+					 
+					<option value="/资源视图/数据库">/资源视图/数据库</option>
+					 
+					<option value="/资源视图/数据库/SQL Server">/资源视图/数据库/SQL Server</option>
+					 
+					<option value="/资源视图/网络设备/路由器/Huawei/Huawei">/资源视图/网络设备/路由器/Huawei/Huawei</option>
+					 
+					<option value="/资源视图/网络设备/交换机/Huawei/Quidway">/资源视图/网络设备/交换机/Huawei/Quidway</option>
+					 
+					<option value="/资源视图/网络设备/交换机/Huawei/Quidway2">/资源视图/网络设备/交换机/Huawei/Quidway2</option>
+					 
+					<option value="/资源视图/操作系统/Linux/TestGroup">/资源视图/操作系统/Linux/TestGroup</option>
+					 
+					<option value="/资源视图/操作系统/Linux/TestGroup">/资源视图/操作系统/Linux/TestGroup</option>
+					 
+					<option value="/资源视图/操作系统/Windows/WIN-ME6FVAS3LQP">/资源视图/操作系统/Windows/WIN-ME6FVAS3LQP</option>
+					 
+					<option value="/资源视图/操作系统/Windows/FlyLikeWind-PC">/资源视图/操作系统/Windows/FlyLikeWind-PC</option>
+					 
+					<option value="/资源视图/数据库/SQL Server/SQLServer(192.168.2.138)">/资源视图/数据库/SQL Server/SQLServer(192.168.2.138)</option>
+					
+				</select>
+			</div>
+			<p style="color: red">*</p>
+		</div>
+
+		<div class="form-group row" style="height:34px">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">监测器类型：</label>
+			<div class="col-sm-8">
+
+				<div class="mcdropdown">
+					<input type="text" class=" down-ip-adress" name="category" id="category1" autocomplete="off" value="" readonly="readonly"> <a href="#" tabindex="-1"></a>
+				</div>
+
+				<ul id="categorymenu1" class="mcdropdown_menu">
+					
+						
+							<li rel="1" class="mc_root mc_parent">操作系统
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'Aix')" class="mc_root">
+											AIX</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'Linux')" class="mc_root">
+											Linux/Unix</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'Windows')" class="mc_root">
+											Windows</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'as400device')" class="mc_root">
+											AS400</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hpux')" class="mc_root">
+											HP Unix</li>
+									
+								</ul></li>
+						
+					
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">数据库
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'db2device')" class="mc_root">
+											DB2</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'informixdevice')" class="mc_root">
+											Informix</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'mongodevice')" class="mc_root">
+											Mongo</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'mysqldevice')" class="mc_root">
+											MySQL</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'oracledevice')" class="mc_root">
+											Oracle</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'sqlserverdevice')" class="mc_root">
+											SQL Server</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'sybasedevice')" class="mc_root">
+											SyBase</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">服务器硬件
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hmcdevice')" class="mc_root">
+											HMC</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hpc7000device')" class="mc_root">
+											HP C7000</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hpchassis')" class="mc_root">
+											HP刀箱</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hpoadevice')" class="mc_root">
+											HP OA</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hpomsnmpdevice')" class="mc_root">
+											HP带内</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hpoutofbanddevice')" class="mc_root">
+											HP带外</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hprx7640device')" class="mc_root">
+											HP RX7640</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hpsd1device')" class="mc_root">
+											HP SD1</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hpsd2device')" class="mc_root">
+											HP SD2</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'huaweiserverhardware')" class="mc_root">
+											华为</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'ibmchassis')" class="mc_root">
+											IBM刀箱</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'ibmoutofbandhardware')" class="mc_root">
+											IBM带外</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'ibmoutofbandhardwaretelnet')" class="mc_root">
+											IBM带外(Telnet)</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'ibmserverhardware')" class="mc_root">
+											IBM带内</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'aixdevice')" class="mc_root">
+											AIX小机(带内)</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'dellidracdevice')" class="mc_root">
+											DELL带外(SSH)</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'dellserverhardware')" class="mc_root">
+											DELL带内</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">存储
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'sunstorage')" class="mc_root">
+											Sun</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'HP3par')" class="mc_root">
+											HP 3PAR</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'HitachistorageDevice')" class="mc_root">
+											Hitachi</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'IBMDS8000StorageDevice')" class="mc_root">
+											IBM DS8000</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'IBMStorageDevice')" class="mc_root">
+											IBM DS系列存储</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'NetAppDevice')" class="mc_root">
+											NetApp</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'dellCompellent')" class="mc_root">
+											Dell Compellent</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'dellmd')" class="mc_root">
+											Dell MD</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'emcstorage')" class="mc_root">
+											EMC</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'emcvmaxdmx')" class="mc_root">
+											EMC VMAX/DMX</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'equallogicMember2')" class="mc_root">
+											Dell EqualLogic</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hpevastorage')" class="mc_root">
+											HP EVA</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'huaweiraid')" class="mc_root">
+											Huawei</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'ibmv7000storage')" class="mc_root">
+											IBM V7000</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">备份设备
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'datadomain')" class="mc_root">
+											DataDomain EMC</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'hpvlsstorage')" class="mc_root">
+											HP VLS</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'ibmts3500storage')" class="mc_root">
+											IBM TS3500</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'ibmts7650storage')" class="mc_root">
+											IBM TS7650</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'adic')" class="mc_root">
+											ADIC</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">应用软件
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'tomcatdevice')" class="mc_root">
+											Tomcat</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'tuxedodevice')" class="mc_root">
+											Tuxedo</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'weblogicdevice')" class="mc_root">
+											WebLogic</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'webspheredevice')" class="mc_root">
+											WebSphere</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'AD')" class="mc_root">
+											AD域</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'Apache')" class="mc_root">
+											Apache</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'Nginx')" class="mc_root">
+											Nginx</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'URLRecored')" class="mc_root">
+											UrlRecored</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'aixhacmpdevice')" class="mc_root">
+											HACMP</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'exchangedevice')" class="mc_root">
+											Exchange</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'iisdevice')" class="mc_root">
+											IIS</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'jbossdevice')" class="mc_root">
+											JBoss</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'jbosseapdevice')" class="mc_root">
+											JBoss EAP</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'lotusdevice')" class="mc_root">
+											Lotus</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">机房
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'emerson')" class="mc_root">
+											Emerson</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'liebert')" class="mc_root">
+											Liebert</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'upsdevice')" class="mc_root">
+											UPS</li>
+									
+										<li rel="2" onclick="getSubMenu(1,1,'akcp')" class="mc_root">
+											Akcp</li>
+									
+								</ul></li>
+						
+					
+						
+					
+
+					<li rel="1" class="mc_root mc_parent">网络设备
+						<ul>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'neusoftmonitor')" class="mc_root">
+									Neusoft</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'nokiamonitor')" class="mc_root">
+									Nokia</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'nortelmonitor')" class="mc_root">
+									Nortel</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'paloalto')" class="mc_root">
+									Paloalto</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'radwaremonitor')" class="mc_root">
+									Radware</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'riverbedmonitor')" class="mc_root">
+									RiverBed</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'ruijiemonitor')" class="mc_root">
+									Ruijie</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'sinform540monitor')" class="mc_root">
+									SinForMX</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'sinformonitor')" class="mc_root">
+									深信服</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'sslmonitor')" class="mc_root">
+									Koal SSL</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'topsecmonitor')" class="mc_root">
+									TOPSEC</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'tpipsmonitor')" class="mc_root">
+									TippingPointIPS</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'uttmonitor')" class="mc_root">
+									UTT</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'venustechmonitor')" class="mc_root">
+									Venustech</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'watchguardmonitor')" class="mc_root">
+									WatchGuard</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'Aruba')" class="mc_root">
+									Aruba</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'F5monitor')" class="mc_root">
+									F5</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'FortigateMonitor')" class="mc_root">
+									FortiGate</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'NRmonitor')" class="mc_root">
+									NRmonitor</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'Sonicwall')" class="mc_root">
+									Sonicwall</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'avaya')" class="mc_root">
+									Avaya</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'barracudamonitor')" class="mc_root">
+									Barracuda</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'bluecoatmonitor')" class="mc_root">
+									Bluecoat</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'brocademonitor')" class="mc_root">
+									Brocade</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'checkpointmonitor')" class="mc_root">
+									CheckPoint</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'cisco')" class="mc_root">
+									Cisco</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'dellpwcsmonitor')" class="mc_root">
+									DellPWConnSwitch</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'dlinkmonitor')" class="mc_root">
+									DLink</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'enterasysmonitor')" class="mc_root">
+									Enterasys</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'foundrymonitor')" class="mc_root">
+									Foundry</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'genericnetworkmonitor')" class="mc_root">
+									通用网络</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'h3cmonitor')" class="mc_root">
+									H3C</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'hillstonemonitor')" class="mc_root">
+									HillStone</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'hitchistoragemonitor')" class="mc_root">
+									HAC</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'hp')" class="mc_root">
+									HP</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'huaweiddosmonitor')" class="mc_root">
+									Huawei DDOS</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'huaweimonitor')" class="mc_root">
+									华为</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'ironportmonitor')" class="mc_root">
+									IronPort</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'junipermonitor')" class="mc_root">
+									Juniper</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'maipumonitor')" class="mc_root">
+									迈普</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'mcafeemonitor')" class="mc_root">
+									MCAFEE</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'netscreenmonitor')" class="mc_root">
+									NetScreen</li>
+							
+						</ul></li>
+
+					<li rel="1" class="mc_root mc_parent">通用
+						<ul>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'ping')" class="mc_root">
+									Ping</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'ftplogin')" class="mc_root">
+									FTP登录状态</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'TCPPortMonitor')" class="mc_root">
+									TCP端口</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'URLMonitor')" class="mc_root">
+									URL</li>
+							
+								<li rel="2" onclick="getSubMenu(1,2,'UrlVBSMonitor')" class="mc_root">
+									Agent URL</li>
+							
+						</ul></li>
+
+					<li rel="1" class="mc_root mc_parent">自定义监测器
+						<ul>
+							<li rel="2" onclick="getSubMenu(1,3,'userdefined_jdbc_monitor')" class="mc_root">
+								JDBC监测器</li>
+							<li rel="2" onclick="getSubMenu(1,3,'userdefined_snmp_monitor')" class="mc_root">
+								SNMP监测器</li>
+						</ul></li>
+
+				</ul>
+			</div>
+			<p style="color: red">*</p>
+		</div>
+
+		<div class="form-group row" style="height:34px;" id="sub_target1">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">监测指标：</label>
+			<div class="col-sm-8">
+
+				<div class="mcdropdown">
+					<input type="text" class="down-ip-adress" name="category" id="sub_category1" autocomplete="off" value="" readonly="readonly">
+					<a href="#" tabindex="-1"></a>
+				</div>
+
+				<ul id="sub_categorymenu1" class="mcdropdown_menu">
+
+
+				</ul>
+			</div>
+			<p style="color: red">*</p>
+		</div>
+		<input id="perf_name1" value="" type="hidden"> 
+		<input id="top_nodeClass1" value="" type="hidden">
+		<input id="top_unit1" value="" type="hidden">
+		<input id="top_tittle1" value="" type="hidden">
+		<!--form-group row-->
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">top-N：</label>
+			<div class="col-sm-8">
+				<select class="form-control" id="top_n1">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3" selected="selected">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</select>
+			</div>
+		</div>
+		<!--form-group row-->
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">选择颜色：</label>
+			<div class="col-sm-8">
+				<select class="form-control" id="top_color1">
+					<option selected="selected" value="#008B00">绿色</option>
+					<option value="#7CB5EC">蓝色</option>
+					<option value="#F39C12">橙色</option>
+					<option value="#f00">红色</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" onclick="change_topN(1)">保存
+		</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" onclick="modalclose2(false)">取消</button>
+	</div>
+</div>
+<div id="modal2" class="appmodal" style=" display: block; position: fixed;">
+	<input type="hidden" id="topN_id2" value="">
+    <input type="hidden" id="topN_parentId2" value="">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="modalclose2(false)">×</button>
+		<h4 class="modal-title" id="myModalLabel">设置</h4>
+	</div>
+	<div class="modal-content" style="overflow-y: auto; height: 73%; overflow-x: hidden; padding: 10px 10px 0px 10px;">
+
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">名称：</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control down-ip-adress" id="top_name2" placeholder="请输入名称" value="top_disc">
+			</div>
+			<p style="color: red">*</p>
+		</div>
+
+		<!--form-group row-->
+		<!-- <div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label"
+				style="text-align: right;">上级对象：</label>
+			<div class="col-sm-8">
+				<input type="text" id="parent_body2" value=""
+					class="form-control down-ip-adress" readonly="readonly">
+			</div>
+		</div> -->
+        <div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">上级对象：</label>
+			<div class="col-sm-8">
+				<select class="form-control" id="parentObject2">
+				    
+					<option value="/">/</option>
+					 
+					<option value="/资源视图">/资源视图</option>
+					 
+					<option value="/资源视图/网络设备">/资源视图/网络设备</option>
+					 
+					<option value="/资源视图/网络设备/路由器">/资源视图/网络设备/路由器</option>
+					 
+					<option value="/资源视图/网络设备/路由器/Huawei">/资源视图/网络设备/路由器/Huawei</option>
+					 
+					<option value="/资源视图/网络设备/交换机">/资源视图/网络设备/交换机</option>
+					 
+					<option value="/资源视图/网络设备/交换机/Huawei">/资源视图/网络设备/交换机/Huawei</option>
+					 
+					<option value="/资源视图/操作系统">/资源视图/操作系统</option>
+					 
+					<option value="/资源视图/操作系统/Linux">/资源视图/操作系统/Linux</option>
+					 
+					<option value="/资源视图/操作系统/Windows">/资源视图/操作系统/Windows</option>
+					 
+					<option value="/资源视图/数据库">/资源视图/数据库</option>
+					 
+					<option value="/资源视图/数据库/SQL Server">/资源视图/数据库/SQL Server</option>
+					 
+					<option value="/资源视图/网络设备/路由器/Huawei/Huawei">/资源视图/网络设备/路由器/Huawei/Huawei</option>
+					 
+					<option value="/资源视图/网络设备/交换机/Huawei/Quidway">/资源视图/网络设备/交换机/Huawei/Quidway</option>
+					 
+					<option value="/资源视图/网络设备/交换机/Huawei/Quidway2">/资源视图/网络设备/交换机/Huawei/Quidway2</option>
+					 
+					<option value="/资源视图/操作系统/Linux/TestGroup">/资源视图/操作系统/Linux/TestGroup</option>
+					 
+					<option value="/资源视图/操作系统/Linux/TestGroup">/资源视图/操作系统/Linux/TestGroup</option>
+					 
+					<option value="/资源视图/操作系统/Windows/WIN-ME6FVAS3LQP">/资源视图/操作系统/Windows/WIN-ME6FVAS3LQP</option>
+					 
+					<option value="/资源视图/操作系统/Windows/FlyLikeWind-PC">/资源视图/操作系统/Windows/FlyLikeWind-PC</option>
+					 
+					<option value="/资源视图/数据库/SQL Server/SQLServer(192.168.2.138)">/资源视图/数据库/SQL Server/SQLServer(192.168.2.138)</option>
+					
+				</select>
+			</div>
+			<p style="color: red">*</p>
+		</div>
+		
+		<div class="form-group row" style="height:34px">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">监测器类型：</label>
+			<div class="col-sm-8">
+
+				<div class="mcdropdown">
+					<input type="text" class=" down-ip-adress" name="category" id="category2" autocomplete="off" value="" readonly="readonly"> <a href="#" tabindex="-1"></a>
+				</div>
+
+				<ul id="categorymenu2" class="mcdropdown_menu">
+					
+						
+							<li rel="1" class="mc_root mc_parent">操作系统
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'Aix')" class="mc_root">
+											AIX</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'Linux')" class="mc_root">
+											Linux/Unix</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'Windows')" class="mc_root">
+											Windows</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'as400device')" class="mc_root">
+											AS400</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hpux')" class="mc_root">
+											HP Unix</li>
+									
+								</ul></li>
+						
+					
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">数据库
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'db2device')" class="mc_root">
+											DB2</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'informixdevice')" class="mc_root">
+											Informix</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'mongodevice')" class="mc_root">
+											Mongo</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'mysqldevice')" class="mc_root">
+											MySQL</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'oracledevice')" class="mc_root">
+											Oracle</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'sqlserverdevice')" class="mc_root">
+											SQL Server</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'sybasedevice')" class="mc_root">
+											SyBase</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">服务器硬件
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hmcdevice')" class="mc_root">
+											HMC</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hpc7000device')" class="mc_root">
+											HP C7000</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hpchassis')" class="mc_root">
+											HP刀箱</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hpoadevice')" class="mc_root">
+											HP OA</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hpomsnmpdevice')" class="mc_root">
+											HP带内</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hpoutofbanddevice')" class="mc_root">
+											HP带外</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hprx7640device')" class="mc_root">
+											HP RX7640</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hpsd1device')" class="mc_root">
+											HP SD1</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hpsd2device')" class="mc_root">
+											HP SD2</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'huaweiserverhardware')" class="mc_root">
+											华为</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'ibmchassis')" class="mc_root">
+											IBM刀箱</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'ibmoutofbandhardware')" class="mc_root">
+											IBM带外</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'ibmoutofbandhardwaretelnet')" class="mc_root">
+											IBM带外(Telnet)</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'ibmserverhardware')" class="mc_root">
+											IBM带内</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'aixdevice')" class="mc_root">
+											AIX小机(带内)</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'dellidracdevice')" class="mc_root">
+											DELL带外(SSH)</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'dellserverhardware')" class="mc_root">
+											DELL带内</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">存储
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'sunstorage')" class="mc_root">
+											Sun</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'HP3par')" class="mc_root">
+											HP 3PAR</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'HitachistorageDevice')" class="mc_root">
+											Hitachi</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'IBMDS8000StorageDevice')" class="mc_root">
+											IBM DS8000</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'IBMStorageDevice')" class="mc_root">
+											IBM DS系列存储</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'NetAppDevice')" class="mc_root">
+											NetApp</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'dellCompellent')" class="mc_root">
+											Dell Compellent</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'dellmd')" class="mc_root">
+											Dell MD</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'emcstorage')" class="mc_root">
+											EMC</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'emcvmaxdmx')" class="mc_root">
+											EMC VMAX/DMX</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'equallogicMember2')" class="mc_root">
+											Dell EqualLogic</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hpevastorage')" class="mc_root">
+											HP EVA</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'huaweiraid')" class="mc_root">
+											Huawei</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'ibmv7000storage')" class="mc_root">
+											IBM V7000</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">备份设备
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'datadomain')" class="mc_root">
+											DataDomain EMC</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'hpvlsstorage')" class="mc_root">
+											HP VLS</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'ibmts3500storage')" class="mc_root">
+											IBM TS3500</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'ibmts7650storage')" class="mc_root">
+											IBM TS7650</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'adic')" class="mc_root">
+											ADIC</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">应用软件
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'tomcatdevice')" class="mc_root">
+											Tomcat</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'tuxedodevice')" class="mc_root">
+											Tuxedo</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'weblogicdevice')" class="mc_root">
+											WebLogic</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'webspheredevice')" class="mc_root">
+											WebSphere</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'AD')" class="mc_root">
+											AD域</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'Apache')" class="mc_root">
+											Apache</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'Nginx')" class="mc_root">
+											Nginx</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'URLRecored')" class="mc_root">
+											UrlRecored</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'aixhacmpdevice')" class="mc_root">
+											HACMP</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'exchangedevice')" class="mc_root">
+											Exchange</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'iisdevice')" class="mc_root">
+											IIS</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'jbossdevice')" class="mc_root">
+											JBoss</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'jbosseapdevice')" class="mc_root">
+											JBoss EAP</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'lotusdevice')" class="mc_root">
+											Lotus</li>
+									
+								</ul></li>
+						
+					
+						
+							<li rel="1" class="mc_root mc_parent">机房
+								<ul>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'emerson')" class="mc_root">
+											Emerson</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'liebert')" class="mc_root">
+											Liebert</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'upsdevice')" class="mc_root">
+											UPS</li>
+									
+										<li rel="2" onclick="getSubMenu(2,1,'akcp')" class="mc_root">
+											Akcp</li>
+									
+								</ul></li>
+						
+					
+						
+					
+
+					<li rel="1" class="mc_root mc_parent">网络设备
+						<ul>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'neusoftmonitor')" class="mc_root">
+									Neusoft</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'nokiamonitor')" class="mc_root">
+									Nokia</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'nortelmonitor')" class="mc_root">
+									Nortel</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'paloalto')" class="mc_root">
+									Paloalto</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'radwaremonitor')" class="mc_root">
+									Radware</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'riverbedmonitor')" class="mc_root">
+									RiverBed</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'ruijiemonitor')" class="mc_root">
+									Ruijie</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'sinform540monitor')" class="mc_root">
+									SinForMX</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'sinformonitor')" class="mc_root">
+									深信服</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'sslmonitor')" class="mc_root">
+									Koal SSL</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'topsecmonitor')" class="mc_root">
+									TOPSEC</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'tpipsmonitor')" class="mc_root">
+									TippingPointIPS</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'uttmonitor')" class="mc_root">
+									UTT</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'venustechmonitor')" class="mc_root">
+									Venustech</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'watchguardmonitor')" class="mc_root">
+									WatchGuard</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'Aruba')" class="mc_root">
+									Aruba</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'F5monitor')" class="mc_root">
+									F5</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'FortigateMonitor')" class="mc_root">
+									FortiGate</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'NRmonitor')" class="mc_root">
+									NRmonitor</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'Sonicwall')" class="mc_root">
+									Sonicwall</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'avaya')" class="mc_root">
+									Avaya</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'barracudamonitor')" class="mc_root">
+									Barracuda</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'bluecoatmonitor')" class="mc_root">
+									Bluecoat</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'brocademonitor')" class="mc_root">
+									Brocade</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'checkpointmonitor')" class="mc_root">
+									CheckPoint</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'cisco')" class="mc_root">
+									Cisco</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'dellpwcsmonitor')" class="mc_root">
+									DellPWConnSwitch</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'dlinkmonitor')" class="mc_root">
+									DLink</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'enterasysmonitor')" class="mc_root">
+									Enterasys</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'foundrymonitor')" class="mc_root">
+									Foundry</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'genericnetworkmonitor')" class="mc_root">
+									通用网络</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'h3cmonitor')" class="mc_root">
+									H3C</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'hillstonemonitor')" class="mc_root">
+									HillStone</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'hitchistoragemonitor')" class="mc_root">
+									HAC</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'hp')" class="mc_root">
+									HP</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'huaweiddosmonitor')" class="mc_root">
+									Huawei DDOS</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'huaweimonitor')" class="mc_root">
+									华为</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'ironportmonitor')" class="mc_root">
+									IronPort</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'junipermonitor')" class="mc_root">
+									Juniper</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'maipumonitor')" class="mc_root">
+									迈普</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'mcafeemonitor')" class="mc_root">
+									MCAFEE</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'netscreenmonitor')" class="mc_root">
+									NetScreen</li>
+							
+						</ul></li>
+
+					<li rel="1" class="mc_root mc_parent">通用
+						<ul>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'ping')" class="mc_root">
+									Ping</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'ftplogin')" class="mc_root">
+									FTP登录状态</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'TCPPortMonitor')" class="mc_root">
+									TCP端口</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'URLMonitor')" class="mc_root">
+									URL</li>
+							
+								<li rel="2" onclick="getSubMenu(2,2,'UrlVBSMonitor')" class="mc_root">
+									Agent URL</li>
+							
+						</ul></li>
+
+					<li rel="1" class="mc_root mc_parent">自定义监测器
+						<ul>
+							<li rel="2" onclick="getSubMenu(2,3,'userdefined_jdbc_monitor')" class="mc_root">
+								JDBC监测器</li>
+							<li rel="2" onclick="getSubMenu(2,3,'userdefined_snmp_monitor')" class="mc_root">
+								SNMP监测器</li>
+						</ul></li>
+
+				</ul>
+			</div>
+			<p style="color: red">*</p>
+		</div>
+
+		<div class="form-group row" style="height:34px;" id="sub_target2">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">监测指标：</label>
+			<div class="col-sm-8">
+
+				<div class="mcdropdown">
+					<input type="text" class="down-ip-adress" name="category" id="sub_category2" autocomplete="off" value="" readonly="readonly">
+					<a href="#" tabindex="-1"></a>
+				</div>
+
+				<ul id="sub_categorymenu2" class="mcdropdown_menu">
+
+
+				</ul>
+			</div>
+			<p style="color: red">*</p>
+		</div>
+		<input id="perf_name2" value="" type="hidden"> 
+		<input id="top_nodeClass2" value="" type="hidden">
+		<input id="top_unit2" value="" type="hidden">
+		<input id="top_tittle2" value="" type="hidden">
+		<!--form-group row-->
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">top-N：</label>
+			<div class="col-sm-8">
+				<select class="form-control" id="top_n2">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3" selected="selected">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</select>
+			</div>
+		</div>
+		<!--form-group row-->
+		<div class="form-group row">
+			<label for="down-ip-adress" class="col-sm-3 control-label" style="text-align: right;">选择颜色：</label>
+			<div class="col-sm-8">
+				<select class="form-control" id="top_color2">
+					<option selected="selected" value="#008B00">绿色</option>
+					<option value="#7CB5EC">蓝色</option>
+					<option value="#F39C12">橙色</option>
+					<option value="#f00">红色</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" onclick="change_topN(2)">保存
+		</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" onclick="modalclose2(false)">取消</button>
+	</div>
+</div>	
+		<!--modal1-->
+
+        <!-- Main content -->
+        <section class="content" style="padding-bottom: 0px;">
+          <!-- Info boxes -->
+          <div class="row">
+            <div class="col-md-3">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+                
+                <div class="info-box-content">
+                	<a href="#" class="info-box-content_a">
+                  <span class="info-box-text">SLA</span>
+                  <span class="info-box-number">0<small>%</small></span>
+                 </a>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-3">
+              <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-dashboard"></i></span>
+                <div class="info-box-content">
+                	<a style="cursor: pointer;" onclick="getBusinessPage()" class="info-box-content_a">
+                  <span class="info-box-text">业务服务</span>
+                  <span class="info-box-number">1</span>
+                 </a>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+
+            <div class="col-md-3">
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-laptop"></i></span>
+                <span class="label label-danger pull-left">4</span>
+                <div class="info-box-content">
+                	<a onclick="showAllStatus(0)" style="cursor: pointer;" class="info-box-content_a">
+                  <span class="info-box-text">设备</span>
+                  <span class="info-box-number">8</span>
+                  </a>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-3">
+              <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa fa-stethoscope"></i></span>
+                <span class="label label-danger pull-left">0</span>
+                <div class="info-box-content">
+                	<a onclick="showAllStatus(1)" style="cursor: pointer;" class="info-box-content_a">
+                  <span class="info-box-text">监测器</span>
+                  <span class="info-box-number">236</span>
+                 </a>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+
+		<div class="row">
+		  <div class="col-md-12">
+			<!-- Custom tabs (Charts with tabs)-->
+              <div class="nav-tabs-custom">
+                <!-- Tabs within a box -->
+                <ul class="nav nav-tabs pull-right">
+                  <li class="active"><a href="#table-chart" data-toggle="tab">监测器状态</a></li>
+                 <!--  <li><a href="#sales-chart" data-toggle="tab">安全告警</a></li> -->
+                  <li class="pull-left header"><i class="fa fa-inbox"></i> 告警</li>
+                </ul>
+                <div class="tab-content no-padding">
+                  <!-- Morris chart - Sales -->
+                  <div class="tab-pane active" id="table-chart">
+                  	<div class="row" style=" margin-left: 0px;">
+                  	
+                  	<!--col-md-4-->
+                  	<div class="table-chart-div col-md-8" style=" height: 280px; overflow-y: hidden; overflow-x: hidden; padding-right: 0px; margin-top: 0px !important; ">
+                       <!-- 代码 开始 -->
+                       <div class="focus">
+                        <ul class="rslides f426x240 rslides1" style=" width: 100%; max-height: 275px; overflow-x: hidden; margin-top: 0px !important;margin-bottom: 0px !important;"> 
+                           <li id="rslides1_s0" class="rslides1_on" style="display: list-item; float: left; position: relative;"><table class="table table-bordered table-striped manager-table"><thead><tr><th>IP</th><th>对象</th><th>告警字段</th><th>次数</th><th>确认人</th></tr></thead><tbody><tr><td>192.168.2.92</td><td>WIN-2008</td><td>丢包率 &gt; 99 %</td><td>2</td><td>NA</td></tr></tbody></table></li>
+                           <!-- <li>
+                             <table class="table table-bordered table-striped manager-table">
+                                <thead>
+					              <tr>
+                                   <th>IP</th>
+                                   <th>对象</th>
+                                   <th>告警字段</th>
+                                   <th>次数</th>
+                                   <th>确认人</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                   <td>dffd</td>
+                                   <td>fdfdfd</td>
+                                   <td>fddf</td>
+                                   <td>fddf</td>
+                                   <td>fddf</td>
+                                   </tr>
+                                   <tr>
+                                   <td>fdfd</td>
+                                   <td>fdfd</td>
+                                   <td>dffd</td>
+                                   <td>fdfd</td>
+                                   <td>dffdf</td>
+                                   </tr>
+                                </tbody> 
+                             </table>
+                           </li>
+                           <li>
+                             <table class="table table-bordered table-striped manager-table">
+                                <thead>
+					              <tr>
+                                   <th>IP</th>
+                                   <th>对象</th>
+                                   <th>告警字段</th>
+                                   <th>次数</th>
+                                   <th>确认人</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                   <td>dffd</td>
+                                   <td>fdfdfd</td>
+                                   <td>fddf</td>
+                                   <td>fddf</td>
+                                   <td>fddf</td>
+                                   </tr>
+                                   <tr>
+                                   <td>fdfd</td>
+                                   <td>fdfd</td>
+                                   <td>dffd</td>
+                                   <td>fdfd</td>
+                                   <td>dffdf</td>
+                                   </tr>
+                                </tbody> 
+                             </table>
+                           </li> -->
+                         </ul>
+                        </div>
+                  </div>
+                   <input id="pie_normalCount" value="52" type="text" style="display:none">
+                  <input id="pie_emergentCount" value="0" type="text" style="display:none">
+                  <input id="pie_majorCount" value="0" type="text" style="display:none">
+                  <input id="pie_minorCount" value="0" type="text" style="display:none">
+                  <input id="pie_warningCount" value="0" type="text" style="display:none">
+                  
+                  	<!--col-md-8-->
+                  	<div class="col-md-4" id="pie_chart4" style="height: 250px; margin-top: 20px;" data-highcharts-chart="1239"><div class="highcharts-container" id="highcharts-3896" style="position: relative; overflow: hidden; width: 280px; height: 250px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg version="1.1" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Arial, Helvetica, sans-serif;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="280" height="250"><desc>Created with Highcharts 4.2.5</desc><defs><clipPath id="highcharts-3897"><rect x="0" y="0" width="260" height="225"></rect></clipPath></defs><rect x="0" y="0" width="280" height="250" fill="#FFFFFF" class=" highcharts-background"></rect><g class="highcharts-series-group"><path fill="#008B00" fill-opacity="0.25" d="M 0 0"></path><g class="highcharts-series highcharts-series-0 highcharts-tracker" transform="translate(10,10) scale(1 1)" style="cursor:pointer;"><path fill="#ffd700" d="M 147.9860483855469 44.000001420785026 A 68.5 68.5 0 0 1 147.91754840536015 44.000049622393576 L 148 112.5 A 0 0 0 0 0 148 112.5 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path><path fill="#008B00" d="M 147.9860483855469 44.000001420785026 A 68.5 68.5 0 1 1 147.9048548742421 44.00006607736731 L 148 112.5 A 0 0 0 1 0 148 112.5 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path><path fill="#ff7f00" d="M 147.97335484432065 44.000005182221514 A 68.5 68.5 0 0 1 147.9048548742421 44.00006607736731 L 148 112.5 A 0 0 0 0 0 148 112.5 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path><path fill="#FFFF00" d="M 147.97335484432065 44.000005182221514 A 68.5 68.5 0 0 1 147.9048548742421 44.00006607736731 L 148 112.5 A 0 0 0 0 0 148 112.5 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path><path fill="#f00" d="M 147.97335484432065 44.000005182221514 A 68.5 68.5 0 0 1 147.9048548742421 44.00006607736731 L 148 112.5 A 0 0 0 0 0 148 112.5 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path></g><g class="highcharts-markers highcharts-series-0" transform="translate(10,10) scale(1 1)"></g></g><g class="highcharts-data-labels highcharts-series-0 highcharts-tracker" visibility="visible" transform="translate(10,10) scale(1 1)" opacity="1" style="cursor:pointer;"><path fill="none" d="M 153 14 C 148 14 148 22 148 33 L 148 44" stroke="#000000" stroke-width="1"></path><path fill="none" d="M 153 211 C 148 211 148 203 148 192 L 148 181" stroke="#000000" stroke-width="1"></path><path fill="none" d="M 143 14 C 148 14 148 22 148 33 L 148 44" stroke="#000000" stroke-width="1"></path><path fill="none" d="M 74.21046591232064 42 C 79.21046591232064 42 148 22 148 33 L 148 44" stroke="#000000" stroke-width="1"></path><path fill="none" d="M 54.14056043390775 70 C 59.14056043390775 70 148 22 148 33 L 148 44" stroke="#000000" stroke-width="1"></path><g style="cursor:pointer;" transform="translate(158,4)"><text x="5" style="font-size:11px;font-weight:bold;color:#000000;text-shadow:0 0 6px #FFFFFF, 0 0 3px #FFFFFF;fill:#000000;text-rendering:geometricPrecision;" y="16"><tspan>警告</tspan></text></g><g style="cursor:pointer;" transform="translate(158,201)"><text x="5" style="font-size:11px;font-weight:bold;color:#000000;text-shadow:0 0 6px #FFFFFF, 0 0 3px #FFFFFF;fill:#000000;text-rendering:geometricPrecision;" y="16"><tspan>正常</tspan></text></g><g style="cursor:pointer;" transform="translate(102,4)"><text x="5" style="font-size:11px;font-weight:bold;color:#000000;text-shadow:0 0 6px #FFFFFF, 0 0 3px #FFFFFF;fill:#000000;text-rendering:geometricPrecision;" y="16"><tspan>主要</tspan></text></g><g style="cursor:pointer;" transform="translate(33,32)"><text x="5" style="font-size:11px;font-weight:bold;color:#000000;text-shadow:0 0 6px #FFFFFF, 0 0 3px #FFFFFF;fill:#000000;text-rendering:geometricPrecision;" y="16"><tspan>次要</tspan></text></g><g style="cursor:pointer;" transform="translate(13,60)"><text x="5" style="font-size:11px;font-weight:bold;color:#000000;text-shadow:0 0 6px #FFFFFF, 0 0 3px #FFFFFF;fill:#000000;text-rendering:geometricPrecision;" y="16"><tspan>紧急</tspan></text></g></g><g class="highcharts-legend"><g><g></g></g></g><g class="highcharts-tooltip" style="cursor:default;padding:0;pointer-events:none;white-space:nowrap;" transform="translate(372,-9999)" opacity="0" visibility="visible"><path fill="none" d="M 3.5 0.5 L 57.5 0.5 C 60.5 0.5 60.5 0.5 60.5 3.5 L 60.5 46.5 C 60.5 49.5 60.5 49.5 57.5 49.5 L 3.5 49.5 C 0.5 49.5 0.5 49.5 0.5 46.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.049999999999999996" stroke-width="5" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 57.5 0.5 C 60.5 0.5 60.5 0.5 60.5 3.5 L 60.5 46.5 C 60.5 49.5 60.5 49.5 57.5 49.5 L 3.5 49.5 C 0.5 49.5 0.5 49.5 0.5 46.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.09999999999999999" stroke-width="3" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 57.5 0.5 C 60.5 0.5 60.5 0.5 60.5 3.5 L 60.5 46.5 C 60.5 49.5 60.5 49.5 57.5 49.5 L 3.5 49.5 C 0.5 49.5 0.5 49.5 0.5 46.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.15" stroke-width="1" transform="translate(1, 1)"></path><path fill="rgba(249, 249, 249, .85)" d="M 3.5 0.5 L 57.5 0.5 C 60.5 0.5 60.5 0.5 60.5 3.5 L 60.5 46.5 C 60.5 49.5 60.5 49.5 57.5 49.5 L 3.5 49.5 C 0.5 49.5 0.5 49.5 0.5 46.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" stroke="#008B00" stroke-width="1"></path><text x="8" style="font-size:12px;color:#333333;fill:#333333;" y="20"><tspan style="font-size: 10px">正常</tspan><tspan style="font-weight:bold" x="8" dy="15">100.0</tspan><tspan dx="0">%</tspan></text></g></svg></div></div>
+                  	</div>
+                  	<!--row-->
+                  </div>
+                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+                </div>
+              </div><!-- /.nav-tabs-custom -->
+             </div>
+		</div>
+					
+          
+
+          <!-- Main row -->
+          <div class="row">
+            <!-- Left col -->
+            <div class="col-md-8">
+              <!-- MAP & BOX PANE -->
+              <div class="box box-success">
+                <div class="box-header with-border">
+                  <h3 class="box-title"><i class="fa fa-share-alt"></i> 业务视图</h3>
+                  <div class="box-tools pull-right">
+                    <!-- <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> -->
+                    <div class="btn-group">
+                    <!--   <button class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></button> -->
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                      </ul>
+                    </div>
+                    <!-- <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                  <div class="row business-row">
+                   
+					
+					
+                     
+                     <div class="col-md-6">
+                     <!--  <p class="text-center">
+                        <strong>OCS系统</strong>
+                      </p> -->
+                       <div class="progress-group">
+                        <span class="progress-text">业务A</span>
+                        <span class="progress-number">100%</span>
+                        <div class="progress sm">
+                          <div class="progress-bar progress-bar-aqua" style="width: 100%;cursor: pointer;" onclick="busniessInfo('3')"></div>
+                        </div>
+                      </div><!-- /.progress-group -->
+                      </div>
+                    
+                   
+                    
+                   
+                   
+                  
+                  </div><!-- /.row -->
+
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+              
+              
+
+              <!-- TABLE: LATEST ORDERS -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title"><i class="fa fa-tasks"></i> 设备状态概况</h3>
+                  <div class="box-tools pull-right">
+                    <!-- s<i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body" id="pie_chartIndex" style="height:270px; overflow-y:auto;overflow-x:hidden;"><div class="row"><div class="col-md-6 pie_chart" id="pie_chart0" data-highcharts-chart="3782"><div class="highcharts-container" id="highcharts-11550" style="position: relative; overflow: hidden; width: 262px; height: 250px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg version="1.1" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Arial, Helvetica, sans-serif;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="262" height="250"><desc>Created with Highcharts 4.2.5</desc><defs><clipPath id="highcharts-11551"><rect x="0" y="0" width="242" height="141"></rect></clipPath></defs><rect x="0" y="0" width="262" height="250" fill="#FFFFFF" class=" highcharts-background"></rect><g class="highcharts-series-group"><g class="highcharts-series highcharts-series-0 highcharts-tracker" transform="translate(10,53) scale(1 1)" style="cursor:pointer;"><path fill="#008B00" d="M 120.99939510418818 57.09548741241604 A 13.40451260123231 13.40451260123231 0 0 1 134.18850588593844 68.10327920417016 L 121 70.5 A 0 0 0 0 0 121 70.5 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path><path fill="#f00" d="M 134.19089601208242 68.11646890621832 A 13.40451260123231 13.40451260123231 0 0 1 134.18850588593844 68.10327920417016 L 121 70.5 A 0 0 0 0 0 121 70.5 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,-10)"></path></g><g class="highcharts-markers highcharts-series-0" transform="translate(10,53) scale(1 1)"></g></g><text x="131" text-anchor="middle" class="highcharts-title" style="color:#333333;font-size:18px;fill:#333333;width:198px;" y="24">操作系统</text><g class="highcharts-legend" transform="translate(66,206)"><g><g><g class="highcharts-legend-item" transform="translate(8,3)"><text x="21" style="color:#333333;font-size:12px;font-weight:bold;cursor:pointer;fill:#333333;" text-anchor="start" y="15">正常</text><rect x="0" y="4" width="16" height="12" fill="#008B00"></rect></g><g class="highcharts-legend-item" transform="translate(75.234375,3)"><text x="21" y="15" style="color:#333333;font-size:12px;font-weight:bold;cursor:pointer;fill:#333333;" text-anchor="start">异常</text><rect x="0" y="4" width="16" height="12" fill="#f00"></rect></g></g></g></g><g class="highcharts-tooltip" style="cursor:default;padding:0;pointer-events:none;white-space:nowrap;" transform="translate(0,-9999)"><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.049999999999999996" stroke-width="5" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.09999999999999999" stroke-width="3" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.15" stroke-width="1" transform="translate(1, 1)"></path><path fill="rgba(249, 249, 249, .85)" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5"></path><text x="8" style="font-size:12px;color:#333333;fill:#333333;" y="20"></text></g></svg></div></div><div class="col-md-6 pie_chart" id="pie_chart1" data-highcharts-chart="3783"><div class="highcharts-container" id="highcharts-11552" style="position: relative; overflow: hidden; width: 261px; height: 250px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg version="1.1" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Arial, Helvetica, sans-serif;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="261" height="250"><desc>Created with Highcharts 4.2.5</desc><defs><clipPath id="highcharts-11553"><rect x="0" y="0" width="241" height="141"></rect></clipPath></defs><rect x="0" y="0" width="261" height="250" fill="#FFFFFF" class=" highcharts-background"></rect><g class="highcharts-series-group"><g class="highcharts-series highcharts-series-0 highcharts-tracker" transform="translate(10,53) scale(1 1)" style="cursor:pointer;"><path fill="#008B00" d="M 120.49948934967888 58.18391882045836 A 12.316081190127955 12.316081190127955 0 0 1 120.48717327080735 58.18392548914867 L 120.5 70.5 A 0 0 0 0 0 120.5 70.5 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path><path fill="#f00" d="M 120.49948934967888 58.18391882045836 A 12.316081190127955 12.316081190127955 0 0 1 120.48717327080735 58.18392548914867 L 120.5 70.5 A 0 0 0 0 0 120.5 70.5 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,-10)"></path></g><g class="highcharts-markers highcharts-series-0" transform="translate(10,53) scale(1 1)"></g></g><text x="131" text-anchor="middle" class="highcharts-title" style="color:#333333;font-size:18px;fill:#333333;width:197px;" y="24">数据库</text><g class="highcharts-legend" transform="translate(65,206)"><g><g><g class="highcharts-legend-item" transform="translate(8,3)"><text x="21" style="color:#333333;font-size:12px;font-weight:bold;cursor:pointer;fill:#333333;" text-anchor="start" y="15">正常</text><rect x="0" y="4" width="16" height="12" fill="#008B00"></rect></g><g class="highcharts-legend-item" transform="translate(75.234375,3)"><text x="21" y="15" style="color:#333333;font-size:12px;font-weight:bold;cursor:pointer;fill:#333333;" text-anchor="start">异常</text><rect x="0" y="4" width="16" height="12" fill="#f00"></rect></g></g></g></g><g class="highcharts-tooltip" style="cursor:default;padding:0;pointer-events:none;white-space:nowrap;" transform="translate(0,-9999)"><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.049999999999999996" stroke-width="5" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.09999999999999999" stroke-width="3" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.15" stroke-width="1" transform="translate(1, 1)"></path><path fill="rgba(249, 249, 249, .85)" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5"></path><text x="8" style="font-size:12px;color:#333333;fill:#333333;" y="20"></text></g></svg></div></div></div></div><!-- /.box-body -->
+               
+              </div><!-- /.box -->
+            
+            	<div class="row">
+                <div class="col-md-6" style="padding-left:15px;">
+                  <!-- DIRECT CHAT -->
+                  <div class="box box-warning direct-chat direct-chat-warning">
+                    <div class="box-header with-border">
+                      <span id="set_tittle0">
+                        <h3 class="box-title"><i class="fa fa-list"></i> CPU使用率TopN</h3>
+                      </span>
+                      <div class="box-tools pull-right">
+                       
+                       <!--  <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> -->
+                        <button class="btn btn-box-tool" onclick="modalopen2(0)"><i class="fa fa-wrench"></i></button>
+                        <!-- <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                      </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body column-chart" id="column_container"><div style="text-align:center;color:#e0e0e0;padding-top:58px"><i class="fa fa-warning" style="font-size:150px"></i><br><font style="font-size:16px;color:#d0d0d0;">暂无数据</font></div></div><!-- /.box-body -->
+                  </div><!--/.direct-chat -->
+                </div><!-- /.col -->
+
+                <div class="col-md-6" style="padding-right:15px;">
+                  <!-- USERS LIST -->
+                  <div class="box box-danger">
+                    <div class="box-header with-border">
+                      <span id="set_tittle1">
+                        <h3 class="box-title"><i class="fa fa-list"></i> 内存使用率TopN</h3>
+                      </span>
+                      <div class="box-tools pull-right">
+                        
+                        <!-- <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> -->
+                        <button class="btn btn-box-tool" onclick="modalopen2(1)"><i class="fa fa-wrench"></i></button>
+                       <!--  <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                      </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body no-padding column-chart" id="column_container1"><div style="text-align:center;color:#e0e0e0;padding-top:58px"><i class="fa fa-warning" style="font-size:150px"></i><br><font style="font-size:16px;color:#d0d0d0;">暂无数据</font></div></div><!-- /.box-body -->
+                    
+                  </div><!--/.box -->
+                </div><!-- /.col -->
+              </div><!-- /.row -->
+            </div><!-- /.col -->
+
+            <div class="col-md-4">
+
+              <!-- PRODUCT LIST -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title"><i class="fa fa-adn"></i> 监测引擎</h3>
+                  <div class="box-tools pull-right">
+                   <!--  <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body" style="height: 582px;">
+                  <div class="row">
+                  	<div class="col-md-12 col-xs-12 Speedometer" id="Speedometer" style="height: 180px;" data-highcharts-chart="1341"><div class="highcharts-container" id="highcharts-4220" style="position: relative; overflow: hidden; width: 241px; height: 180px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg version="1.1" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Arial, Helvetica, sans-serif;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="241" height="180"><desc>Created with Highcharts 4.2.5</desc><defs><clipPath id="highcharts-4221"><rect x="0" y="0" width="221" height="112"></rect></clipPath><linearGradient x1="0" y1="0" x2="0" y2="1" id="highcharts-4222"><stop offset="0" stop-color="#FFF" stop-opacity="1"></stop><stop offset="1" stop-color="#333" stop-opacity="1"></stop></linearGradient><linearGradient x1="0" y1="0" x2="0" y2="1" id="highcharts-4223"><stop offset="0" stop-color="#333" stop-opacity="1"></stop><stop offset="1" stop-color="#FFF" stop-opacity="1"></stop></linearGradient><linearGradient x1="0" y1="0" x2="0" y2="1" id="highcharts-4224"><stop offset="0" stop-color="#FFF" stop-opacity="1"></stop><stop offset="1" stop-color="#DDD" stop-opacity="1"></stop></linearGradient></defs><rect x="0" y="0" width="241" height="180" fill="#FFFFFF" class=" highcharts-background"></rect><path fill="url(#highcharts-4222)" d="M 120.5 57.11599999999999 A 51.88400000000001 51.88400000000001 0 1 1 120.4481160086473 57.11602594199783 M 120.5 109 A 0 0 0 1 0 120.5 109 " visibility="visible"></path><path fill="url(#highcharts-4223)" d="M 120.5 58.068000000000005 A 50.931999999999995 50.931999999999995 0 1 1 120.44906800848864 58.068025465997884 M 120.5 109 A 0 0 0 1 0 120.5 109 " stroke="silver" stroke-width="1" visibility="visible"></path><path fill="url(#highcharts-4224)" d="M 120.5 59.02 A 49.98 49.98 0 1 1 120.45002000832997 59.02002498999792 M 120.5 109 A 0 0 0 1 0 120.5 109 " stroke="silver" stroke-width="1" visibility="visible"></path><path fill="#DDD" d="M 120.5 59.02 A 49.98 49.98 0 1 1 120.45002000832997 59.02002498999792 M 120.4509720081713 59.97202451399796 A 49.028 49.028 0 1 0 120.5 59.972 " visibility="visible"></path><path fill="#008B00" d="M 96.69999999999997 150.22280922013928 A 47.6 47.6 0 0 1 120.45240000793333 61.40002379999802 L 120.46240000626668 71.40001879999843 A 37.6 37.6 0 0 0 101.69999999999999 141.5625551822949 Z" visibility="visible"></path><path fill="#ffd700" d="M 120.5 61.4 A 47.6 47.6 0 0 1 168.09997620000198 108.95240000793329 L 158.09998120000157 108.96240000626663 A 37.6 37.6 0 0 0 120.5 71.4 Z" visibility="visible"></path><path fill="#f00" d="M 168.1 108.99999999999996 A 47.6 47.6 0 0 1 144.34121090235067 150.19898861270303 L 139.332553149756 141.54373890415198 A 37.6 37.6 0 0 0 158.1 108.99999999999997 Z" visibility="visible"></path><g class="highcharts-grid"></g><g class="highcharts-axis"><path fill="none" d="M 96.69999999999997 150.22280922013928 L 101.69999999999999 141.5625551822949" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 92.52142199087828 147.5092089322475 L 98.39927451380301 139.41903898849802" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 88.64938313731834 144.37369369272395 L 95.34068920090692 136.94224543795002" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 85.12630630727602 140.85061686268165 L 92.55775456204996 134.15931079909305" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 81.9907910677525 136.97857800912172 L 90.08096101150197 131.10072548619698" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 79.27719077986072 132.79999999999998 L 87.9374448177051 127.79999999999998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 77.01523621621219 128.36066421040806 L 86.1506907926382 124.29329777965008" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 75.22970982435069 123.70920893224749 L 84.74027498730223 120.61903898849802" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.94017420507085 118.89659648292533 L 83.7216502124089 116.81747957474774" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.16075778047019 113.97555485154028 L 83.10597673415292 112.93027021886375" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 72.9 109 L 82.9 109" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.16075778047019 104.02444514845968 L 83.10597673415293 105.06972978113622" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.94017420507086 99.10340351707464 L 83.72165021240892 101.18252042525224" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 75.22970982435069 94.2907910677525 L 84.74027498730223 97.38096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 77.0152362162122 89.6393357895919 L 86.15069079263822 93.70670222034991" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 79.27719077986072 85.19999999999999 L 87.93744481770511 90.19999999999999" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 81.9907910677525 81.02142199087828 L 90.08096101150198 86.89927451380301" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 85.12630630727602 77.14938313731835 L 92.55775456204998 83.84068920090694" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 88.64938313731835 73.62630630727602 L 95.34068920090692 81.05775456204998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 92.52142199087828 70.4907910677525 L 98.39927451380302 78.58096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 96.69999999999999 67.77719077986072 L 101.69999999999999 76.43744481770511" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 101.13933578959191 65.5152362162122 L 105.20670222034991 74.65069079263822" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 105.79079106775251 63.729709824350685 L 108.88096101150198 73.24027498730223" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 110.60340351707464 62.44017420507085 L 112.68252042525224 72.22165021240892" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 115.52444514845969 61.66075778047019 L 116.56972978113623 71.60597673415293" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 120.5 61.4 L 120.5 71.4" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 125.4755548515403 61.660757780470185 L 124.43027021886377 71.60597673415292" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 130.39659648292533 62.440174205070846 L 128.31747957474775 72.2216502124089" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 135.2092089322475 63.72970982435069 L 132.11903898849803 73.24027498730223" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 139.8606642104081 65.5152362162122 L 135.7932977796501 74.6506907926382" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 144.3 67.77719077986072 L 139.3 76.43744481770511" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 148.4785780091217 70.4907910677525 L 142.60072548619698 78.58096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 152.35061686268165 73.62630630727602 L 145.65931079909308 81.05775456204998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 155.87369369272398 77.14938313731835 L 148.44224543795002 83.84068920090692" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 159.00920893224747 81.02142199087827 L 150.91903898849802 86.899274513803" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 161.72280922013928 85.19999999999999 L 153.0625551822949 90.19999999999999" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 163.9847637837878 89.63933578959188 L 154.84930920736178 93.7067022203499" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 165.7702901756493 94.29079106775248 L 156.25972501269777 97.38096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.05982579492914 99.10340351707464 L 157.27834978759108 101.18252042525224" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.8392422195298 104.02444514845966 L 157.89402326584707 105.0697297811362" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 168.1 108.99999999999996 L 158.1 108.99999999999997" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.8392422195298 113.9755548515403 L 157.89402326584707 112.93027021886375" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.05982579492917 118.89659648292532 L 157.27834978759108 116.81747957474774" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 165.77029017564934 123.70920893224746 L 156.2597250126978 120.61903898849799" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 163.9847637837878 128.3606642104081 L 154.84930920736178 124.29329777965008" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 161.7228092201393 132.79999999999998 L 153.06255518229491 127.79999999999998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 159.00920893224753 136.9785780091217 L 150.91903898849804 131.10072548619695" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 155.87369369272398 140.85061686268165 L 148.44224543795002 134.15931079909308" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 152.35061686268168 144.37369369272395 L 145.65931079909308 136.94224543795002" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 148.47857800912175 147.50920893224747 L 142.600725486197 139.41903898849802" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 144.3 150.22280922013928 L 139.3 141.5625551822949" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 96.69999999999997 150.22280922013928 L 101.69999999999999 141.5625551822949" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 79.27719077986072 132.79999999999998 L 87.9374448177051 127.79999999999998" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 72.9 109 L 82.9 109" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 79.27719077986072 85.19999999999999 L 87.93744481770511 90.19999999999999" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 96.69999999999999 67.77719077986072 L 101.69999999999999 76.43744481770511" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 120.5 61.4 L 120.5 71.4" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 144.3 67.77719077986072 L 139.3 76.43744481770511" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 161.72280922013928 85.19999999999999 L 153.0625551822949 90.19999999999999" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 168.1 108.99999999999996 L 158.1 108.99999999999997" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 161.7228092201393 132.79999999999998 L 153.06255518229491 127.79999999999998" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 144.3 150.22280922013928 L 139.3 141.5625551822949" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 96.69999999999997 150.22280922013928 A 47.6 47.6 0 1 1 144.34121090235067 150.19898861270306 M 120.5 109 A 0 0 0 1 0 120.5 109 " stroke="#C0D0E0" stroke-width="1"></path></g><g class="highcharts-data-labels highcharts-series-0 highcharts-tracker" visibility="visible" transform="translate(10,53) scale(1 1)" style=""><g style="" transform="translate(102,71)"><rect x="0.5" y="0.5" width="18" height="28" fill="none" stroke="silver" stroke-width="1" rx="3" ry="3"></rect><text x="5" style="font-size:11px;font-weight:bold;color:#000000;text-shadow:0 0 6px #FFFFFF, 0 0 3px #FFFFFF;fill:#000000;text-rendering:geometricPrecision;" y="16"><tspan>0</tspan></text></g></g><g class="highcharts-series-group"><g class="highcharts-series highcharts-series-0 highcharts-tracker" transform="translate(10,53) scale(1 1)" style="" clip-path="url(#highcharts-4221)"><path fill="black" d="M -3.8079999999999994 -1.5 L 26.656 -1.5 38.08 -0.5 38.08 0.5 26.656 1.5 -3.8079999999999994 1.5 z" transform="translate(110.5,56) rotate(-239.99999999999997 0 0)"></path><circle cx="0" cy="0" r="5" fill="black" transform="translate(110.5,56)"></circle></g><g class="highcharts-markers highcharts-series-0" transform="translate(10,53) scale(1 1)" clip-path="none"></g></g><text x="121" text-anchor="middle" class="highcharts-title" style="color:#333333;font-size:18px;fill:#333333;width:177px;" y="24">CPU使用率</text><g class="highcharts-legend"><g><g></g></g></g><g class="highcharts-axis-labels highcharts-yaxis-labels"><text x="109.19999999999999" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0) rotate(-150 109.19999999999999 128.5721741255283)" y="128.5721741255283" opacity="1">0</text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(-120 0 -9999)" y="-9999"><tspan>10</tspan></text><text x="97.9" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0) rotate(-90 97.9 109)" y="109" opacity="1">20</text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(-59.999999999999986 0 -9999)" y="-9999"><tspan>30</tspan></text><text x="109.19999999999999" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(-30.000000000000018 109.19999999999999 89.4278258744717)" y="89.4278258744717" opacity="1"><tspan>40</tspan></text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0)" y="-9999">50</text><text x="131.8" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(29.999999999999993 131.8 89.42782587447168)" y="89.42782587447168" opacity="1"><tspan>60</tspan></text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(59.999999999999986 0 -9999)" y="-9999"><tspan>70</tspan></text><text x="143.1" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0) rotate(89.99999999999994 143.1 108.99999999999999)" y="108.99999999999999" opacity="1">80</text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(119.99999999999997 0 -9999)" y="-9999"><tspan>90</tspan></text><text x="131.8" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(150 131.8 128.5721741255283)" y="128.5721741255283" opacity="1"><tspan>100</tspan></text></g><g class="highcharts-tooltip" style="cursor:default;padding:0;pointer-events:none;white-space:nowrap;" transform="translate(0,-9999)"><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.049999999999999996" stroke-width="5" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.09999999999999999" stroke-width="3" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.15" stroke-width="1" transform="translate(1, 1)"></path><path fill="rgba(249, 249, 249, .85)" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5"></path><text x="8" style="font-size:12px;color:#333333;fill:#333333;" y="20"></text></g></svg></div></div>
+                  </div>
+                  <div class="row">
+                  	<div class="col-md-12 col-xs-12 Speedometer" id="Speedometer1" style="height: 180px;" data-highcharts-chart="1342"><div class="highcharts-container" id="highcharts-4225" style="position: relative; overflow: hidden; width: 241px; height: 180px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg version="1.1" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Arial, Helvetica, sans-serif;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="241" height="180"><desc>Created with Highcharts 4.2.5</desc><defs><clipPath id="highcharts-4226"><rect x="0" y="0" width="221" height="112"></rect></clipPath><linearGradient x1="0" y1="0" x2="0" y2="1" id="highcharts-4227"><stop offset="0" stop-color="#FFF" stop-opacity="1"></stop><stop offset="1" stop-color="#333" stop-opacity="1"></stop></linearGradient><linearGradient x1="0" y1="0" x2="0" y2="1" id="highcharts-4228"><stop offset="0" stop-color="#333" stop-opacity="1"></stop><stop offset="1" stop-color="#FFF" stop-opacity="1"></stop></linearGradient><linearGradient x1="0" y1="0" x2="0" y2="1" id="highcharts-4229"><stop offset="0" stop-color="#FFF" stop-opacity="1"></stop><stop offset="1" stop-color="#DDD" stop-opacity="1"></stop></linearGradient></defs><rect x="0" y="0" width="241" height="180" fill="#FFFFFF" class=" highcharts-background"></rect><path fill="url(#highcharts-4227)" d="M 120.5 57.11599999999999 A 51.88400000000001 51.88400000000001 0 1 1 120.4481160086473 57.11602594199783 M 120.5 109 A 0 0 0 1 0 120.5 109 " visibility="visible"></path><path fill="url(#highcharts-4228)" d="M 120.5 58.068000000000005 A 50.931999999999995 50.931999999999995 0 1 1 120.44906800848864 58.068025465997884 M 120.5 109 A 0 0 0 1 0 120.5 109 " stroke="silver" stroke-width="1" visibility="visible"></path><path fill="url(#highcharts-4229)" d="M 120.5 59.02 A 49.98 49.98 0 1 1 120.45002000832997 59.02002498999792 M 120.5 109 A 0 0 0 1 0 120.5 109 " stroke="silver" stroke-width="1" visibility="visible"></path><path fill="#DDD" d="M 120.5 59.02 A 49.98 49.98 0 1 1 120.45002000832997 59.02002498999792 M 120.4509720081713 59.97202451399796 A 49.028 49.028 0 1 0 120.5 59.972 " visibility="visible"></path><path fill="#008B00" d="M 96.69999999999997 150.22280922013928 A 47.6 47.6 0 0 1 120.45240000793333 61.40002379999802 L 120.46240000626668 71.40001879999843 A 37.6 37.6 0 0 0 101.69999999999999 141.5625551822949 Z" visibility="visible"></path><path fill="#ffd700" d="M 120.5 61.4 A 47.6 47.6 0 0 1 168.09997620000198 108.95240000793329 L 158.09998120000157 108.96240000626663 A 37.6 37.6 0 0 0 120.5 71.4 Z" visibility="visible"></path><path fill="#f00" d="M 168.1 108.99999999999996 A 47.6 47.6 0 0 1 144.34121090235067 150.19898861270303 L 139.332553149756 141.54373890415198 A 37.6 37.6 0 0 0 158.1 108.99999999999997 Z" visibility="visible"></path><g class="highcharts-grid"></g><g class="highcharts-axis"><path fill="none" d="M 96.69999999999997 150.22280922013928 L 101.69999999999999 141.5625551822949" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 92.52142199087828 147.5092089322475 L 98.39927451380301 139.41903898849802" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 88.64938313731834 144.37369369272395 L 95.34068920090692 136.94224543795002" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 85.12630630727602 140.85061686268165 L 92.55775456204996 134.15931079909305" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 81.9907910677525 136.97857800912172 L 90.08096101150197 131.10072548619698" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 79.27719077986072 132.79999999999998 L 87.9374448177051 127.79999999999998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 77.01523621621219 128.36066421040806 L 86.1506907926382 124.29329777965008" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 75.22970982435069 123.70920893224749 L 84.74027498730223 120.61903898849802" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.94017420507085 118.89659648292533 L 83.7216502124089 116.81747957474774" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.16075778047019 113.97555485154028 L 83.10597673415292 112.93027021886375" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 72.9 109 L 82.9 109" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.16075778047019 104.02444514845968 L 83.10597673415293 105.06972978113622" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.94017420507086 99.10340351707464 L 83.72165021240892 101.18252042525224" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 75.22970982435069 94.2907910677525 L 84.74027498730223 97.38096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 77.0152362162122 89.6393357895919 L 86.15069079263822 93.70670222034991" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 79.27719077986072 85.19999999999999 L 87.93744481770511 90.19999999999999" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 81.9907910677525 81.02142199087828 L 90.08096101150198 86.89927451380301" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 85.12630630727602 77.14938313731835 L 92.55775456204998 83.84068920090694" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 88.64938313731835 73.62630630727602 L 95.34068920090692 81.05775456204998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 92.52142199087828 70.4907910677525 L 98.39927451380302 78.58096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 96.69999999999999 67.77719077986072 L 101.69999999999999 76.43744481770511" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 101.13933578959191 65.5152362162122 L 105.20670222034991 74.65069079263822" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 105.79079106775251 63.729709824350685 L 108.88096101150198 73.24027498730223" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 110.60340351707464 62.44017420507085 L 112.68252042525224 72.22165021240892" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 115.52444514845969 61.66075778047019 L 116.56972978113623 71.60597673415293" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 120.5 61.4 L 120.5 71.4" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 125.4755548515403 61.660757780470185 L 124.43027021886377 71.60597673415292" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 130.39659648292533 62.440174205070846 L 128.31747957474775 72.2216502124089" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 135.2092089322475 63.72970982435069 L 132.11903898849803 73.24027498730223" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 139.8606642104081 65.5152362162122 L 135.7932977796501 74.6506907926382" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 144.3 67.77719077986072 L 139.3 76.43744481770511" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 148.4785780091217 70.4907910677525 L 142.60072548619698 78.58096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 152.35061686268165 73.62630630727602 L 145.65931079909308 81.05775456204998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 155.87369369272398 77.14938313731835 L 148.44224543795002 83.84068920090692" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 159.00920893224747 81.02142199087827 L 150.91903898849802 86.899274513803" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 161.72280922013928 85.19999999999999 L 153.0625551822949 90.19999999999999" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 163.9847637837878 89.63933578959188 L 154.84930920736178 93.7067022203499" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 165.7702901756493 94.29079106775248 L 156.25972501269777 97.38096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.05982579492914 99.10340351707464 L 157.27834978759108 101.18252042525224" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.8392422195298 104.02444514845966 L 157.89402326584707 105.0697297811362" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 168.1 108.99999999999996 L 158.1 108.99999999999997" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.8392422195298 113.9755548515403 L 157.89402326584707 112.93027021886375" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.05982579492917 118.89659648292532 L 157.27834978759108 116.81747957474774" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 165.77029017564934 123.70920893224746 L 156.2597250126978 120.61903898849799" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 163.9847637837878 128.3606642104081 L 154.84930920736178 124.29329777965008" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 161.7228092201393 132.79999999999998 L 153.06255518229491 127.79999999999998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 159.00920893224753 136.9785780091217 L 150.91903898849804 131.10072548619695" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 155.87369369272398 140.85061686268165 L 148.44224543795002 134.15931079909308" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 152.35061686268168 144.37369369272395 L 145.65931079909308 136.94224543795002" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 148.47857800912175 147.50920893224747 L 142.600725486197 139.41903898849802" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 144.3 150.22280922013928 L 139.3 141.5625551822949" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 96.69999999999997 150.22280922013928 L 101.69999999999999 141.5625551822949" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 79.27719077986072 132.79999999999998 L 87.9374448177051 127.79999999999998" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 72.9 109 L 82.9 109" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 79.27719077986072 85.19999999999999 L 87.93744481770511 90.19999999999999" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 96.69999999999999 67.77719077986072 L 101.69999999999999 76.43744481770511" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 120.5 61.4 L 120.5 71.4" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 144.3 67.77719077986072 L 139.3 76.43744481770511" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 161.72280922013928 85.19999999999999 L 153.0625551822949 90.19999999999999" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 168.1 108.99999999999996 L 158.1 108.99999999999997" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 161.7228092201393 132.79999999999998 L 153.06255518229491 127.79999999999998" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 144.3 150.22280922013928 L 139.3 141.5625551822949" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 96.69999999999997 150.22280922013928 A 47.6 47.6 0 1 1 144.34121090235067 150.19898861270306 M 120.5 109 A 0 0 0 1 0 120.5 109 " stroke="#C0D0E0" stroke-width="1"></path></g><g class="highcharts-data-labels highcharts-series-0 highcharts-tracker" visibility="visible" transform="translate(10,53) scale(1 1)" style=""><g style="" transform="translate(102,71)"><rect x="0.5" y="0.5" width="18" height="28" fill="none" stroke="silver" stroke-width="1" rx="3" ry="3"></rect><text x="5" style="font-size:11px;font-weight:bold;color:#000000;text-shadow:0 0 6px #FFFFFF, 0 0 3px #FFFFFF;fill:#000000;text-rendering:geometricPrecision;" y="16"><tspan>0</tspan></text></g></g><g class="highcharts-series-group"><g class="highcharts-series highcharts-series-0 highcharts-tracker" transform="translate(10,53) scale(1 1)" style="" clip-path="url(#highcharts-4226)"><path fill="black" d="M -3.8079999999999994 -1.5 L 26.656 -1.5 38.08 -0.5 38.08 0.5 26.656 1.5 -3.8079999999999994 1.5 z" transform="translate(110.5,56) rotate(-239.99999999999997 0 0)"></path><circle cx="0" cy="0" r="5" fill="black" transform="translate(110.5,56)"></circle></g><g class="highcharts-markers highcharts-series-0" transform="translate(10,53) scale(1 1)" clip-path="none"></g></g><text x="121" text-anchor="middle" class="highcharts-title" style="color:#333333;font-size:18px;fill:#333333;width:177px;" y="24">内存使用率</text><g class="highcharts-legend"><g><g></g></g></g><g class="highcharts-axis-labels highcharts-yaxis-labels"><text x="109.19999999999999" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0) rotate(-150 109.19999999999999 128.5721741255283)" y="128.5721741255283" opacity="1">0</text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(-120 0 -9999)" y="-9999"><tspan>10</tspan></text><text x="97.9" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0) rotate(-90 97.9 109)" y="109" opacity="1">20</text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(-59.999999999999986 0 -9999)" y="-9999"><tspan>30</tspan></text><text x="109.19999999999999" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(-30.000000000000018 109.19999999999999 89.4278258744717)" y="89.4278258744717" opacity="1"><tspan>40</tspan></text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0)" y="-9999">50</text><text x="131.8" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(29.999999999999993 131.8 89.42782587447168)" y="89.42782587447168" opacity="1"><tspan>60</tspan></text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(59.999999999999986 0 -9999)" y="-9999"><tspan>70</tspan></text><text x="143.1" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0) rotate(89.99999999999994 143.1 108.99999999999999)" y="108.99999999999999" opacity="1">80</text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(119.99999999999997 0 -9999)" y="-9999"><tspan>90</tspan></text><text x="131.8" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(150 131.8 128.5721741255283)" y="128.5721741255283" opacity="1"><tspan>100</tspan></text></g><g class="highcharts-tooltip" style="cursor:default;padding:0;pointer-events:none;white-space:nowrap;" transform="translate(0,-9999)"><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.049999999999999996" stroke-width="5" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.09999999999999999" stroke-width="3" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.15" stroke-width="1" transform="translate(1, 1)"></path><path fill="rgba(249, 249, 249, .85)" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5"></path><text x="8" style="font-size:12px;color:#333333;fill:#333333;" y="20"></text></g></svg></div></div>
+                  </div>
+                  <div class="row">
+                  	<div class="col-md-12 col-xs-12 Speedometer" id="Speedometer2" style="height: 180px;" data-highcharts-chart="1343"><div class="highcharts-container" id="highcharts-4230" style="position: relative; overflow: hidden; width: 241px; height: 180px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg version="1.1" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Arial, Helvetica, sans-serif;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="241" height="180"><desc>Created with Highcharts 4.2.5</desc><defs><clipPath id="highcharts-4231"><rect x="0" y="0" width="221" height="112"></rect></clipPath><linearGradient x1="0" y1="0" x2="0" y2="1" id="highcharts-4232"><stop offset="0" stop-color="#FFF" stop-opacity="1"></stop><stop offset="1" stop-color="#333" stop-opacity="1"></stop></linearGradient><linearGradient x1="0" y1="0" x2="0" y2="1" id="highcharts-4233"><stop offset="0" stop-color="#333" stop-opacity="1"></stop><stop offset="1" stop-color="#FFF" stop-opacity="1"></stop></linearGradient><linearGradient x1="0" y1="0" x2="0" y2="1" id="highcharts-4234"><stop offset="0" stop-color="#FFF" stop-opacity="1"></stop><stop offset="1" stop-color="#DDD" stop-opacity="1"></stop></linearGradient></defs><rect x="0" y="0" width="241" height="180" fill="#FFFFFF" class=" highcharts-background"></rect><path fill="url(#highcharts-4232)" d="M 120.5 57.11599999999999 A 51.88400000000001 51.88400000000001 0 1 1 120.4481160086473 57.11602594199783 M 120.5 109 A 0 0 0 1 0 120.5 109 " visibility="visible"></path><path fill="url(#highcharts-4233)" d="M 120.5 58.068000000000005 A 50.931999999999995 50.931999999999995 0 1 1 120.44906800848864 58.068025465997884 M 120.5 109 A 0 0 0 1 0 120.5 109 " stroke="silver" stroke-width="1" visibility="visible"></path><path fill="url(#highcharts-4234)" d="M 120.5 59.02 A 49.98 49.98 0 1 1 120.45002000832997 59.02002498999792 M 120.5 109 A 0 0 0 1 0 120.5 109 " stroke="silver" stroke-width="1" visibility="visible"></path><path fill="#DDD" d="M 120.5 59.02 A 49.98 49.98 0 1 1 120.45002000832997 59.02002498999792 M 120.4509720081713 59.97202451399796 A 49.028 49.028 0 1 0 120.5 59.972 " visibility="visible"></path><path fill="#008B00" d="M 96.69999999999997 150.22280922013928 A 47.6 47.6 0 0 1 120.45240000793333 61.40002379999802 L 120.46240000626668 71.40001879999843 A 37.6 37.6 0 0 0 101.69999999999999 141.5625551822949 Z" visibility="visible"></path><path fill="#ffd700" d="M 120.5 61.4 A 47.6 47.6 0 0 1 168.09997620000198 108.95240000793329 L 158.09998120000157 108.96240000626663 A 37.6 37.6 0 0 0 120.5 71.4 Z" visibility="visible"></path><path fill="#f00" d="M 168.1 108.99999999999996 A 47.6 47.6 0 0 1 144.34121090235067 150.19898861270303 L 139.332553149756 141.54373890415198 A 37.6 37.6 0 0 0 158.1 108.99999999999997 Z" visibility="visible"></path><g class="highcharts-grid"></g><g class="highcharts-axis"><path fill="none" d="M 96.69999999999997 150.22280922013928 L 101.69999999999999 141.5625551822949" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 92.52142199087828 147.5092089322475 L 98.39927451380301 139.41903898849802" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 88.64938313731834 144.37369369272395 L 95.34068920090692 136.94224543795002" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 85.12630630727602 140.85061686268165 L 92.55775456204996 134.15931079909305" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 81.9907910677525 136.97857800912172 L 90.08096101150197 131.10072548619698" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 79.27719077986072 132.79999999999998 L 87.9374448177051 127.79999999999998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 77.01523621621219 128.36066421040806 L 86.1506907926382 124.29329777965008" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 75.22970982435069 123.70920893224749 L 84.74027498730223 120.61903898849802" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.94017420507085 118.89659648292533 L 83.7216502124089 116.81747957474774" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.16075778047019 113.97555485154028 L 83.10597673415292 112.93027021886375" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 72.9 109 L 82.9 109" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.16075778047019 104.02444514845968 L 83.10597673415293 105.06972978113622" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 73.94017420507086 99.10340351707464 L 83.72165021240892 101.18252042525224" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 75.22970982435069 94.2907910677525 L 84.74027498730223 97.38096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 77.0152362162122 89.6393357895919 L 86.15069079263822 93.70670222034991" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 79.27719077986072 85.19999999999999 L 87.93744481770511 90.19999999999999" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 81.9907910677525 81.02142199087828 L 90.08096101150198 86.89927451380301" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 85.12630630727602 77.14938313731835 L 92.55775456204998 83.84068920090694" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 88.64938313731835 73.62630630727602 L 95.34068920090692 81.05775456204998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 92.52142199087828 70.4907910677525 L 98.39927451380302 78.58096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 96.69999999999999 67.77719077986072 L 101.69999999999999 76.43744481770511" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 101.13933578959191 65.5152362162122 L 105.20670222034991 74.65069079263822" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 105.79079106775251 63.729709824350685 L 108.88096101150198 73.24027498730223" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 110.60340351707464 62.44017420507085 L 112.68252042525224 72.22165021240892" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 115.52444514845969 61.66075778047019 L 116.56972978113623 71.60597673415293" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 120.5 61.4 L 120.5 71.4" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 125.4755548515403 61.660757780470185 L 124.43027021886377 71.60597673415292" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 130.39659648292533 62.440174205070846 L 128.31747957474775 72.2216502124089" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 135.2092089322475 63.72970982435069 L 132.11903898849803 73.24027498730223" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 139.8606642104081 65.5152362162122 L 135.7932977796501 74.6506907926382" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 144.3 67.77719077986072 L 139.3 76.43744481770511" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 148.4785780091217 70.4907910677525 L 142.60072548619698 78.58096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 152.35061686268165 73.62630630727602 L 145.65931079909308 81.05775456204998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 155.87369369272398 77.14938313731835 L 148.44224543795002 83.84068920090692" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 159.00920893224747 81.02142199087827 L 150.91903898849802 86.899274513803" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 161.72280922013928 85.19999999999999 L 153.0625551822949 90.19999999999999" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 163.9847637837878 89.63933578959188 L 154.84930920736178 93.7067022203499" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 165.7702901756493 94.29079106775248 L 156.25972501269777 97.38096101150197" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.05982579492914 99.10340351707464 L 157.27834978759108 101.18252042525224" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.8392422195298 104.02444514845966 L 157.89402326584707 105.0697297811362" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 168.1 108.99999999999996 L 158.1 108.99999999999997" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.8392422195298 113.9755548515403 L 157.89402326584707 112.93027021886375" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 167.05982579492917 118.89659648292532 L 157.27834978759108 116.81747957474774" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 165.77029017564934 123.70920893224746 L 156.2597250126978 120.61903898849799" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 163.9847637837878 128.3606642104081 L 154.84930920736178 124.29329777965008" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 161.7228092201393 132.79999999999998 L 153.06255518229491 127.79999999999998" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 159.00920893224753 136.9785780091217 L 150.91903898849804 131.10072548619695" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 155.87369369272398 140.85061686268165 L 148.44224543795002 134.15931079909308" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 152.35061686268168 144.37369369272395 L 145.65931079909308 136.94224543795002" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 148.47857800912175 147.50920893224747 L 142.600725486197 139.41903898849802" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 144.3 150.22280922013928 L 139.3 141.5625551822949" stroke="#666" stroke-width="1" opacity="1"></path><path fill="none" d="M 96.69999999999997 150.22280922013928 L 101.69999999999999 141.5625551822949" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 79.27719077986072 132.79999999999998 L 87.9374448177051 127.79999999999998" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 72.9 109 L 82.9 109" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 79.27719077986072 85.19999999999999 L 87.93744481770511 90.19999999999999" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 96.69999999999999 67.77719077986072 L 101.69999999999999 76.43744481770511" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 120.5 61.4 L 120.5 71.4" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 144.3 67.77719077986072 L 139.3 76.43744481770511" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 161.72280922013928 85.19999999999999 L 153.0625551822949 90.19999999999999" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 168.1 108.99999999999996 L 158.1 108.99999999999997" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 161.7228092201393 132.79999999999998 L 153.06255518229491 127.79999999999998" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 144.3 150.22280922013928 L 139.3 141.5625551822949" stroke="#666" stroke-width="2" opacity="1"></path><path fill="none" d="M 96.69999999999997 150.22280922013928 A 47.6 47.6 0 1 1 144.34121090235067 150.19898861270306 M 120.5 109 A 0 0 0 1 0 120.5 109 " stroke="#C0D0E0" stroke-width="1"></path></g><g class="highcharts-data-labels highcharts-series-0 highcharts-tracker" visibility="visible" transform="translate(10,53) scale(1 1)" style=""><g style="" transform="translate(102,71)"><rect x="0.5" y="0.5" width="18" height="28" fill="none" stroke="silver" stroke-width="1" rx="3" ry="3"></rect><text x="5" style="font-size:11px;font-weight:bold;color:#000000;text-shadow:0 0 6px #FFFFFF, 0 0 3px #FFFFFF;fill:#000000;text-rendering:geometricPrecision;" y="16"><tspan>0</tspan></text></g></g><g class="highcharts-series-group"><g class="highcharts-series highcharts-series-0 highcharts-tracker" transform="translate(10,53) scale(1 1)" style="" clip-path="url(#highcharts-4231)"><path fill="black" d="M -3.8079999999999994 -1.5 L 26.656 -1.5 38.08 -0.5 38.08 0.5 26.656 1.5 -3.8079999999999994 1.5 z" transform="translate(110.5,56) rotate(-239.99999999999997 0 0)"></path><circle cx="0" cy="0" r="5" fill="black" transform="translate(110.5,56)"></circle></g><g class="highcharts-markers highcharts-series-0" transform="translate(10,53) scale(1 1)" clip-path="none"></g></g><text x="121" text-anchor="middle" class="highcharts-title" style="color:#333333;font-size:18px;fill:#333333;width:177px;" y="24">磁盘使用率</text><g class="highcharts-legend"><g><g></g></g></g><g class="highcharts-axis-labels highcharts-yaxis-labels"><text x="109.19999999999999" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0) rotate(-150 109.19999999999999 128.5721741255283)" y="128.5721741255283" opacity="1">0</text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(-120 0 -9999)" y="-9999"><tspan>10</tspan></text><text x="97.9" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0) rotate(-90 97.9 109)" y="109" opacity="1">20</text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(-59.999999999999986 0 -9999)" y="-9999"><tspan>30</tspan></text><text x="109.19999999999999" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(-30.000000000000018 109.19999999999999 89.4278258744717)" y="89.4278258744717" opacity="1"><tspan>40</tspan></text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0)" y="-9999">50</text><text x="131.8" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(29.999999999999993 131.8 89.42782587447168)" y="89.42782587447168" opacity="1"><tspan>60</tspan></text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(59.999999999999986 0 -9999)" y="-9999"><tspan>70</tspan></text><text x="143.1" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:clip;" text-anchor="middle" transform="translate(0,0) rotate(89.99999999999994 143.1 108.99999999999999)" y="108.99999999999999" opacity="1">80</text><text x="0" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(119.99999999999997 0 -9999)" y="-9999"><tspan>90</tspan></text><text x="131.8" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:70px;text-overflow:ellipsis;" text-anchor="middle" transform="translate(0,0) rotate(150 131.8 128.5721741255283)" y="128.5721741255283" opacity="1"><tspan>100</tspan></text></g><g class="highcharts-tooltip" style="cursor:default;padding:0;pointer-events:none;white-space:nowrap;" transform="translate(0,-9999)"><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.049999999999999996" stroke-width="5" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.09999999999999999" stroke-width="3" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.15" stroke-width="1" transform="translate(1, 1)"></path><path fill="rgba(249, 249, 249, .85)" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5"></path><text x="8" style="font-size:12px;color:#333333;fill:#333333;" y="20"></text></g></svg></div></div>
+                  </div>
+                </div><!-- /.box-body -->
+                
+              </div><!-- /.box -->
+              
+              <div class="box box-default">
+                <div class="box-header with-border">
+                  <span id="set_tittle2">
+                    <h3 class="box-title"><i class="fa fa-list"></i> 磁盘占用率TopN</h3>
+                  </span>
+                  <div class="box-tools pull-right">
+                    <!-- <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> -->
+                    
+                    <button class="btn btn-box-tool" onclick="modalopen2(2)"><i class="fa fa-wrench"></i></button>
+                    
+                    <!-- <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body dist-box-body">
+                  <div class="row" style="padding-left:5px;padding-right:5px;">
+                    <div class="col-md-12 col_chart" id="col_chart" style="padding-left: 0px; 
+				padding-right: 0px;"><div style="text-align:center;color:#e0e0e0;padding-top:58px"><i class="fa fa-warning" style="font-size:150px"></i><br><font style="font-size:16px;color:#d0d0d0;">暂无数据</font></div></div><!-- /.col -->
+                  </div><!-- /.row -->
+                </div><!-- ./box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </section><!-- /.content -->
+     
+      
+			
+	<div onclick="modalclose2(this)" id="blackmod2" style="z-index: 1050;"></div>	
+    
+    <script src="/Unipower_Web/plugins/hightcharts/highcharts.js"></script> 
+  	<script type="text/javascript" src="/Unipower_Web/plugins/hightcharts/highcharts-more.js"></script>
+    <script type="text/javascript" src="/Unipower_Web/js/mainIndex/initIndex.js"></script>
+    <script type="text/javascript" src="/Unipower_Web/js/mainIndex/lrtk.js"></script>
+	<script type="text/javascript" src="/Unipower_Web/plugins/select/js/mylist.js"></script>
+    <script type="text/javascript">
+        $(function(){
+              $("#category0").mcDropdown("#categorymenu0");
+              $("#category1").mcDropdown("#categorymenu1");
+              $("#category2").mcDropdown("#categorymenu2");
+        });
+        
+       /*  $(function(){
+	      pie_chart(0); //设备概况
+         });
+
+        $(function(){
+	     chart_top(0);//top10
+	     setRefresh();
+        }); */
+     </script>
+  
+
+</div>
+	       	
+		    <div id="appcontentop" class="box-header " style="display: none;padding-bottom:0px;"></div>		 
+	        <div id="appcontent" style="display:none;overflow-y:auto; /* border-bottom: 1px solid #dcdcdc;
+                                         border-left: 1px solid #dcdcdc;margin-left: 10px;margin-right: 10px; */ "></div><!-- /.content-wrapper -->
+		 	<div id="device_appcon" style="display: none; height: 556px;"></div>
+		  </div>
+	      <div id="appfooter">
+
+
+<style>
+
+</style>
+<footer class="main-footer" id="app-foot">
+        <div class="pull-right hidden-xs">
+          <b>Version</b> 1.0.0
+        </div>
+       
+        <strong> © 2016-2017 <a href="#">广州市优普计算机有限公司™</a></strong>
+</footer></div>
+  	</div>  
+  	<input type="hidden" value="false" id="Bool">
+  	<input type="hidden" value="" id="treeid">
+    <!-- jQuery 2.1.4 -->
+   <script src="/Unipower_Web/plugins/jQuery/jQuery-2.1.4.min.js"></script> 
+   
+   
+    <!-- jQuery UI 1.11.4 -->
+   <script src="/Unipower_Web/plugins/jQueryUI/jquery-ui.min.js"></script> 
+    <script src="/Unipower_Web/bootstrap/js/bootstrap.min.js"></script> 
+    
+    <script type="text/javascript">
+		 var b = $(window).height();
+    	 $('#appcon').css("height", b-81+"px");
+    	$('#device_appcon').css("height", b-81+"px");
+    	 function res_body(){
+    		var b = $(window).height();
+    		$('#appcon').css("height", b-81+"px");
+    		$('#device_appcon').css("height", b-81+"px");
+    		$('#table_appcontent').css("height", b-144+"px");
+    		if(document.getElementById('search-div')!=null){
+    		if(document.getElementById('search-div').style.display != "block"){
+		           $('#table_row').css("height", b-184+"px");
+			 }else{
+		          $('#table_row').css("height",b-218+"px");
+		          
+			 }	
+			 }	
+    	} 
+		 
+	     $(function() {
+	     	modalClose();
+	        $('#apptop').load("top.action",function(response,status,xhr){
+			          $('#apptop').html(response);
+			    });
+	        $('#appleft').load("left.action?selectedmenu=null",function(response,status,xhr){
+	          $('#appleft').html(response);
+	        });
+	         $('#appcontentop').load("contentop.action",function(response,status,xhr){
+	          $('#appcontentop').html(response);
+	        });	        	       
+	        $('#appfooter').load("root.action",function(response,status,xhr){
+	          $('#appfooter').html(response);
+	        });
+	         $('#appmain').show();
+	         $('#appmain').load("unipower_index.action",function(response,status,xhr){
+	          	$('#appmain').html(response);
+	        });  
+	         //alert($("#Bool").val()+"  "+$("#treeid").val());
+	         if($("#Bool").val()=="true"){
+	         	$('#appcontentop').hide();
+             $('#appcontent').hide();
+              $('#appmain').hide();  
+              $('#device_appcon').show();
+           	$('#appcontentop').html(null);
+            $('#appcontent').html(null);
+         	$('#device_appcon').html(null);
+	         $('#device_appcon').load("treeMain.action?functionCode=1101",function(response,status,xhr){
+	          var treeid=$("#treeid").val();
+	          	$('#tree_data').load("deviceTree.action?TreeId=1&managerId=2&treeid="+treeid,function(response,status,xhr){
+				       $('#tree_data').html(response);
+				 });
+				 
+				 $('#table_appcontent').load("showDeviceStatus.action?TreeId=1&managerId=2&treeid="+treeid,function(response,status,xhr){
+			 		 $('#table_appcontent').html(response);
+		 		});
+	          
+	          	$('#device_appcon').html(response);
+	        	});  
+	        	
+	        	 if($('body').attr('class')=='skin-blue sidebar-mini wysihtml5-supported'){
+			        $('body').attr('class','skin-blue sidebar-mini wysihtml5-supported sidebar-collapse');
+			      }else{
+			         $('body').attr('class','skin-blue sidebar-mini wysihtml5-supported');
+			      }
+	         }
+	        
+	     });
+	     
+			function sidebartoggle(){
+			 	
+			      if($('body').attr('class')=='skin-blue sidebar-mini wysihtml5-supported'){
+			        $('body').attr('class','skin-blue sidebar-mini wysihtml5-supported sidebar-collapse');
+			      }else{
+			         $('body').attr('class','skin-blue sidebar-mini wysihtml5-supported');
+			      }
+    	 } 
+    </script>
+    
+    <!-- Morris.js charts -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>-->
+    
+    <!-- Sparkline -->
+   
+    <!-- jvectormap -->
+     <script src="/Unipower_Web/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script> 
+  
+    <!-- jQuery Knob Chart -->
+     <script src="/Unipower_Web/plugins/knob/jquery.knob.js"></script>
+    <!-- daterangepicker -->
+
+     <script src="/Unipower_Web/plugins/daterangepicker/daterangepicker.js"></script> 
+    <!-- datepicker -->
+   <script src="/Unipower_Web/plugins/datepicker/bootstrap-datepicker.js"></script> 
+    <!-- Bootstrap WYSIHTML5 -->
+   <script src="/Unipower_Web/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script> 
+    <!-- Slimscroll -->
+    <script src="/Unipower_Web/plugins/slimScroll/jquery.slimscroll.min.js"></script> 
+    <!-- FastClick -->
+     <script src="/Unipower_Web/plugins/fastclick/fastclick.min.js"></script> 
+    <!-- AdminLTE App -->
+  
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    
+    <!-- AdminLTE for demo purposes -->
+     <script src="/Unipower_Web/dist/js/demo.js"></script>
+    
+    <!-- 通知弹窗DIV -->
+    <div id="popupDiv" style="z-index: 100; position: fixed; right: 0px; bottom: 0px; width: 420px; background-color: rgb(238, 238, 238); border-radius: 5px 0px; display: none;">
+
+
+
+
+  
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+    
+  
+    
+    
+    
+    	<script>
+	    $(document).ready(function(){
+	    	closePopup();
+	    });
+	    </script>
+    
+    <div id="listPopups">
+    </div>
+  
+
+</div>
+    
+    <script>
+    function loadPopup(){
+    	$("#popupDiv").load("/Unipower_Web/noticeclient/popupwindow_noticeClient");
+    }
+    $(document).ready(function(){
+    	closePopup();
+    	loadPopup();
+    	setInterval("loadPopup()", 60000);
+    });
+    function closePopup() {
+		$("#popupDiv").hide(1000);
+	}
+	function openPopup(){
+		$("#popupDiv").show(1000);
+	}
+    </script>
+    <!-- 通知弹窗DIV -->
+    
+    <!--弹框内容一定要放在body下面-->
+	<div id="show-view-window" class="box box-default box-solid" style="z-index: 2000; position: fixed; left: 10%; top: 5%; width: 80%; height: 90%; display: none;">
+		<div class="box-header" style="height:34px;line-height:34px;padding-top:6px">
+			<button type="button" id="btn_close" class="close" data-dismiss="modal" onclick="modalClose();">×</button>
+			<h5 class="modal-title" id="show-view-window-title"></h5>
+		</div>
+		<div class="box-body" id="view-detail-window" style="height:90%;overflow-y:auto;overflow-x:hidden;"></div>
+	</div>
+	<!--弹框内容结束-->
+    <!--背后黑影-->
+		<div id="blackmod" style="z-index: 1050;"></div>
+    <script>
+					function modalopen(title) {
+						$("#blackmod").toggleClass("modal-backdrop fade in");
+						$("#show-view-window-title").html(title);
+						$("#show-view-window").show();
+					}
+					
+					function viewDetail(url,title){
+						$("#view-detail-window").load(url);
+						
+						$("#show-view-window").css("height","90%");
+						$("#show-view-window").css("width","80%");
+						$("#view-detail-window").css("height","90%");
+						$("#show-view-window").css("top","5%");
+						$("#show-view-window").css("left","10%");
+						$("#view-detail-window").css("overflow-y","auto");
+						
+						modalopen(title);
+					}
+					
+					function viewDetailPixel(url,title,pxHeight,pxWidth){
+						$("#view-detail-window").load(url);
+						
+						$("#show-view-window").css("height",pxHeight+"px");
+						$("#show-view-window").css("width",pxWidth+"px");
+						childHeight=pxHeight-50;
+						$("#view-detail-window").css("height",childHeight+"px");
+						$("#show-view-window").css("top",($(window).height()-pxHeight)/2+"px");
+						$("#show-view-window").css("left",($(window).width()-pxWidth)/2+"px");
+						
+						modalopen(title);
+					}
+					
+					function viewDetailPixelScroll(url,title,pxHeight,pxWidth){
+						$("#view-detail-window").load(url);
+						
+						$("#show-view-window").css("height",pxHeight+"px");
+						$("#show-view-window").css("width",pxWidth+"px");
+						childHeight=pxHeight-50;
+						$("#view-detail-window").css("height",childHeight+"px");
+						$("#show-view-window").css("top",($(window).height()-pxHeight)/2+"px");
+						$("#show-view-window").css("left",($(window).width()-pxWidth)/2+"px");
+						
+						modalopen(title);
+					}
+					
+					/* function viewDetailPerc(url,title,percHeight,percWidth){
+						$("#view-detail-window").load(url);
+						modalopen(title);
+						$("#show-view-window").css("height",pxHeight+"%");
+						$("#show-view-window").css("width",pxWidth+"%");
+					} */
+
+					function modalClose() {
+						$("#show-view-window").hide();
+						$("#blackmod").removeClass("modal-backdrop fade in");
+						//$("#view-detail-window").html(null);
+						$("#view-detail-window").empty();
+						$("#view-detail-window").html("<div style=\"width:100%;height:100%;background-image:url(/Unipower_Web/images/ajax-loader.gif);background-repeat:no-repeat;background-position:center;\"></div>");
+					}
+					
+					function modalclose() {
+						modalClose();
+					}
+				</script>
+  
+
+</body></html>

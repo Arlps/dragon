@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<style>
+	*{padding:0; margin:0;}
+	.wrap{ padding:10px; width:100%;}
+		.contain{ height:300px; padding:5px;border:0px solid #ccc;/* background:url(img/bg1.png) 100% 100%;*/ }
+		.box{ height:100%; background:#ccc;box-shadow:0 0 1px;}
+		
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="contain col-md-3 col-sm-5">
+			<div class="box">1</div>
+		</div>
+		<div class="contain col-md-5 col-sm-7">
+			<div class="box">2</div>
+		</div>
+		<div class="contain col-md-4 col-sm-6 div3">
+			<div class="box">3</div>
+		</div>
+		<div class="contain col-md-8 col-sm-12 div4">
+			<div class="box">4</div>
+		</div>
+		<div class="contain col-md-4 col-sm-6">
+			<div class="box">5</div>
+		</div>
+		<div class="contain col-md-6 col-sm-12">
+			<div class="box">6</div>
+		</div>
+		<div class="contain col-md-6 col-sm-12">
+			<div class="box">7</div>
+		</div>
+	</div>
+</body>
+<script>
+	$(function(){
+		$(window).trigger('resize');
+	})
+	$(window).resize(function(){
+		//sm尺寸
+		if (parseInt($(window).width())<=992) {
+			var $div3=$('.div3');
+			var $div33=$div3.clone(true,true);
+			$div3.remove();
+			$div33.insertAfter($('.div4'));
+		}
+		//md尺寸
+		if (parseInt($(window).width())>990) {
+			var $div3=$('.div3');
+			var $div33=$div3.clone(true,true);
+			$div3.remove();
+			$div33.insertBefore($('.div4'));
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jtopo-0.4.08.js"></script>
+      <style>
+            .box{ position:relative; width:700px; height:500px;background:url(img/bg1.png);z-index:0;}
+            #canvas{ z-index:100;}
+            .add{ position:absolute; width:100px; height:50px;box-shadow:0 0 3px; background:white; z-index:0; opacity:0.5;}
+            /*----动画-------------------------*/
+            .box2{  width:10px; height:10px; position: absolute; z-index:-1;}
+            .circle2{ position:absolute; top: 0px; left:0px; width:10px; height:10px;background: rgba(255,255,0,0.5); border-radius:5px; cursor: pointer; box-shadow:inset 0 0 1px;;}
+            .shadow{ position:absolute; width:10px; height:10px; border-radius:10px; animation:weave 1s infinite;box-shadow:inset 0 0 1px yellow; border:0px solid red;}
+            .shadow2{ position:absolute; width:10px; height:10px; border-radius:10px; animation:weave 1s infinite 0.5s;box-shadow:inset 0 0 1px yellow; border:0px solid red;}
+            @keyframes weave{
+                  from{transform: scale(1);opacity:1;}
+                  to{transform: scale(5);opacity:0.3;}
+            }
+      </style>
+</head>
+<body><!--   -->
+      <div class="box">
+          <canvas id="canvas" width="700px" height="500px" style="border:1px solid black; "></canvas>  
+      </div>
+  <!--     <div class="box2">
+            <div class="shadow"></div>
+            <div class="shadow2"></div>
+            <div class="circle2"></div>
+      </div> -->
+	
+</body>
+<script>
+	$(document).ready(function() {  
+            //画布对象：canvas  
+            var canvas = document.getElementById('canvas');  
+            //抽象的舞台对象对应一个Canvas对象，所有图形展示的地方  
+            var stage = new JTopo.Stage(canvas);  
+            stage.width=500;
+            stage.height=500;
+            //场景对象  
+            var scene = new JTopo.Scene(stage);
+            var sceneX=0,sceneY=0;
+            scene.backgroundColor='255,255,255'; 
+            //背景颜色设置  
+            scene.draggable=false;
+            scene.Alpha=0;  
+            scene.mousedrag(function(){
+                  this.translateX=0;
+                  this.translateY=0;
+                  //console.log(this.translateX,this.translateY)
+                  sceneX=this.translateX;
+                  sceneY=this.translateY;
+
+            })
+
+            var host= new JTopo.Node('host');  //节点1：vm  
+            host.setSize(20,20);
+            host.setLocation(0,0);//节点1：vm位置设置  
+            host.fillColor='#000000';//
+            // vm.setImage('img/arrow.png');//设置图片
+            scene.add(host);//场景对象添加节点1：vm  
+
+
+            function linking(a,b){
+                  var link=new JTopo.Link(a,b);//连线对象  
+                  link.lineWidth = 0.1;//连线大小 
+                  link.strokeColor='200,200,200' 
+                  link.Alpha=0;
+                  link.lineJoin  = 'round';  
+                  link.name='Link';//连线名称  
+                  scene.add(link);//场景对象添加连线对象：link.
+            }
+            var x=50,y=50;
+            for (var i = 0; i < 80; i++) {
+                  var node= new JTopo.Node(''); 
+                  node.setSize(20,20);
+                  node.setLocation(x,y);
+                  node.setImage('img/'+'eye'+'.png')
+                  node.fillColor='#000000';
+                  node.dragable=false;
+                  //添加点击事件
+                  node.dbclick(function(){
+                        var nodeTop=this.getBound().top;
+                        var nodeLeft=this.getBound().left;
+                        $('<div>').addClass('add').appendTo($('.box')).css({left:nodeLeft+sceneX+'px',top:nodeTop+sceneY+'px'})
+                        //undefined
+                        //console.log(this.translateX,this.translateY)
+                  })
+                  node.mouseover(function(){console.log("in")})
+                  node.mouseout(function(){
+                        console.log("out")
+                        $('.add').remove()
+                  })
+                  node.click(function(){
+                        console.log(this.x)
+                  //       var nodeTop=this.getBound().top;
+                  //       var nodeLeft=this.getBound().left;
+                  //       $('<div>').addClass('box2').html('<div class="shadow"></div><div class="shadow2"></div><div class="circle2"></div>').appendTo($('.box')).css({left:nodeLeft+sceneX+'px',top:nodeTop+sceneY+'px'})
+                  })
+                  if ((x+y)%100==0) {
+                        var nodeTop=node.getBound().top;
+                        var nodeLeft=node.getBound().left;
+                        $('<div>').addClass('box2').html('<div class="shadow"></div><div class="shadow2"></div><div class="circle12"></div>').appendTo($('.box')).css({left:nodeLeft+sceneX+'px',top:nodeTop+sceneY+'px'});
+                        // node.alarm='异常';
+                        // node.alarmColor='255,155,0'
+                  };
+                  scene.add(node);
+                  linking(host,node)
+                  x+=50;
+                  if (x>=550) {
+                        x=50;y+=50
+                  };
+
+             }; 
+            
+        });  
+</script>
+</html>

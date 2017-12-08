@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src='js/jquery-1.9.1.js'></script>
+	<script src="js/highcharts.js"></script><!--highcharts -->
+		<script src="js/highcharts-more.js"></script><!--highcharts -->
+		<script src="js/solid-gauge.js"></script><!--highcharts -->
+	<script src='js/amcharts.js'></script>
+	<script src='js/serial.js'></script>
+	
+	<style>
+	html,body{ height: 100%}
+		.chart{ width: 40%; height: 50%; float:left;}
+	</style>
+</head>
+<body>
+	<div id="chart1" class="chart"></div>
+    <div id="chart2" class="chart"></div>
+    <div id="chart3" class="chart"></div>
+    <div id="chart4" class="chart"></div>
+    <div id="chart5" class="chart"></div>
+</body>
+<script>
+    //更新前的数据
+    var data = [
+        {
+            "range": "中级",
+            "visits": 80,
+            "color": "#006298"
+        },
+        {
+            "range": "紧急",
+            "visits": 82,
+            "color": "#AD232F"
+        },
+        {
+            "range": "一般",
+            "visits": 19,
+            "color": "#00AEA5"
+        },
+        {
+            "range": "低级",
+            "visits": 22,
+            "color": "#009CE7"
+        }
+    ];
+
+    // 绘制图表
+    var chart1=makeAmchart($('#chart1'),data);
+    var chart2=makeAmchart($('#chart2'),data);
+    var chart3=makeAmchart($('#chart3'),data);
+    var chart4=makeAmchart($('#chart4'),data);
+    // 持续更新数据
+    keepUpload(chart1);
+    keepUpload(chart2);
+    keepUpload(chart3);
+    keepUpload(chart4);
+
+    function keepUpload(chart){
+        setInterval(function(){
+            $.each(data,function(idx,item){
+                item['visits']=parseInt(Math.random()*100)
+            })
+            uploadData(chart,data);
+        },500)
+    }
+
+
+    // 更新数据函数
+    function uploadData(chart,data) {  
+        chart.dataProvider = data; 
+        chart.validateNow();  
+        chart.validateData();  
+    }  
+
+    // 封装amchart
+    function makeAmchart($dom,data){
+        var chart;
+        var colors = [ "#006298", "#AD232F", "#00AEA5", "#009CE7", "#E46603" ];
+        var chartData = [];
+        $.each(data, function(index,item) {
+            chartData.push({
+                "device": item.device,
+                "visits": item.visits,
+                "color": colors[index]
+            });
+        });
+        chart = new AmCharts.AmSerialChart();
+        chart.dataProvider = chartData;
+        chart.categoryField = "device";
+        chart.columnWidth=0.6;
+        // the following two lines makes chart 3D
+        chart.depth3D = 10;
+        chart.angle = 20;
+        chart.startDuration=1;
+        chart.rotate=true;
+
+        // x轴------------------------------------
+        var categoryAxis = chart.categoryAxis;
+        categoryAxis.labelRotation = 90;
+        categoryAxis.inside = true;
+        //categoryAxis.gridPosition = "start";
+        // 网格虚线长度
+        categoryAxis.dashLength = 0;
+        //网格的透明度
+        categoryAxis.gridAlpha = 0.2;
+        //网格的粗细
+        categoryAxis.axisAlpha = 1;
+        //轴的粗
+        categoryAxis.axisThickness = 1;
+        //刻度的长度
+        categoryAxis.tickLength =0;
+        //字的颜色
+        //categoryAxis.color = "#379176";
+        categoryAxis.color ="#959595";
+        categoryAxis.fontSize=14;
+        //字的大小
+        categoryAxis.maxPeriod=30;
+        //x轴的颜色
+        categoryAxis.axisColor = "#000";
+        //单位
+        categoryAxis.unit = "";
+        //是否显示项的名称
+        //categoryAxis.labelsEnabled = false;
+
+        // y轴--------------------------------
+        var valueAxis = new AmCharts.ValueAxis();
+        chart.addValueAxis(valueAxis);
+        valueAxis.title = "Visitors";
+        // 网格虚线长度
+        valueAxis.dashLength = 0;
+        //网格的透明度
+        valueAxis.gridAlpha = 0.4;
+        //网格的粗细
+        valueAxis.axisAlpha = 1;
+        //刻度的长度
+        valueAxis.tickLength =0;
+        //无效
+        valueAxis.step=10;
+        //设置y轴标题
+         valueAxis.title ="";
+        //y轴的颜色
+        valueAxis.color = "#379176";
+        //设置y轴的最小值、起始值
+        valueAxis.minimum =0;
+        valueAxis.maxmum =0;
+        //y轴标题颜色
+        valueAxis.titleColor = "#666";
+        //y轴颜色
+        valueAxis.fontSize=12;
+        valueAxis.axisColor = "#000";
+        //y轴靠右
+        valueAxis.position = "left";
+        //单位
+        valueAxis.unit = "";
+        //刻度值在里面
+        //valueAxis.inside = true;
+
+        // GRAPH-----------------------------
+        var graph = new AmCharts.AmGraph();
+        graph.type = "column";
+        //graph.title = "线条的名称";
+        graph.valueField = "visits";
+        //graph.fillColors=['#f20','#f60']
+        //设置数组时为渐变
+        graph.colorField = "color";
+        graph.balloonText = "<span style='font-size:10px'>[[category]]: <b>[[value]]</b></span>";
+        //柱体边透明度
+        graph.lineAlpha = 0;
+        //柱体透明度
+        graph.fillAlphas = 0.6;
+        chart.addGraph(graph);
+
+        // 十字光标
+        var chartCursor = new AmCharts.ChartCursor();
+        chartCursor.cursorAlpha = 0.3;
+        chartCursor.zoomable = false;
+        chartCursor.categoryBalloonEnabled = false;
+        chart.addChartCursor(chartCursor);
+
+
+        chart.creditsPosition = "top-right";
+        chart.write($dom.attr('id'));
+        $('a[title]').hide();
+        return chart;
+    }
+	
+</script>
+</html>

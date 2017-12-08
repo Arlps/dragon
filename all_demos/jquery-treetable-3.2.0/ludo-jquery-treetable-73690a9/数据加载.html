@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="bootstrap.css">
+	<link rel="stylesheet" href="jquery.treetable.css">
+	<link rel="stylesheet" href="jquery.treetable.theme.default.css">
+	<script src="jQuery-2.1.4.min.js"></script>
+	<script src="jquery.treetable.js"></script>
+	<style>
+		body{ font-family:Microsoft YaHei;}
+	</style>
+</head>
+<body>
+	<div class="col-xs-12">
+		<!-- <button id="load">reload</button> -->
+		<table id="tree" class="table table-striped table-hover table-bordered table-responsive">
+			<caption>Basic jQuery treetable Example</caption>
+			<thead>
+				<tr>
+					<th>名称</th>
+					<th>描述</th>
+					<th>是否主节点</th>
+					<th>IP地址</th>
+					<th>端口</th>
+					<th>用户名</th>
+					<th>CPU</th>
+					<th>内存</th>
+					<th>磁盘空间</th>
+					<th>当前状态</th>
+					<th>剩余比例</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr data-tt-id="1">
+					<td>Node 1: Click on the icon in front of me to expand this branch.</td>
+					<td>I live in the second column.</td>
+				</tr>-->
+			</tbody>
+		</table>
+
+
+	</div>
+	<script>
+		$(function(){
+			//生成结构
+			createTable($('#tree'),data);
+			setTimeout(function(){
+				createTable($('#tree'),data);
+			},2000)
+		    function createTable($dom,data){
+		    	$dom.children('tbody').empty();
+			    for(var i=0;i<data.length;i++){
+			    	var $tr=$('<tr data-tt-id='+data[i].dId+' data-tt-parent-id='+data[i].pId+'></tr>');
+			    	var htmlStr='';
+				    for (var j = 0; j < data[i].content.length; j++) {
+				    	htmlStr+='<td>'+ data[i].content[j] +'</td>';
+				    };
+				    $tr.html(htmlStr).appendTo($dom.children('tbody'))
+			    }
+
+			     // 关系初始化
+				$dom.treetable({ 
+					expandable: true,//是否折叠
+					indent:20,//缩进
+				});
+				$dom.treetable('expandAll');//全部展开
+		    }
+
+			   
+			// 删除事件
+			$('#tree').on('click','.delete',function(){
+				if(confirm('确定删除此项？')){
+					$("#tree").treetable('removeNode',$(this).parents('tr').data('tt-id'))
+				}
+			});
+			$('#load').click(function(){
+				createTable($('#tree'),data)
+			})
+		});
+
+		var data=[
+		    {
+		        "dId": "1",
+		        "pId": "0",
+		        "content":['GP1','','是','','','','','','','','60%','<a class="btn btn-xs btn-primary delete">删除</a>']
+		    },
+		    {
+		        "dId": "2",
+		        "pId": "1",
+		        "content":['ETL_A','','否','192.168.2.100','22','admin','10核心','20G','20T','正在运行','','<a class="btn btn-xs btn-primary delete">删除</a>']
+		    },
+		    {
+		        "dId": "3",
+		        "pId": "1",
+		        "content":['ETL_B','','否','192.168.2.101','22','admin','10核心','20G','20T','正在运行','','<a class="btn btn-xs btn-primary delete">删除</a>']
+		    },
+		    {
+		        "dId": "4",
+		        "pId": "1",
+		        "content":['ETL_C','','否','192.168.2.102','22','admin','10核心','20G','20T','正在运行','','<a class="btn btn-xs btn-primary delete">删除</a>']
+		    },
+		    {
+		        "dId": "5",
+		        "pId": "0",
+		        "content":['GP2','','是','','','','','','','','70%','<a class="btn btn-xs btn-primary delete">删除</a>']
+		    },
+		    {
+		        "dId": "6",
+		        "pId": "5",
+		        "content":['ETL_A','','否','192.168.2.100','22','admin','10核心','20G','20T','正在运行','','<a class="btn btn-xs btn-primary delete">删除</a>']
+		    },
+		    {
+		        "dId": "7",
+		        "pId": "5",
+		        "content":['ETL_B','','否','192.168.2.101','22','admin','10核心','20G','20T','正在运行','','<a class="btn btn-xs btn-primary delete">删除</a>']
+		    },
+		    {
+		        "dId": "8",
+		        "pId": "5",
+		        "content":['ETL_C','','否','192.168.2.102','22','admin','10核心','20G','20T','正在运行','','<a class="btn btn-xs btn-primary delete">删除</a>']
+		    },
+		]
+	</script>
+</body>
+</html>

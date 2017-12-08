@@ -1,0 +1,305 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>拓扑demo</title>
+    <link href="../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../dist/jQuery-2.1.4.min.js"></script>
+    <script src="../../dist/highcharts.js"></script>
+    <script src="../../dist/highcharts-more.js"></script>
+    <script src="../../dist/solid-gauge.js"></script>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #chart-container {
+        width: 300px;
+        height: 150px;
+        padding: 15px;
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        border-radius: 10px;
+        background: #fafafa;
+        background: rgba(255, 255, 255, 0.9);
+        z-index: 10;
+        overflow: hidden;
+        box-shadow: 0 0 10px #666;
+        display: none;
+      }
+      
+      #chart-container .chart {
+        width: 50%;
+        float: left;
+        height: 100px;
+        box-shadow: 0 0 0px;
+        overflow: hidden;
+      }
+      
+      #chart-container .chart-flow {
+        width: 100%;
+        float: left;
+        height: 120px;
+        box-shadow: 0 0 0px;
+        overflow: hidden;
+        box-shadow: 0 0 0px;
+      }
+      
+      #chart-container p {
+        font-size: 10px;
+        text-indent: 10px;
+      }
+      
+      #chart-container p span {
+        padding: 0px 3px;
+        margin-right: 3px;
+        border-radius: 5px;
+        color: #fff;
+        display: inline-block;
+        width: 25px;
+        text-indent: 0;
+        text-align: center;
+      }
+      
+      span.red {
+        background: #B94A48;
+      }
+      
+      span.green {
+        background: #5B955B;
+      }
+      
+      span.orange {
+        background: #FA9300;
+      }
+      
+      span.light {
+        background: #CCCC00;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- 拓扑所在div -->
+    <div id="box" style="width:1000px;height:500px; background:#ccc">
+      <!-- 提示框 默认隐藏 -->
+      <div id="chart-container"></div>
+    </div>
+
+    <script type="text/javascript">
+      // 触发事件
+      $('#box').mouseenter(function() {
+        showChart($(this))
+      }).mouseleave(function() {
+        hideChart()
+      })
+
+      //移中显示信息框
+      function showChart($dom) {
+        var type = 0;
+        $('#chart-container').show();
+        if(type) {
+          // 类型1：油表-------------------
+          var htmlStr =
+            '<div class="text">' +
+            '<p><strong>' + '电票数据库服务器' + '</strong></p>' +
+            '<p><strong>运行时间：</strong>15天5分钟</p>' +
+            '<p><strong>状态：</strong><span class="red">' + 3 + '</span><span class="orange">' + 13 + '</span><span class="light">' + 8 + '</span><span class="green">' + 123 + '</span></p>' +
+            '</div>' +
+            '<div class="chart" data-num=' + 78 + ' data-title="CPU使用率"></div>' +
+            '<div class="chart" data-num=' + 25 + ' data-title="内存使用率"></div>';
+
+          $('#chart-container').html(htmlStr);
+          $('#chart-container .chart').each(function() {
+            makeGaugeChart($(this));
+          })
+        } else {
+          // 类型2：流量-------------------
+          var htmlStr =
+            '<div class="text">' +
+            '<p><strong>端口：</strong>' + '阿司法i哦哦i好' + '(192.168.2.233)</p>' +
+            '<p><strong>端口：</strong>' + '我的少妇红i' + '(192.168.2.233)</p>' +
+            '</div>' +
+            '<div class="chart-flow" data-title="CPU使用率"></div>'
+
+          $('#chart-container').html(htmlStr);
+          $('#chart-container .chart-flow').each(function() {
+            makeFlowChart($(this))
+          })
+        }
+
+        //跟随鼠标移动
+        $dom.mousemove(function(event) {
+          var x = event.offsetX;
+          var y = event.offsetY;
+          $('#chart-container').css({
+            left: x + 10,
+            top: y
+          });
+        })
+      }
+
+      // 移出隐藏信息框
+      function hideChart() {
+        $('#chart-container').hide();
+      }
+
+      // 油表函数
+      function makeGaugeChart($dom) {
+        $dom.highcharts({
+          chart: {
+            type: 'solidgauge',
+            backgroundColor: null
+          },
+          title: null, //{ text:$dom.data('title')},
+          tooltip: {
+            enabled: false
+          },
+          pane: {
+            center: ['50%', '85%'],
+            size: '170%',
+            startAngle: -90,
+            endAngle: 90,
+            background: {
+              backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+              innerRadius: '60%',
+              outerRadius: '100%',
+              shape: 'arc'
+            }
+          },
+          yAxis: {
+            min: 0,
+            max: 100,
+            title: {
+              text: $dom.data('title'),
+              style: {
+                color: '#333',
+                fontSize: '14px',
+                fontWeight: 'bold'
+              },
+              y: 50
+            },
+            stops: [
+              [0.1, '#55BF3B'], // green
+              [0.5, '#DDDF0D'], // yellow
+              [0.9, '#DF5353'] // red
+            ],
+            lineWidth: 0,
+            minorTickInterval: null,
+            tickPixelInterval: 400,
+            tickWidth: 0,
+            labels: {
+              y: -7,
+              style: {
+                color: 'rgba(0,0,0,0)'
+              }
+            },
+          },
+          plotOptions: {
+            solidgauge: {
+              dataLabels: {
+                y: 5,
+                borderWidth: 0,
+                // useHTML: true
+              }
+            }
+          },
+          credits: {
+            enabled: false
+          },
+          series: [{
+            name: $dom.data('title'),
+            data: [$dom.data('num')],
+            tooltip: {
+              valueSuffix: $dom.data('title')
+            }
+          }]
+        });
+      }
+
+      // 流量函数
+      function makeFlowChart($dom) {
+        $dom.highcharts({
+          chart: {
+            type: 'areaspline',
+            marginBottom: 40,
+            marginLeft: 40
+          },
+          colors: ['#66C54F', '#2EA3CA'],
+          title: {
+            text: null
+          },
+          xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+              millisecond: '%H:%M:%S.%L',
+              second: '%H:%M:%S',
+              minute: '%H:%M',
+              hour: '%H:%M',
+              day: '%m-%d',
+              week: '%m-%d',
+              month: '%Y-%m',
+              year: '%Y'
+            }
+          },
+          tooltip: {
+            dateTimeLabelFormats: {
+              millisecond: '%H:%M:%S.%L',
+              second: '%H:%M:%S',
+              minute: '%H:%M',
+              hour: '%H:%M',
+              day: '%Y-%m-%d',
+              week: '%m-%d',
+              month: '%Y-%m',
+              year: '%Y'
+            }
+          },
+          credits: {
+            enabled: false
+          },
+          yAxis: {
+            title: {
+              text: 'Kbps',
+              x: 10
+            },
+            labels: {
+              x: 0
+            }
+          },
+          legend: {
+            float: true,
+            y: 20
+          },
+          plotOptions: {
+            series: {
+              marker: {
+                enabled: false
+              },
+              dataLabels: {
+                enabled: false
+              }
+            }
+          },
+          events: {
+            click: function() {
+              alert();
+            }
+          },
+          series: [{
+            id: "flowIn",
+            name: "流入量",
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 11]
+          }, {
+            id: "flowOut",
+            name: "流出量",
+            data: [1, 2, 3, 3, 4, 2]
+          }]
+        });
+      }
+    </script>
+
+  </body>
+
+</html>

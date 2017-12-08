@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.msCarousel-min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/mscarousel.css" />
+<style type="text/css">
+body {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+}
+.set{ width: 520px; height: 398px}
+
+</style>
+</head>
+<body>
+
+
+
+<div id="carouseldiv" style="border:2px solid #c3c3c3; background-color:#FFFFFF">
+  <div class="set"></div>
+  <div class="set"></div>
+  <div class="set"></div>
+</div>
+
+<div style="clear:both; padding:10px; border-bottom:1px solid #c3c3c3; margin-bottom:10px;">
+
+  <input name="previous" id="previous" type="button" value="Previous" />
+
+  &nbsp;
+
+  <input name="next" id="next" type="button" value="Next" />
+
+  &nbsp; </div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {	
+    	
+		var oHandlerHorizontal = $("#carouseldiv").msCarousel({boxClass:'div.set', width:516, height:198, scrollSpeed:500}).data("msCarousel");
+		var index=0;
+		$('.set').eq(0).empty().load("1.html")
+		$("#next").click(function() {
+			oHandlerHorizontal.next();
+		    index++;if(index>3){index=0};
+		    switch(index){
+		    	case 0: $('.set').eq(index).empty().load("1.html");break;
+		    	case 1: $('.set').eq(index).empty().load("2.html");break;
+		    	case 2: $('.set').eq(index).empty().load("3.html");break;
+		    	default:break;
+		    }
+		     console.log('加载完成');
+		    
+		});
+
+		$("#previous").click(function() {
+			oHandlerHorizontal.previous();
+		});	
+})
+
+</script>
+
+</body>
+</html>
+

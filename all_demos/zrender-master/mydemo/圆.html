@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../dist/zrender.js"></script>
+    <style>
+        #main{ width:300px; height:300px; background-color:rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body>
+    <div id="main"></div>
+
+    <script>
+        var $box=document.getElementById('main');
+        var zr = zrender.init($box);
+
+        //设置渐变色
+        var gradient = new zrender.LinearGradient();
+        gradient.addColorStop(0, 'green');
+        gradient.addColorStop(1, 'yellow');
+        var circle = new zrender.Circle({
+            position: [100, 100],
+            scale: [1, 1],
+            shape: {
+                cx: 50,
+                cy: 50,
+                r: 50
+            },
+            style: {
+                fill: gradient,//'rgba(255,255,255,0.4)',
+                stroke: '#000',
+                text:'circle',
+                textPosition:'inside'
+            }
+        });
+        zr.add(circle);
+
+        // circle.animate('').when(2000, {
+        //     position: [200, 0]
+        // }).start();
+
+        var angle=0,x=0,y=0;
+        setInterval(function(){
+            angle+=(Math.PI/45)
+            x=Math.cos(angle)*100+100;
+            y=Math.sin(angle)*100+100;
+            circle.animate('').when(100, {
+                position: [x, y]
+            }).start();
+        },100)
+    </script>
+</body>
+</html>

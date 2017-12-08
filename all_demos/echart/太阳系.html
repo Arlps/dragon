@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<script src="js/echarts.min.js"></script>
+	<script src="js/dark.js"></script>
+</head>
+<body>
+	<div id="chart" style="width:300px; height:300px; border:1px solid black"></div>
+	<script>
+		var starData=[
+			[{name:"node1.1"},{name:"node1.2"}],
+			[
+				{name:"node2.1"},{name:"node2.2"},{name:"node2.3"},{name:"node2.4"},{name:"node2.5"},{name:"node2.6"},{name:"node2.7"},{name:"node2.8"},{name:"node2.9"},{name:"node2.10"},{name:"node2.11"},{name:"node2.12"},{name:"node2.13"},{name:"node2.14"}
+			],
+			[{name:"node3.1"},{name:"node3.2"},{name:"node3.3"},{name:"node3.4"}],
+		]
+		starSystem('chart',starData);
+
+		
+		function makeStarData(data){
+			
+			var series=[];
+			for (var i = 0; i < data.length; i++) {
+				var nodes=[],edges=[];
+				$.each(data[i],function(idx,item){
+					nodes.push({
+						id:idx,
+						name:item.name
+					});
+					var end=0;
+					end=(idx+1==data[i].length)?0:idx+1;
+					edges.push({
+						source:idx,
+						target:end
+					})
+				})
+				series.push({
+					nodes:nodes,
+					edges:edges
+				})
+			};
+			console.log(series)
+			return series;
+		}
+		
+		function starSystem(domID,data){
+			var series=makeStarData(data)
+			option = {
+				grid:{
+		            containLabel:true,
+		            // top:"50%",bottom:"50%",left:"30%",right:"30%"
+		        },
+		        tooltip:{
+		        	show:true
+		        },
+				roam:false,
+				calculable : false,
+			    series: series.map(function (item, idx) {
+			    	var color=["#4DB3CB","#34A872","#99C93A"];
+			        return {
+			            type: 'graph',
+			            layout: 'force',
+			            animation: false,
+			            data: item.nodes,
+			            width: '25%',
+			            height: '25%',
+			            force: {
+			                initLayout: 'circular',
+			                repulsion: idx==0?500:Math.pow(60,idx+0.15),
+			                edgeLength: Math.pow(4,2-idx)
+			            },
+			            edges: item.edges,
+			            lineStyle:{
+			                normal:{
+			                    // curveness:item.nodes.length/10,
+			                    opacity:0
+			                }
+			            },
+			            itemStyle:{
+			            	normal:{
+			            		color:color[idx]//'#F5BD53'//'#4FBCF1'
+			            	}
+			            },
+			            label:{
+			            	normal:{
+			            		show:true,
+			            		position:'inside',
+			            		color:'#ccc'
+			            	}
+			            },
+			            circular: { rotateLabel: true},
+			            roam: true,
+			            // nodeScaleRatio:0.6,
+			            symbol:'circle',
+			            symbolSize:20,
+			        };
+			    })
+			};
+			//echart初始化
+		    var myChart=echarts.init(document.getElementById(domID),'dark',{renderer: 'svg'});
+			myChart.setOption(option);
+			$(window).resize(myChart.resize);
+			var n=0;
+		    setInterval(function(){
+		//  	 myChart.dispatchAction({
+		//		    type:'downplay',
+		//		    seriesIndex: 0,
+		//		    dataIndex: n-1<0?JsonObj.length:(n-1)
+		//		})
+		        myChart.dispatchAction({
+		            type:'showTip',
+		            seriesIndex: 0,
+		            dataIndex: n,
+		//          position:['center','50%']
+		        })
+		//      myChart.dispatchAction({
+		//		    type:'highlight',
+		//		    seriesIndex: 0,
+		//		    dataIndex: n
+		//		})
+		        n++;//console.log(n)
+		        if(n>series.nodes.length){n=0}
+		    },600)
+		}
+	</script>
+</body>
+</html>

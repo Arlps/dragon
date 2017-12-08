@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<script src="js/jQuery-2.1.4.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<style>
+		</style>
+	</head>
+	<body>
+		<style type="text/css">
+		.multiClick{ background: #65CEA7!important; border-top-color: #65CEA7!important; border-bottom-color: #65CEA7!important;}
+		.all.multiClick{ border-left-color:#65CEA7!important;}
+		</style>
+		<div class="btn-group" id="multiBtns">
+			<button class="btn btn-sm btn-primary all" data-key="all">所有</button>
+			<button class="btn btn-sm btn-primary" data-key="care">我已关注</button>
+			<button class="btn btn-sm btn-primary" data-key="authority">我有权限</button>
+			<button class="btn btn-sm btn-primary" data-key="refresh"><i class="fa fa-refresh"></i></button>
+		</div>
+		<script type="text/javascript">	
+			//点击任一按钮
+			$('#multiBtns').on('click','button',function(){
+				if($(this).data('key')!=undefined){
+					if($(this).hasClass('all')){//所有
+						$(this).addClass('multiClick').siblings('button').removeClass('multiClick');
+					}else if($(this).data('key')=='refresh'){//刷新
+						
+						$(this).siblings('button.all').addClass('multiClick').siblings('button').removeClass('multiClick');
+					}else if($(this).data('key')!=undefined){
+						console.log(1)
+						if($(this).hasClass('multiClick')&&$('#multiBtns button.multiClick').length==1){
+							$(this).removeClass('multiClick').siblings('button.all').addClass('multiClick');
+						}else if($(this).hasClass('multiClick')){
+							$(this).removeClass('multiClick');
+						}else{
+							$(this).addClass('multiClick').siblings('button.all').removeClass('multiClick');
+						}
+					}
+					var arr=[];
+					$('#multiBtns button').each(function(){
+						if($(this).hasClass('multiClick')){
+							arr.push($(this).data('key'))
+						}
+					});
+					//最终输出值
+					console.log(arr);
+					
+				}
+			});
+			$('#multiBtns button.all').trigger('click')
+		</script>
+	</body>
+</html>

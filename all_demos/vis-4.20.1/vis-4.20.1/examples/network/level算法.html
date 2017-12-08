@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="../../dist/jQuery-2.1.4.min.js"></script>
+</head>
+<body>
+	<script>
+		$(function(){
+			//加总根节点
+			addRoot(datamap_system);
+			//根据根节点建立层级关系
+			loop(datamap_system[datamap_system.length-1],datamap_system,0)
+			console.log(datamap_system);
+
+			for (var i = 0; i < datamap_system.length; i++) {
+				console.log(datamap_system[i].level)
+			};
+		})
+
+		//加总节点函数
+		function addRoot(data){
+			var rootArr=[];//所有没有上游的节点
+			$.each(data,function(idx,item){
+				var flag=true;
+				$.each(data,function(idx2,item2){
+					for (var i = 0; i < item2.bloodID.length; i++) {
+						if(item.id==item2.bloodID[i]){
+							flag=false;break;
+						}
+					};
+				});
+				if(flag){ rootArr.push(item.id) }
+				flag=true;
+			});
+			var idArr=[];//所有节点id
+			$.each(data,function(idx,item){
+				idArr.push(item.id)
+			});
+			var max=0;
+			for (var i = 0; i < idArr.length; i++) {
+				if(max<idArr[i]){
+					max=idArr[i];
+				}
+			};
+			data.push({
+				id:max+1,
+				title: 'ALL',
+				bloodID:rootArr,
+			})
+		}
+		//分层函数
+		function loop(item,data,n){
+			item.level=n;
+			for (var i = 0; i < item.bloodID.length; i++) {
+				for (var j = 0; j < data.length; j++) {
+					if(data[j].id==item.bloodID[i]){
+						n++;
+						loop(data[j],data,n);;n--
+					}
+				};
+			};
+		}
+		
+	</script>
+</body>
+</html>
+
+<script>
+var datamap_system = [
+{
+	id:999,
+	title:'',
+	bloodID:[0,11,12,13,14],
+	level:0
+},{
+	id:0,
+	title: '资产管理系统安全生产子系统',
+	total: 12,
+	bloodID:[1,2,4,5,6],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:1
+}, {
+	id:1,
+	title: '海量准实时数据服务平台',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:2
+}, {
+	id:2,
+	title: 'GIS系统',
+	total: 12,
+	bloodID:[3],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:2
+}, {
+	id:3,
+	title: '营销系统',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:3
+}, {
+	id:4,
+	title: '资产管理系统项目子系统',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:2
+}, {
+	id:5,
+	title: '资产管理系统计划投资子系统',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:2
+}, {
+	id:6,
+	title: '远程中心系统',
+	total: 12,
+	bloodID:[7,8,9,10],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:2
+}, {
+	id:7,
+	title: '广东省气象台气象系统',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:3
+}, {
+	id:8,
+	title: '南方卫星遥感中心气象遥感系统',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:3
+}, {
+	id:9,
+	title: '雷电定位系统',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:3
+}, {
+	id:10,
+	title: '输电线路故障精确定位系统',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:3
+},{
+	id:11,
+	title: '计量自动化系统',
+	total: 12,
+	bloodID:[1],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:1
+}, {
+	id:12,
+	title: '变电站视频监控系统',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:1
+}, {
+	id:13,
+	title: '电压监测系统',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:1
+}, {
+	id:14,
+	title: '电能质量检测系统',
+	total: 12,
+	bloodID:[],
+	linkNum: 3,
+	url:"xxxxxxxxx",
+	level:1
+}]
+
+
+</script>

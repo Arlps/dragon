@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>jsPlumb 1.5.3 - flowchart connectors demonstration - jQuery</title>
+    <link rel="stylesheet" href="css/demo-all.css" />
+    <link rel="stylesheet" href="css/demo.css" />
+
+    <script type='text/javascript' src='js/jquery.min.js'></script>
+
+    <script type='text/javascript' src='js/jquery-ui.min.js'></script>
+
+    <script type='text/javascript' src='js/jquery.ui.touch-punch.min.js'></script>
+
+    <script type='text/javascript' src='js/jquery.jsPlumb-1.5.3.js'></script>
+
+    <script type="text/javascript" src="js/demo.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            jsPlumbDemo.init();
+        });
+    </script>
+
+</head>
+<body data-demo-id="flowchart" data-library="jquery">
+    <div id="main">
+        <div>
+            节点位置样式等在css里面<br />
+            锚点，连接线和标签等在js里面
+        </div>
+        <div class="window" id="window1">
+            <a href="#" onclick="alert('提示1！');">
+                <div class="windownode">
+                    1.开始<br />
+                    出差申请单</div>
+            </a>
+        </div>
+        <div class="window" id="window2">
+            <a href="#" onclick="alert('提示2！');">
+                <div class="windownode">
+                    2.内勤备案</div>
+            </a>
+        </div>
+        <div class="window" id="window3">
+            <div class="windownode">
+                3.出差报销申请</div>
+        </div>
+        <div class="window" id="window4">
+            <div class="windownode">
+                4.财务结算</div>
+        </div>
+           <div class="window" id="window5">
+            <div class="windownode">
+                5.结束</div>
+        </div>
+    </div>
+</body>
+</html>

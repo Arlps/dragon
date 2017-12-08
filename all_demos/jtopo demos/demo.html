@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jtopo-0.4.08.js"></script>
+</head>
+<body><!--   -->
+	<canvas id="canvas" width="600px" height="600px" style="border:1px solid black; "></canvas>
+</body>
+<script>
+	// 数据结构
+      var group=[
+            {
+              type:'switch',
+              id:'XXX',
+              status:0,
+              son:[
+                  // -----1级------
+                        {
+                            type:'route',
+                            id:'XXX',
+                            status:0,
+                            son:[
+                              // -----2级------
+                                    {
+                                        type:'switch',
+                                        id:'XXX',
+                                        status:1,
+                                        son:[]
+                                    },
+                                    {
+                                        type:'route',
+                                        id:'XXX',
+                                        status:0,
+                                        son:[]
+                                    }
+                              // -----2级------
+                            ]
+                        },
+                        {
+                            type:'switch',
+                            id:'XXX',
+                            status:0,
+                            son:[
+                              // -----2级------
+                                    {
+                                        type:'route',
+                                        id:'XXX',
+                                        status:0,
+                                        son:[]
+                                    },
+                                    // {
+                                    //       type:'route',
+                                    //       status:0,
+                                    //       son:[]
+                                    // }
+                              // -----2级------
+                            ]
+                        },
+                        {
+                            type:'firewall',
+                            id:'XXX',
+                            status:1,
+                            son:[
+                              // -----2级------
+                                    {
+                                        type:'firewall',
+                                        id:'XXX',
+                                        status:0,
+                                        son:[]
+                                    },
+                                    {
+                                        type:'route',
+                                        id:'XXX',
+                                        status:0,
+                                        son:[]
+                                    }
+                              // -----2级------
+                            ]
+                        },
+                        {
+                            type:'switch',
+                            id:'XXX',
+                            status:0,
+                            son:[
+                              // -----2级------
+                                    {
+                                        type:'switch',
+                                        id:'XXX',
+                                        status:1,
+                                        son:[]
+                                    },
+                                    {
+                                        type:'switch',
+                                        id:'XXX',
+                                        status:0,
+                                        son:[]
+                                    }
+                              // -----2级------
+                            ]
+                        },
+                  //------1级------
+                ]
+            }
+    ]
+      
+      
+      $(document).ready(function(){                    
+            var canvas = document.getElementById('canvas');
+            // 初始化画布
+            var stage = new JTopo.Stage(canvas);
+            stage.frames=-24;
+            //显示工具栏
+            //showJTopoToobar(stage);
+            var scene = new JTopo.Scene(stage);    
+            scene.alpha = 0;
+            //scene.backgroundColor='255,0,0'
+            
+            //连线垂直方向的长度+节点高度
+            var offsetGap=50,sizeHeight=40; 
+            //树的某个高度方向属性
+            var treeHeight=offsetGap*2+sizeHeight;
+            
+            // 函数：新增一个节点
+            function addNode(obj){
+              //转化中文
+              var typeCN='';
+              switch (obj.type){
+                case 'switch':typeCN='交换机';break;
+                case 'route':typeCN='路由器';break;
+                case 'firewall':typeCN='防火墙';break;
+                default:break;
+              }
+                var node = new JTopo.Node(typeCN+obj.id);
+                node.setSize(40,40);
+                // 设置图片
+                node.setImage('img/'+obj.type+'.png');
+                // 字体颜色
+                node.fontColor = '37,165,206';
+                // 字体位置
+                node.textPosition="Top_Center";
+                // 字体垂直偏移
+                node.textOffsetY=10;
+                //异常
+                // if (obj.status) {
+                //   //"warning";
+                //   node.alarmColor='255,0,0';
+                //   node.alarmAlpha=0.6;
+                //   //node.selected=true;
+                //   setInterval(function(){
+                //     if(node.alarm==null){
+                //       node.alarm='';
+                //     }else{
+                //       node.alarm=null;
+                //     }
+                //   },600)
+                // }
+                // 添加节点到画布
+                scene.add(node);
+                
+
+                // 为节点添加事件
+                // node.mouseover(function(){
+                //     node.fontColor = '255,255,255';
+                // });
+                // node.mouseout(function(){
+                //     node.fontColor = '37,165,206';
+                // });
+                // console.log(node.cx)
+                
+                return node;
+            }
+            
+            // 函数：连接两个节点 
+            function addLink(nodeA, nodeZ,obj){
+                var link = new JTopo.FlexionalLink(nodeA, nodeZ);
+                // 根据status设置连线颜色
+                if (obj.status) {
+                   link.strokeColor = '255,0,0';
+                }else{
+                   link.strokeColor = '37,165,206';
+                }
+                //设置树的尺寸之类的 末端连线的长度offsetGap=(TreeLayout.Y-node.height)/2 
+                link.offsetGap=offsetGap;
+                link.direction = 'vertical';
+                link.lineWidth = 2+obj.status/5;
+
+                // 添加连线到画布
+                scene.add(link);
+               // console.log(nodeA.x)
+                return link;
+            }
+                 
+
+
+            //从这里开始 调用函数开始画树结构
+
+           	//画根节点
+            var rootNode = addNode(group[0]);
+            console.log(rootNode)
+            //rootNode.alarm('hahahaah')
+            for(var i=0; i<group[0].son.length; i++){
+            	//画每一个子节点
+                  var firstNode = addNode(group[0].son[i]);   
+                  // 连线每一个字节点和根节点
+                   addLink(rootNode, firstNode, group[0].son[i]);
+                   
+                for (var j = 0; j < group[0].son[i].son.length; j++) {
+                	//画每一个孙节点
+                     var secondNode = addNode(group[0].son[i].son[j]);
+                     //连接每一个子节点与孙节点
+                     addLink(firstNode,secondNode,group[0].son[i].son[j]);
+                };
+            }
+
+            // 树形布局声明（使画面形成树形排列）
+            scene.doLayout(JTopo.layout.TreeLayout('down', 80, treeHeight));
+            //缩放显示所有元素并居中显示
+            scene.centerAndZoom();
+            
+       });
+</script>
+</html>

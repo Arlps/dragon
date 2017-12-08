@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+	
+		var a = [];
+		for (var i = 0; i < 10; i++) {
+		  a[i] = function () {
+		    console.log(i);
+		  };
+		}
+		a[6](); // 10
+
+		var a = [];
+		for (let i = 0; i < 10; i++) {
+		  a[i] = function () {
+		    console.log(i);
+		  };
+		}
+		a[6](); // 6
+
+		for (let i = 0; i < 3; i++) {
+		  let i = 'abc';
+		  console.log(i);
+		}
+		// abc
+		// abc
+		// abc
+
+		for (var i = 0; i < 10; i++) {
+		  let i='abc';
+		  console.log(i)
+		}
+		// abc
+		// abc
+		// abc
+
+//暂时性死区（不存在变量提升）
+		// if (true) {
+		//   // TDZ开始
+		//   tmp = 'abc'; // ReferenceError
+		//   console.log(tmp); // ReferenceError
+
+		//   let tmp; // TDZ结束
+		//   console.log(tmp); // undefined
+
+		//   tmp = 123;
+		//   console.log(tmp); // 123
+		// }
+
+		var tmp = new Date();
+		function f() {
+		  console.log(tmp);
+		  if (false) {
+		  	alert();
+		    var tmp = 'hello world';
+		  }
+		}
+		f(); // undefined
+
+//批量定义
+		let [a, b, c] = [1, 2, 3];
+		let [head, ...tail] = [1, 2, 3, 4];
+		head // 1
+		tail // [2, 3, 4]
+
+		let [x, y, ...z] = ['a'];
+		x // "a"
+		y // undefined
+		z // []
+	</script>
+</body>
+</html>

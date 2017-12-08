@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="border" style="width:500px; height:500px; border:1px solid black; position:relative">
+		<div id="tank" style="width:100px; height:100px; position: absolute; background:url(img/arrow.png); background-size: 100% 100%"></div>
+	</div>
+	<script>
+		function War(obj){
+			this.x=0;
+			this.y=0;
+			this.speed=100;
+			this.move=function(event){
+				switch (event.keyCode){
+					case 37:this.x-=this.speed;break;
+					case 39:this.x+=this.speed;break;
+					case 38:this.y-=this.speed;break;
+					case 40:this.y+=this.speed;break;
+					default:break;
+				}
+				obj.style.left=this.x+'px';
+				obj.style.top=this.y+'px';
+			};
+		}	
+
+		var $tank=document.getElementById('tank');
+		var war=new War($tank);
+		onkeydown=function(event){
+			war.move(event);console.log(event.keyCode);
+			$tank.style.left=war.x
+		}
+	</script>
+</body>
+</html>

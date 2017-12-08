@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		window.onload=function(){
+			addCookie("haha","afd阿斯 ；蒂芬个 ",1);
+			// deleteCookie("haha")
+			var str=getCookie("haha");
+			console.log(str)
+		}
+		//-------------------------------------------------
+		//添加cookie
+		function addCookie(name,value,time){ 
+			var str=name+"="+escape(value); 
+			var date=new Date(); 
+			date.setTime(date.getTime()+time*3600*1000); 
+			str=str+"; expires="+date.toGMTString(); 
+			document.cookie=str; 
+		} 
+		// 获取cookie
+		function getCookie(name){ 
+			var str=document.cookie;
+			var arrCookie=str.split("; "); 
+			for(var i=0;i<arrCookie.length;i++){ 
+				var arr=arrCookie[i].split("="); 
+				if(arr[0]==name){
+					return  unescape(arr[1]);
+				} 
+			} 
+		} 
+		// 删除cookie
+		function deleteCookie(name){ 
+			var date=new Date(); 
+			date.setTime(date.getTime()-10000); 
+			document.cookie=name+"=v; expires="+date.toGMTString(); 
+		} 
+	</script>
+</body>
+</html>

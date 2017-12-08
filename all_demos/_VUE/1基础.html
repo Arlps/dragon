@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/vue.js"></script>
+	<style>
+		/*阻止闪烁*/
+		[v-cloak] { display: none }
+		.tesr{ height:2000px;}
+		li{ float:left; list-style:none;}
+		div{ border:1px solid black;}
+	</style>
+</head>
+<body>
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+	<div id="app1">
+		{{message|uppercase}}
+	</div><hr>
+	<script>
+		var app1=new Vue({
+		  el: '#app1',
+		  data: {
+		    message: 'Hello'
+		  }
+		})
+	</script>
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->	
+	<div id="app2">
+	  <span v-bind:title="message">{{message}}  title</span>
+	</div><hr>
+	<script>
+		var app2=new Vue({
+			el:"#app2",
+			data:{
+				message:new Date()
+			}
+		})
+	</script>
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->	
+	<div id="app3">
+		<p v-if="flag">flag true</p>
+		<p v-if="!flag">flag flase</p>
+	</div><hr>
+	<script>
+		var app3=new Vue({
+			el:"#app3",
+			data:{
+				flag:false
+			}
+		})
+	</script>
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->		
+	<div id="app4">
+		<ul>
+			<li v-for="item in list">{{item.name}}</li>
+		</ul>
+	</div><hr>
+	<script>
+		var app4=new Vue({
+			el:'#app4',
+			data:{
+				list:[{name:'AAA'},{name:'BBB'},{name:'CCC'}]
+			}
+		})
+	</script>
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->		
+	<div id="app5">
+		<button v-on:click="doit">Von</button>
+	</div><hr>
+	<script>
+		var app5=new Vue({
+			el:'#app5',
+			data:{
+				info:"123456789"
+			},
+			methods:{
+				doit:function(){
+					alert(this.info.split('').reverse().join('|'))
+				}
+			}
+		})
+	</script>
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->		
+	<div id="app6">
+		<p>{{text}}</p>
+		<input type="text" v-model="text">
+		<!-- <myhtml></myhtml> -->
+	</div><hr>
+	<script>
+		var app6=new Vue({
+			el:"#app6",
+			data:{
+				text:"TYPEIN PLEASE"
+			}
+		})
+	</script>
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->		
+	<div id="app7">
+		<!-- <myhtml></myhtml> -->
+	</div><hr>
+	<script>
+		var app7=new Vue({
+			el:'#app7',
+			data:{},
+		})
+		// Vue.component("myhtml",{
+		// 	template:"<li>一个模版</li>"
+		// })
+	</script>
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->		
+	<div id="app8">
+		<table>
+			<tr v-for="item in books">
+				<td>{{item.id}}</td><td>{{item.name}}</td>
+			</tr>
+		</table>
+
+		<p>-----------</p>
+		<p>
+			<label for="name">添加歌曲</label>
+			<input type="text" v-model="book.name">
+			<button v-on:click="addone()">确定</button>
+		</p>
+		<p>
+			<label for="name">删除歌曲</label>
+			<input type="text" v-model="find">
+			<button v-on:click="delone(find)">确定</button>
+		</p>
+	</div><hr>
+	<script>
+		var app8=new Vue({
+			el:'#app8',
+			data:{
+				book:{
+					id:"",
+					name:""
+				},
+				find:'',
+				books:[{
+					id:'',
+					name:"认真的雪"
+				},{
+					id:'',
+					name:"天后"
+				},{
+					id:'',
+					name:"死性不改"
+				}]
+			},
+			methods:{
+				// 设置序号函数
+				setIdx:function(){		
+					for (var i = 0; i < this.books.length; i++) {
+						this.books[i].id=i+1;
+					};
+				},
+				addone:function(){
+					if(this.book.name==''||this.book.name==undefined){
+						alert("叫你写歌名");
+						return;
+					}
+					this.books.push(this.book);
+					this.book={};
+					this.setIdx();
+				},
+				delone:function(theOne){
+					// 找到对应元素并且删除
+					var findFlag=false;
+					for (var i = 0; i < this.books.length; i++) {
+						if (this.books[i].name==theOne) {
+							this.books.splice(this.books[i].id-1,1);
+							findFlag=true;
+							console.log(this.book=={})
+						}
+
+					}
+					if(!findFlag){
+						alert("找不到歌曲");
+						this.find="";
+					}
+					// 重新排序
+					this.setIdx();
+				}
+			}
+		})
+	</script>
+
+</body>
+
+<script>
+	setTimeout(function(){
+		var all=document.getElementsByTagName('div');
+		all[all.length-1].scrollIntoView()
+		
+		// document.getElementById("end").scrollIntoView();
+		// document.body.scrollTop=1000
+		// document.documentElement.scrollTop=100;
+		// window.scrollTo(100,500)
+	},100)
+</script>
+</html>

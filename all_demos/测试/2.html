@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="css/reset.css" />
+		<script src="js/jquery-1.9.1.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<script src="js/bootstrap.js"></script>
+		<script src="js/highcharts.js"></script>
+		<style>
+			.box{ width: 300px; min-width: 300px; height:300px; border-radius: 30px; border: 1px solid black; margin: 30px; overflow: hidden; position: relative;box-shadow:inset 0 0 10px; background: url(bg1.png); background-size: 100% 100%;}
+			#container{ min-width:200px;height:200px;z-index:-9999;border-radius: 30px;}
+			.shadow{ position: absolute; top: 0; left: 0; width: 300px; height: 300px;border-radius: 30px;}
+			.bottom{ height: 50px; border-top: 1px solid #00313A; border-bottom: 1px solid #084C57}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div id="container" style=""></div>
+			<div class="bottom"></div>
+			<div class="bottom"></div>
+		</div>
+	</body>
+	<script>
+	$(function () {
+//		// Radialize the colors
+//	    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+//	        return {
+//	            radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+//	            stops: [
+//	                [0, color],
+//	                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+//	            ]
+//	        };
+//	    });
+	    Highcharts.setOptions({
+	        colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+	    });
+	    $('#container').highcharts({
+	        chart: {
+	            type: 'bar',
+	            backgroundColor: 'rgba(0,0,0,0)',
+	            borderWidth:'0px',
+	            animation:false
+	        },
+	        title: {
+			    text: ''
+			},
+	        series: [{
+	            data: [29.9, 71.5, 106.4, 129.2, 144.0]
+	        }],
+	        plotOptions: {
+	            pie: {
+	                //cursor: 'pointer',
+	                dataLabels: {
+	                    enabled: false
+	                },
+	                showInLegend: false
+	            }
+	        },
+	        credits: {  
+	          enabled:false  
+			}, 
+	    });
+	});
+	</script>
+</html>

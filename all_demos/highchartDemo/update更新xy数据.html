@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/highcharts.js"></script>
+	<script src="js/dark-unica.js"></script>
+	
+	<style>
+
+	.chart{ width:400px; height:400px; border:1px solid black; float:left;}
+	</style>
+</head>
+<body>
+	<div class="chartBox">
+		<div class="line chart" id="mychart"></div>
+		<button id="btn">ads</button>
+		<!-- <div id="myMap" class="chart"></div> -->
+
+		<button onclick="xx()">safaf</button>
+	</div>
+	
+	<script>
+	$(document).ready(function(){
+		// var data=[
+		// 	{name:"A",y:10,url:"1.com"},
+		// 	{name:"B",y:20,url:"2.com"},
+		// 	{name:"C",y:30,url:"3.com"},
+		// 	{name:"D",y:40,url:"4.com"},
+		// 	{name:"E",y:50,url:"5.com"},
+		// ];
+		var data=[10,20,30,40,50]
+		
+		
+		var $chart=$('#mychart').highcharts({
+			chart: {
+				marginBottom:30
+			},
+			title: {
+				text: ''
+			},
+			tooltip: {
+				headerFormat: '{series.name}<br>',
+				pointFormat: '{point.name}: <b>{point.y}</b>',
+				crosshairs:[true,true],
+				shared:true
+			},
+			xAxis:{
+				// type: 'datetime',
+				categories:timeArr
+			},
+			yAxis:{
+				max:50,min:0
+			},
+			legend:{ enabled:false },
+			plotOptions: {
+				series:{
+					shadow:true,
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels:{
+						enabled: true,
+						formats:'<b>{point.name}</b>: {point.y} ',
+					},
+					events:{
+						click:function(e){
+							alert(e.point.url)
+						}
+					},
+					marker: {
+						enabled:false,
+                        radius: 4,
+                        lineColor: '#666666',
+                        lineWidth: 1
+                    }
+				}
+			},
+			series: [{
+				type: 'areaspline',
+				name: 'topN',
+				data: data
+			}],
+			
+		});
+
+		// if($('#mychart').highcharts()){
+		// 	alert(1)
+		// }else{
+		// 	alert(0)
+		// }
+
+		// 过去5秒
+		var now=new Date();
+		var len=5;
+		var timeArr=[];
+		while(len--){
+			timeArr.unshift(now.toTimeString().split(' ')[0]);
+			now=new Date(now-1000);
+		};
+		console.log(timeArr)
+
+		// var data2=[
+		// 	{name:"A",y:100,url:"1.com"},
+		// 	{name:"B",y:20,url:"2.com"},
+		// 	{name:"C",y:30,url:"3.com"},
+		// 	{name:"D",y:40,url:"4.com"},
+		// 	{name:"E",y:50,url:"5.com"},
+		// ];
+		var data2=data.concat()
+
+		var options=$chart.highcharts();
+		setInterval(function(){
+			timeArr.shift();
+			timeArr.push((new Date()).toTimeString().split(' ')[0]);
+			// 更新X轴  //当categories有设置的时候
+			options.xAxis[0].update({categories:timeArr});
+
+			// data2.shift();data2.push({name:"D",y:10,url:"4.com"})
+			data2.shift();data2.push(10); console.log(data2)
+			// for (var i = 0; i < data2.length; i++) {
+			// 	if(i==data2.length-1){
+			// 		data2[i].y=parseInt(Math.random()*30)+10
+			// 	}else{
+			// 		data2[i].y=data2[i+1].y
+			// 	}
+			// };
+			// 更新y轴
+			options.series[0].update({data:data2});
+		},1000)
+	})
+	
+
+	function xx(){
+		if($('#mychart').highcharts()){
+			 $('#mychart').highcharts().destroy()
+		}
+		return;
+		var $chart=$('#mychart').highcharts({
+			chart: {
+			},
+			title: {
+				text: ''
+			},
+			tooltip: {
+				headerFormat: '{series.name}<br>',
+				pointFormat: '{point.name}: <b>{point.y}</b>',
+				crosshairs:[true,true],
+				shared:true
+			},
+			xAxis:{
+				// type: 'datetime',
+				
+			},
+			yAxis:{
+				max:50,min:0
+			},
+			legend:{ enabled:false },
+			plotOptions: {
+				series:{
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels:{
+						enabled: true,
+						formats:'<b>{point.name}</b>: {point.y} ',
+					},
+					events:{
+						click:function(e){
+							alert(e.point.url)
+						}
+					},
+					marker: {
+                        radius: 4,
+                        lineColor: '#666666',
+                        lineWidth: 1
+                    }
+				}
+			},
+			series: [{
+				type: 'spline',
+				name: 'topN',
+				data: [1,2,2,3,3,3,3]
+			}],
+			
+		});
+	}
+	</script>
+</body>
+</html>

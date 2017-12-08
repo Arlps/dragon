@@ -1,0 +1,77 @@
+<html>
+
+  <head>
+    <title>坦克大战1.0版本 </title>
+
+  </head>
+
+  <body onkeydown="dowhatevent(event)">
+    <div id="filed" style="background-color:black;width:500px;height:400px;position:absolute">
+      <div id="mytank" style="background-position-y:-40px;background-image:url('img/arrow.png'); background-size:100% 100%;width:40px;height:40px;position:absolute;"></div>
+      <div id="my"></div>
+    </div>
+
+    <script language="javascript" type="text/javascript">
+      //用面向对象的方法来开发，web版本的坦克大战1.0（可以通过asdw键盘来控制坦克的走向）  
+      function MyTank(x, y, direct) {
+        this.x = x;
+        this.y = y;
+        this.direct = direct;
+        this.speed = 8;
+        //初始化  
+        console.log(mytank)
+        mytank.style.left = this.x + "px";
+        mytank.style.top = this.y + "px";
+        mytank.style.backgroundPositionY = "0px";
+        
+          //event表示按键事件  
+        this.move=function(event) { //一个静态函数  
+          //a左3  s下2 d右1  w上0  
+          switch(event.keyCode) {
+            case 65: //向左  
+              this.x -= this.speed;
+              this.direct = 3;
+              mytank.style.backgroundPositionY = "40px";
+              break;
+
+            case 83: //向下  
+              this.y += this.speed;
+              this.direct = 2;
+              mytank.style.backgroundPositionY = "80px";
+              break;
+
+            case 68: //向右  
+              this.x += this.speed;
+              this.direct = 1;
+              mytank.style.backgroundPositionY = "120px";
+              break;
+
+            case 87: //向上  
+              this.y -= this.speed;
+              this.direct = 0;
+              mytank.style.backgroundPositionY = "0px";
+              break;
+          }
+          //统一改变位置  
+          mytank.style.left = this.x + "px";
+          mytank.style.top = this.y + "px";
+
+        }
+      }
+
+      //判断用户希望干什么  
+      function dowhatevent(event) {
+        if(event.keyCode == "65" || event.keyCode == "68" || event.keyCode == "83" || event.keyCode == "87")
+          tank.move(event);
+        // 可以判断另外一个事件  
+
+      }
+
+      //创建坦克  
+      var tank = new MyTank(300, 360, 0);
+
+    </script>
+
+  </body>
+
+</html>

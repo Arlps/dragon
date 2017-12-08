@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<style>
+		div{ height: 400px; box-shadow: 0 0 10px}
+		@media(min-width: 400px) and (max-width: 500px){
+			body{
+				background: #ff0
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4"></div>
+	<script>
+		$(function(){
+			alert($(window).width())
+		})
+	</script>
+</body>
+</html>

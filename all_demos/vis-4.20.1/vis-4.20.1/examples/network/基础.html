@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+  <title>拓扑demo</title>
+  <link href="../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../../dist/jQuery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="../../dist/vis.js"></script>
+  <style type="text/css">
+  *{ margin:0; padding: 0;}
+  .netbox{ position: relative; width: 80%;height: 600px; border:1px solid #000;}
+  #sheet-map{ height:100%;}
+  </style>
+</head>
+<body>
+  <div class="netbox">
+    <div id="sheet-map"></div>
+  </div>
+  
+  <script type="text/javascript">
+
+  // 节点数据
+  var nodes = new vis.DataSet([
+    {id: 1, label: '电票数据库服务器1\n192.68.1.103'},
+    {id: 2, label: '电票数据库服务器1\n192.68.1.103'},//,color: '#7BE141'
+    {id: 3, label: '电票数据库服务器1\n192.68.1.103'},
+    {id: 4, label: '电票数据库服务器1\n192.68.1.103'},
+    {id: 5, label: '电票数据库服务器1\n192.68.1.103'},
+    ]);
+  // 连线数据
+  var edges = new vis.DataSet([
+    {from: 1, to: 3, label:"1"},
+    {from: 1, to: 2, label:"2"},
+    {from: 2, to: 4, label:"3"},
+    {from: 2, to: 5, label:"4"},
+    {from: 3, to: 5, label:"5"},
+    {from: 1, to: 4, label:"6"}
+    ]);
+
+  $(function(){
+    //初始化
+    var network=null;
+    network=createTopo(nodes,edges,$('#sheet-map')[0],network);
+  })
+
+  // 初始化函数
+  function createTopo(nodes,edges,$dom,network){
+    var data = {
+      nodes: nodes,
+      edges: edges
+    };
+    console.log(data)
+    var options = {
+      // 点样式
+      nodes: {
+        label:"sadasf",
+        shape:'image',//'circularImage',//'dot',
+        image:'../../dist/img/network/host.png',
+        // image: {
+        //   unselected: './unselected.svg',
+        //   selected: './BROKEN_LINK/selected.svg',
+        // }
+        borderWidth:2,
+        size:20,
+        color: {border: '#bbb',background: '#eee'},
+        font:{
+          color:'#666',
+          strokeWidth:0.2,//字体边缘
+          strokeColor:'#fff',
+        },
+        shadow:true,
+        widthConstraint: {maximum: 20},
+        fixed:false,//固定节点
+      },
+      // 线样式
+      edges: {
+        color: '#aaa',//'lightgray',
+        font: {
+          align: 'middle',//线上文字的位置 horizontal
+        },
+        length:300,
+        dashes:true,
+        width:1.9,
+        smooth:false, //false为直线
+        shadow:true,
+        arrows: {from:true,to:true}, //middle
+        widthConstraint: {maximum: 10 }
+      },
+      // 图层
+      layout: {
+        hierarchical: {
+            direction: 'RL',//树状布局 并规定方向RL UD DU LR
+            sortMethod: 'directed',
+          },
+          randomSeed:1, //一旦设置则固定初始化布局
+      },
+      // 互动效果
+      interaction: {
+        hover: true,// hover移中高亮
+        dragNodes :true, //是否支持拖动
+      },
+      // 物理效果
+      physics: {
+        enabled:false, //是否支持物理运动
+        stabilization: false,//false弹性不稳定增强
+      }, 
+      // -----------------------------
+    };
+    network = new vis.Network($dom, data, options);
+    return network;
+  }
+
+
+  </script>
+
+
+</body>
+</html>

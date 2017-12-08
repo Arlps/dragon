@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/jQuery-2.1.4.min.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/china.js"></script>
+    <script src="js/guangdong.js"></script>
+</head>
+<body>
+    <div id="chart" style="height:500px;width:500px;border:1px solid #aaa"></div>
+    <script>
+   var uploadedDataURL = "/asset/get/s/data-1502779360900-HkKJuGe_W.json";
+
+function area(name, color) {
+    var a = {
+        name: name,
+        selected: true,
+        itemStyle: {
+            emphasis: {
+                areaColor: color,
+                borderColor: '#f47920',
+                borderWidth: 1
+            }
+        }
+    };
+    return a;
+}
+var geodata = [{
+    name: '广州市',
+    value: 123
+}, {
+    name: '佛山市',
+    value: 14
+}, {
+    name: '东莞市',
+    value: 532
+}, {
+    name: '中山市',
+    value: 13
+}, {
+    name: '江门市',
+    value: 56
+}, {
+    name: '阳江市',
+    value: 436
+}, {
+    name: '茂名市',
+    value: 632
+}, {
+    name: '湛江市',
+    value: 88
+}, ];
+
+var colordata=[];
+for (var i = 0; i < geodata.length; i++) {
+    colordata.push(area(geodata[i].name, '#694d9f'))
+};
+
+
+
+    console.log(GD_JSON)
+    var gdJson=JSON.stringify(GD_JSON);
+    echarts.registerMap('广东', gdJson);
+
+    option = {
+        backgroundColor: '#4f5555',
+        title: {
+            text: '深湛高铁线路',
+            subtext: '数据来源百科',
+            textStyle: {
+                color: '#7bbfea'
+            }
+        },
+        tooltip: {
+        trigger: 'item',
+        formatter: '{b}'
+    },
+    visualMap: {
+        seriesIndex: 0,
+        min: 0,
+        max: 2500,
+        left: 'left',
+        top: 'bottom',
+        text: ['高','低'],           // 文本，默认为数值文本
+        calculable: true
+    },
+    grid: {
+        height: 200,
+        width: 8,
+        right: 80,
+        bottom: 10
+    },
+    xAxis: {
+        type: 'category',
+        data: [],
+        splitNumber: 1,
+        show: false
+    },
+    yAxis: {
+        position: 'right',
+        min: 0,
+        max: 20,
+        splitNumber: 20,
+        inverse: true,
+        axisLabel: {
+            show: true
+        },
+        axisLine: {
+            show: false  
+        },
+        splitLine: {
+            show: false
+        },
+        axisTick: {
+            show: false
+        },
+        data: []
+    },
+
+    visualMap: {
+            min: 800,
+            max: 50000,
+            inRange: {
+                color: ['lightskyblue','yellow', 'orangered']
+            }
+        },
+          
+        geo: {
+            map: '广东',
+            label: {
+                emphasis: {
+                    show: false
+                }
+            },
+            roam: true,
+            zlevel: 1,
+            itemStyle: {
+                normal: {
+                    // areaColor: '#031525',
+                    borderColor: '#3B5077'
+                },
+                emphasis: {
+                    areaColor: '#031525'
+                }
+            },
+
+            // 区域涂色
+            // regions:colordata,
+            // regions: [area('深圳市', '#694d9f'),
+            //     area('东莞市', '#45224a'),
+            //     area('佛山市', '#45224a'),
+            //     area('广州市', '#45224a'),
+            //     area('中山市', '#45224a'),
+            //     area('江门市', '#45224a'),
+            //     area('阳江市', '#45224a'),
+            //     area('茂名市', '#45224a'),
+            //     area('湛江市', '#45224a'),
+            // ]
+        },
+        // 动态数据
+         series:[{type:'map',data:geodata}] ,
+        series: [
+
+            //流动线条
+            // {
+            //     type: 'lines',
+            //     coordinateSystem: 'geo',
+            //     //polyline:true,
+            //     symbol: ['none', 'triangle'],
+            //     zlevel: 2,
+            //     effect: {
+            //         show: true,
+            //         symbol: 'roundRect',
+            //         period: 2,
+            //         delay: 100,
+            //         trailLength: 0.6,
+            //         symbolSize: 6,
+            //     },
+            //     lineStyle: {
+            //         normal: {
+            //             color: {
+            //                 type: 'linear',
+            //                 x: 0,
+            //                 y: 0,
+            //                 x2: 0,
+            //                 y2: 1,
+            //                 colorStops: [{
+            //                     offset: 0,
+            //                     color: '#ed1941'
+            //                 }, {
+            //                     offset: 1,
+            //                     color: '#ffce7b'
+            //                 }],
+            //                 globalCoord: false
+            //             },
+            //             width: 1,
+            //             opacity: 0.8,
+            //             //type: 'dotted',
+            //             curveness: 0.2,
+            //         }
+            //     },
+            //     data: [{
+            //         coords: [ //sz-东莞
+            //             [114.07, 22.62],
+            //             [113.85, 23.01],
+            //         ]
+            //     }, {
+            //         coords: [ //dg-广州
+            //             [113.85, 23.01],
+            //             [113.43, 23.26],
+            //         ]
+            //     }]
+            // },
+            // 渐变色
+            // {
+            //     zlevel: 1,
+            //     name: '广东',
+            //     type: 'map',
+            //     // mapType: 'china',
+            //     selectedMode : 'multiple',
+            //     roam: true,
+            //     left: 0,
+            //     right: '15%',
+            //     label: {
+            //         normal: {
+            //             show: true
+            //         },
+            //         emphasis: {
+            //             show: true
+            //         }
+            //     },
+            //     data:geodata
+            // }
+
+        ]
+    };
+    var myChart=echarts.init(document.getElementById('chart'));
+    myChart.setOption(option);
+// });
+
+    
+
+
+    function randomData() {
+        return Math.round(Math.random()*2500);
+    }
+    
+
+    function getGradientColor (start, end, max, val) {
+        var rgb = /#((?:[0-9]|[a-fA-F]){2})((?:[0-9]|[a-fA-F]){2})((?:[0-9]|[a-fA-F]){2})/;
+        var sM = start.match(rgb);
+        var eM = end.match(rgb);
+        var err = '';
+        max = max || 1
+        val = val || 0
+        if (sM === null) {
+            err = 'start';
+        }
+        if (eM === null) {
+            err = 'end';
+        }
+        if (err.length > 0) {
+            throw new Error('Invalid ' + err + ' color format, required hex color');    
+        }
+        var sR = parseInt(sM[1], 16),
+            sG = parseInt(sM[2], 16),
+            sB = parseInt(sM[3], 16);
+        var eR = parseInt(eM[1], 16),
+            eG = parseInt(eM[2], 16),
+            eB = parseInt(eM[3], 16);
+        var p = val / max;
+        var gR = Math.round(sR + (eR - sR) * p).toString(16),
+            gG = Math.round(sG + (eG - sG) * p).toString(16),
+            gB = Math.round(sB + (eB - sB) * p).toString(16);
+        return '#' + gR + gG + gB;
+    }
+    </script>
+</body>
+</html>

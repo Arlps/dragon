@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.8.3.js"></script>
+	<style>
+		#box{ margin:100px 100px; width:400px; height:300px; box-shadow:0 0 10px; overflow:auto; }
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+	<button onClick="get()">加载</button>
+	<button onclick="remove()">卸载</button>
+</body>
+<script>
+
+	function get(){
+		$.get("frame_son.html", function(data){
+				$('#box').empty().append(data)
+			})
+	}
+</script>
+</html>

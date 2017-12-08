@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/newIndex.css">
+	<link rel="stylesheet" href="css/animate.css">
+	<style>
+		*{ padding: 0; margin: 0}
+		html,body{ height: 100%;}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="title"></div>
+		<div class="box left1">
+			<div class="inner"></div>
+			<div class="rect">
+				<div class="hex hex1"></div>
+				<div class="hex hex2"></div>
+			</div>
+		</div>
+		<div class="box left2"></div>
+		<div class="box left3"></div>
+		<div class="box right1"></div>
+		<div class="box right2"></div>
+		<div class="box right3"></div>
+		<div class="box bottom"></div>
+	</div>
+</body>
+<script src="js/jquery-1.9.1.js"></script>
+<script>
+	$(function(){
+	//总体宽高设置
+		//根据页面高度设置按比例宽度
+		$(window).resize(function(){	
+			$('.wrap').width($('.wrap').height()/0.642);
+		})
+		//初始化即调整宽度为比例宽度
+		$(window).trigger('resize');
+
+	// 选中效果
+		$('.title').mouseenter(function(){
+			$(this).append($('<div>').addClass('flash'))
+			$(this).find('.flash').animate({left:'100%'},function(){
+				$(this).remove('.flash')
+			})
+		})
+		$('.box').mouseenter(function(){
+		//玻璃
+			// $(this).append($('<div>').addClass('flash'))
+			// $(this).find('.flash').animate({left:'100%'},function(){
+			// 	$(this).remove('.flash')
+			// })
+		//外部动画
+			// $(this).addClass('animated pulse');
+			// $(this).siblings('.box').removeClass('animated').removeClass('pulse');
+		//bg改变
+			// $(this).css('backgroundSize','150% 150%')//.siblings().css('backgroundSize','95% 95%')
+			// $(this).css('boxShadow','5px 5px 10px')
+
+		}).mouseleave(function(){
+			// $('.box').css('backgroundSize','100% 100%')
+			// $('.box').css('boxShadow','0 0 0px')
+		})
+
+		//六边形div
+		var boxHtml=$('.box').html();
+		var sixHtml='<div class="rect"><div class="hex hex1"></div><div class="hex hex2"></div></div>'
+		$('.box').html(boxHtml+sixHtml);
+		$('.rect,.inner').mouseenter(function(){
+			$(this).parent('.box').css('transform','scale(1.1)')
+		}).mouseleave(function(){
+			$(this).parent('.box').css('transform','scale(1)')
+		})
+	})
+</script>
+</html>

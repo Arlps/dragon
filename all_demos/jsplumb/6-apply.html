@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script src="js/jQuery-2.1.4.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/jsplumb.js"></script>
+        <script src="js/highcharts.js"></script>
+    <!-- <script src="js/highcharts-more.js"></script> -->
+<!-- <script src="js/solid-gauge.js"></script> -->
+        <script src="js/gauge.min.js"></script>
+        <style type="text/css">
+            p{ margin:0;}
+            .wrap{ 
+                width:800px; height:600px; border:1px solid #ccc; position:relative;overflow:scroll;
+            }
+            .box{
+                position:absolute; width:70px; height:70px; background:rgba(0,0,0,0.0); 
+                background-size:70% 70%; background-repeat:no-repeat; border-radius:50%;
+                background-position:center center;
+            }
+            
+            /*.box:nth-child(1){ top:100px; left:50px;}
+            .box:nth-child(2){ top:100px; left:250px;}
+            .box:nth-child(3){ top:100px; left:450px;}*/
+            .box .img{ height:45px; width:50px; border:0px solid; margin:0 auto;background-size:90% 90%; background-repeat:no-repeat;background-position:center center;}
+            .box .text{ height:20px;}
+            .box .text p{ height:11px; line-height:10px; text-align:center; font-size:9px; white-space:nowrap;} 
+            
+
+            /*图标提示框*/
+            #chart-container {
+                width: 300px;
+                height: 150px;
+                padding: 5px;
+                position: absolute;
+                top: 400px;
+                left: 400px;
+                border-radius: 10px;
+                background: #fafafa;
+                background: rgba(255, 255, 255, 0.7);
+                z-index: 10;
+                overflow: hidden;
+                box-shadow: 0 0 10px #666;
+                display: none;
+              }
+              
+              #chart-container .chart {
+                width: 50%;
+                float: left;
+                height: 100px;
+                box-shadow: 0 0 0px;
+                overflow: hidden;
+              }
+              #chart-container .chart canvas{ margin:0 0px;}
+              #chart-container .chart p{ text-align:center; margin-top:-10px;}
+
+              #chart-container .chart-flow {
+                width: 100%;
+                float: left;
+                height: 120px;
+                box-shadow: 0 0 0px;
+                overflow: hidden;
+                box-shadow: 0 0 0px;
+              }
+              
+              #chart-container p {
+                font-size: 10px;
+                text-indent: 10px;
+              }
+              
+              #chart-container p span {
+                padding: 0px 3px;
+                margin-right: 3px;
+                border-radius: 5px;
+                color: #fff;
+                display: inline-block;
+                width: 25px;
+                text-indent: 0;
+                text-align: center;
+              }
+              
+              span.red {
+                background: #B94A48;
+              }
+              
+              span.green {
+                background: #5B955B;
+              }
+              
+              span.orange {
+                background: #FA9300;
+              }
+              
+              span.light {
+                background: #CCCC00;
+              }
+        </style>
+
+    </head>
+
+    <body>
+        <div id="chart-container"></div>
+        <div class="wrap" id="canvas">
+            <!-- 提示框 默认隐藏 -->
+      
+           <!--  <div class="box" id="a">
+                <div class="img"></div><div class="text"><p>192.168.2.299</p><p>副科级啊撒旦服务器</p></div>
+            </div>
+            <div class="box" id="b"></div>
+            <div class="box" id="c"></div> -->
+        </div>
+        <select name="type" id="">
+            <option value="server">服务器</option> 
+            <option value="route">路由器</option>
+            <option value="switch">交换机</option>
+            <option value="firewall">防火墙</option>
+        </select>
+        <button id="add">+</button>
+        <button id="save">save</button>
+        <button id="clear">clear</button>
+        <button id="read">read</button>
+    </body>
+
+</html>
+<script>
+    // localStorage.removeItem('jspData')
+    var mydata={
+        "nodes": [{
+            "id": "a",
+            "anchors": ["Bottom"],
+            "position": ["50px", "100px"]
+        }, {
+            "id": "b",
+            "anchors": ["Bottom"],
+            "position": ["250px", "100px"]
+        }, {
+            "id": "c",
+            "anchors": ["Bottom", "Left"],
+            "position": ["450px", "100px"]
+        }],
+        "links": [{
+            "source": {
+                "id": "a",
+                "type": "Bottom"
+            },
+            "target": {
+                "id": "c",
+                "type": "Bottom"
+            }
+        }, {
+            "source": {
+                "id": "b",
+                "type": "Bottom"
+            },
+            "target": {
+                "id": "c",
+                "type": "Left"
+            }
+        }]
+    }
+</script>
+
+<script>
+    var jsp = jsPlumb.getInstance({});
+    // 连接点样式及线
+    var point = {
+        endpoint: "Dot",
+        // EndpointStyle: { width: 5, height: 5, stroke: '#666' },
+        cssClass: 'point',
+        connector: ["Flowchart", {
+            stub: [50, 50],
+            gap: 0,
+            cornerRadius: 5,
+            alwaysRespectStubs: false
+        }],
+        // 是否作为头尾连接点
+        isSource: true,
+        isTarget: true,
+        maxConnections: -1,
+        // connectorOverlays: [
+        //     ["Arrow", {
+        //         location: 1,
+        //         visible: true,
+        //     }]
+        // ],
+        connectorPaintStyle: {
+            stroke: "#aaa",
+            strokeWidth: 1,
+        },
+        connectorHoverStyle: {
+            stroke: "#000",
+            strokeWidth: 2,
+        },
+        paintStyle: {
+            fill: "#eee",
+            radius: 2
+        },
+        hoverPaintStyle: {
+            fill: "#ff0",
+            radius: 5
+        },
+    }
+    var common={
+        connectorPaintStyle: {
+            stroke: "#aaa",
+            strokeWidth: 1,
+        },
+        connectorHoverStyle: {
+            stroke: "#000",
+            strokeWidth: 2,
+        },
+        paintStyle: {
+            fill: "#eee",
+            radius: 2
+        },
+        hoverPaintStyle: {
+            fill: "#ff0",
+            radius: 5
+        },
+    }
+    // 所有元素可拖动
+    jsp.draggable(jsPlumb.getSelector(".wrap .box"));
+    // 静态----------------------------------
+    // var aaa=jsp.addEndpoint('a',point,{uuid:'a1'});console.log(aaa);
+    // jsp.addEndpoint('b',point,{uuid:'b1'});
+    // jsp.addEndpoint('c',point,{uuid:'c1'}); 
+    // jsp.addEndpoint('c',point,{uuid:'c2',anchor:'Left'});
+
+    // //自动连线
+    // var xxx=jsp.connect({uuids: ["a1", "c1"], editable: false});  console.log(xxx);
+
+    // jsp.connect({uuids: ["b1", "c2"], editable: false});
+    // jsPlumb.connect({
+    //   source:'window3',
+    //   target:'window4',
+    //   paintStyle:{ strokeWidth:10, stroke:'rgba(0, 0, 200, 0.5)' },
+    //   anchors:["Right", "Left"],
+    //   endpoint:[ "Rectangle", { width:10, height:8 } ]
+    // });
+    // 静态----------------------------------
+    console.log(jsp);
+
+    jsp.on(jsPlumb.getSelector(".box"), "dblclick", function(e) {
+
+        $("#" + $(this).attr('id')).remove()
+        jsp.removeAllEndpoints($(this).attr('id'))
+        // var s = instance.toggleDraggable(this.getAttribute("rel"));
+        // this.innerHTML = (s ? 'disable dragging' : 'enable dragging');
+        // jsPlumbUtil.consume(e);
+    });
+
+    //删除
+    jsp.bind("dblclick", function(conn) {
+        // jsp.deleteConnection(conn);
+    });
+
+    //删除点
+    $('.wrap').on('dblclick', '.box', function() {
+        jsp.remove($(this).attr('id'))
+    }).on('mouseenter', '.box', function() {
+        showChart($(this))
+    }).on('mouseleave', '.box', function() {
+        hideChart()
+    })
+
+    var n = 0;
+    $('#add').click(add_dom);
+    $('#save').click(save);
+    $('#clear').click(clear);
+    $('#read').click(function() {
+        var data = JSON.parse(localStorage.getItem('jspData'));
+        if(data == null) {
+            data = mydata;
+        };
+        read(data)
+    })
+    $('#read').trigger('click')
+
+    function clear() {
+        // jsp.reset();
+        $('.box').each(function() {
+            jsp.remove($(this).attr('id'))
+        })
+    }
+    // 添加新div，并且添加节点
+    function add_dom() {
+        var type = $('select[name=type]').val();
+        var id = 'n' + n;
+        var id = 'n_' + parseInt(Math.random() * 1000000);
+        var $dom = $('<div class="box" id="' + id + '" data-type="' + type + '"><div class="img"></div><div class="text"><p>192.168.2.299</p><p>副科级啊撒旦服务器</p></div></div>');
+        $dom.find('.img').css('background-image', 'url(images/' + type + '.png)')
+        $dom.appendTo('.wrap').css('bottom', 0);
+        jsp.draggable($dom);
+        var aaa=jsp.addEndpoint(id, point, {
+            anchor: 'Bottom'
+        });console.log(aaa)
+        jsp.addEndpoint(id, point, {
+            anchor: 'Top'
+        });
+        jsp.addEndpoint(id, point, {
+            anchor: 'Left'
+        });
+        jsp.addEndpoint(id, point, {
+            anchor: 'Right'
+        });
+    }
+    //读取数据画图-------------------------------------------------------------------------------------
+    function paintNodes(data) {
+        $.each(data.nodes, function(idx, item) {
+            $('<div class="box" id="' + item.id + '" data-type="' + item.type + '"><div class="img"></div><div class="text"><p>192.168.2.299</p><p>副科级啊撒旦服务器</p></div></div>').appendTo('.wrap').css({
+                left: item.position[0],
+                top: item.position[1]
+            }).find('.img').css({
+                backgroundImage: 'url(images/' + item.type + '.png)'
+            });
+            for(var i = 0; i < item.anchors.length; i++) {
+                var xxx = jsp.addEndpoint(item.id, point, {
+                    anchor: item.anchors[i]
+                });
+                console.log(xxx)
+            };
+        })
+        jsp.draggable(jsPlumb.getSelector(".wrap .box"));
+    }
+
+    function paintLinks(data) {
+        $.each(data.links, function(idx, item) {
+            var $connect = jsp.connect({
+                source: item.source.id,
+                target: item.target.id,
+                anchors: [item.source.type, item.target.type],
+                connector: ["Flowchart", {
+                    stub: [50, 50],
+                    gap: 10,
+                    cornerRadius: 5,
+                    alwaysRespectStubs: false
+                }],
+                endpoint: ["Dot", {
+                    radius: 3
+                }],
+                common
+            });
+        })
+    }
+
+    function read(data) {
+        clear();
+        paintNodes(data);
+
+        paintLinks(data);
+
+        jsp.bind("dblclick", function(conn) {
+            jsp.deleteConnection(conn);
+            $('body').css('cursor','default')
+        });
+        jsp.bind("mouseover", function(conn) {
+            $('body').css('cursor','pointer')
+        });
+        jsp.bind('mouseout', function(conn) {
+            $('body').css('cursor','default')
+        })
+        $('.wrap').on('dblclick', '.box', function() {
+            jsp.remove($(this).attr('id'))
+        })
+        // 所有线绑定删除事件
+        // var allLinks=jsp.getAllConnections();
+        // for (var i = 0; i < allLinks.length; i++) {
+        //     allLinks[i].bind("dblclick", function (conn) {
+        //         jsp.deleteConnection(this);
+        //     });
+
+        // };
+
+    }
+    //读取数据画图-------------------------------------------------------------------------------------
+
+    //保存数据 data/getNodes/getinks---------------------------------------------------------------------
+    function getNodes() {
+        var arr = [];
+        var doms = jsp.getManagedElements();
+        for(var key in doms) {
+            var anchors = jsp.getEndpoints(key);
+            var arrAnchor = [];
+            for(var i = 0; i < anchors.length; i++) {
+                arrAnchor.push(anchors[i].anchor.type);
+            };
+            var $dom = $('#' + key + '');
+            arr.push({
+                id: key,
+                type: $dom.data('type'),
+                anchors: arrAnchor,
+                position: [$dom.css('left'), $dom.css('top')]
+            })
+        }
+        return arr;
+    }
+
+    function getLinks() {
+        var arr = [];
+        $.each(jsp.getAllConnections(), function(idx, item) {
+            console.log(item);
+            console.log(item.getAttachedElements())
+            var type = item.getAttachedElements()
+            arr.push({
+                source: {
+                    id: item.sourceId,
+                    type: item.getAttachedElements()[0].anchor.type
+                },
+                target: {
+                    id: item.targetId,
+                    type: item.getAttachedElements()[1].anchor.type
+                }
+            })
+        })
+        return arr;
+    }
+
+    function save() {
+        var data = {
+            nodes: getNodes(),
+            links: getLinks()
+        }
+        // console.log(JSON.stringify(data))
+        localStorage.setItem('jspData', JSON.stringify(data));
+        return data;
+    }
+    //保存数据 data/getNodes/getinks--------------------------------------------------------------------
+
+    //显示图表
+    //移中显示信息框-----------------------------------------------------------------------------------
+    function showChart($dom) {
+        var type = 1;
+        $('#chart-container').show();
+        if(type) {
+            var a1=parseInt(Math.random()*100)
+            var a2=parseInt(Math.random()*100)
+            // 类型1：油表-------------------
+            var htmlStr =
+                '<div class="text">' +
+                '<p><strong>' + '电票数据库服务器' + '</strong></p>' +
+                '<p><strong>运行时间：</strong>15天5分钟</p>' +
+                '<p><strong>状态：</strong><span class="red">' + 3 + '</span><span class="orange">' + 13 + '</span><span class="light">' + 8 + '</span><span class="green">' + 123 + '</span></p>' +
+                '</div>' +
+                '<div class="chart" data-num=' + a1 + ' data-title="CPU使用率">' +
+                '<canvas height="80" width="140" style="padding:0px"></canvas>' +
+                '<p><strong>CPU:' + a1 + '%</strong></p>' +
+                '</div>' +
+                '<div class="chart" data-num=' + a2 + ' data-title="CPU使用率">' +
+                '<canvas height="80" width="140"></canvas>' +
+                '<p><strong>内存:' + a2 + '%</strong></p>' +
+                '</div>'
+
+            $('#chart-container').html(htmlStr);
+            $('#chart-container .chart').each(function() {
+                // makeGaugeChart($(this));
+                gauge($(this));
+            })
+        } else {
+            // 类型2：流量-------------------
+            var htmlStr =
+                '<div class="text">' +
+                '<p><strong>端口：</strong>' + '阿司法i哦哦i好' + '(192.168.2.233)</p>' +
+                '<p><strong>端口：</strong>' + '我的少妇红i' + '(192.168.2.233)</p>' +
+                '</div>' +
+                '<div class="chart-flow" data-title="CPU使用率"></div>'
+
+            $('#chart-container').html(htmlStr);
+            $('#chart-container .chart-flow').each(function() {
+                makeFlowChart($(this))
+            })
+        }
+
+        //跟随鼠标移动
+        $('body').css('cursor', 'pointer')
+        $('body').mousemove(function(e) {
+            var x = e.clientX;
+            var y = e.clientY;
+            $('#chart-container').css({
+                left: x + 10 + 'px',
+                top: y + 'px'
+            });
+        })
+    }
+
+    // 移出隐藏信息框
+    function hideChart() {
+        $('#chart-container').hide();
+        $('body').unbind('mousemove').css('cursor','default')
+    }
+
+    // 油表2
+    function gauge($dom) {
+        var $canvas = $dom.find('canvas');
+        var opts = {
+            lines: 20, // The number of lines to draw
+            angle: 0, // The length of each line
+            lineWidth: 0.5, // The line thickness
+            pointer: {
+                length: 0.8, // The radius of the inner circle
+                strokeWidth: 0.053, // The rotation offset
+                color: '#000000' // Fill color
+            },
+            limitMax: 'false', // If true, the pointer will not go past the end of the gauge
+            colorStart: '#6FADCF', // Colors
+            colorStop: '#8FC0DA', // just experiment with them
+            strokeColor: '#E0E0E0', // to see which ones work best for you
+            generateGradient: true
+        };
+        var gauge = new Gauge($canvas[0]).setOptions(opts); // create sexy gauge!
+        gauge.maxValue = 100; // set max gauge value
+        gauge.animationSpeed = 25; // set animation speed (32 is default value)
+        gauge.set($dom.data('num')); // set actual value
+    }
+
+    // 油表函数
+    function makeGaugeChart($dom) {
+        $dom.highcharts({
+            chart: {
+                type: 'solidgauge',
+                backgroundColor: null
+            },
+            title: null, //{ text:$dom.data('title')},
+            tooltip: {
+                enabled: false
+            },
+            pane: {
+                center: ['50%', '85%'],
+                size: '170%',
+                startAngle: -90,
+                endAngle: 90,
+                background: {
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                    innerRadius: '60%',
+                    outerRadius: '100%',
+                    shape: 'arc'
+                }
+            },
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: $dom.data('title'),
+                    style: {
+                        color: '#333',
+                        fontSize: '14px',
+                        fontWeight: 'bold'
+                    },
+                    y: 50
+                },
+                stops: [
+                    [0.1, '#55BF3B'], // green
+                    [0.5, '#DDDF0D'], // yellow
+                    [0.9, '#DF5353'] // red
+                ],
+                lineWidth: 0,
+                minorTickInterval: null,
+                tickPixelInterval: 400,
+                tickWidth: 0,
+                labels: {
+                    y: -7,
+                    style: {
+                        color: 'rgba(0,0,0,0)'
+                    }
+                },
+            },
+            plotOptions: {
+                solidgauge: {
+                    dataLabels: {
+                        y: 5,
+                        borderWidth: 0,
+                        // useHTML: true
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: $dom.data('title'),
+                data: [$dom.data('num')],
+                tooltip: {
+                    valueSuffix: $dom.data('title')
+                }
+            }]
+        });
+    }
+
+    // 流量函数
+    function makeFlowChart($dom) {
+        $dom.highcharts({
+            chart: {
+                type: 'areaspline',
+                marginBottom: 40,
+                marginLeft: 40,
+                backgroundColor: null
+            },
+            colors: ['#66C54F', '#2EA3CA'],
+            title: {
+                text: null
+            },
+            tooltip: {
+                dateTimeLabelFormats: {
+                    millisecond: '%H:%M:%S.%L',
+                    second: '%H:%M:%S',
+                    minute: '%H:%M',
+                    hour: '%H:%M',
+                    day: '%Y-%m-%d',
+                    week: '%m-%d',
+                    month: '%Y-%m',
+                    year: '%Y'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            yAxis: {
+                title: {
+                    text: 'Kbps',
+                    x: 10
+                },
+                labels: {
+                    x: 0
+                }
+            },
+            legend: {
+                float: true,
+                y: 20
+            },
+            plotOptions: {
+                series: {
+                    marker: {
+                        enabled: false
+                    },
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            },
+            events: {
+                click: function() {
+                    alert();
+                }
+            },
+            series: [{
+                id: "flowIn",
+                name: "流入量",
+                data: [7.0, 6.9, 9.5, 14.5, 18.2, 11]
+                // data:[{x:1,y:12},{x:3,y:4}]
+            }, {
+                id: "flowOut",
+                name: "流出量",
+                data: [1, 2, 3, 3, 4, 2]
+            }]
+        });
+    }
+</script>
+

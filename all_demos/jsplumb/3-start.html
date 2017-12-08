@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="js/jQuery-2.1.4.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jsplumb.js"></script>
+        <style type="text/css">
+            .wrap{ 
+                width:600px; height:500px; border:1px solid #ccc; position:relative;
+            }
+            .box{
+                position:absolute; width:100px; height:100px; background:rgba(0,0,0,0.3);
+            }
+            .box:nth-child(1){ top:100px; left:50px;}
+            .box:nth-child(2){ top:100px; left:250px;}
+            .box:nth-child(3){ top:100px; left:450px;}
+        </style>
+
+    </head>
+
+    <body>
+        <div class="wrap">
+            <div class="box" id="a"></div>
+            <div class="box" id="b"></div>
+            <div class="box" id="c"></div>
+        </div>
+    </body>
+
+</html>
+
+<script>
+    jsPlumb.ready(function(){
+        // 初始化
+        var jsp=jsPlumb.getInstance();
+        // 连接点样式
+        var point={
+            endpoint: "Dot",
+            connector: [ "Flowchart", { stub: [50, 50], gap: 10, cornerRadius: 5, alwaysRespectStubs: false } ],
+            // 是否作为头尾连接点
+            isSource: true,
+            isTarget:true
+        }
+        // 所有元素可拖动
+        jsp.draggable(jsPlumb.getSelector(".wrap .box"), { grid: [20, 20] });
+
+        // 在元素上添加点
+        jsp.addEndpoint('a',point,{uuid:'a1'});
+        jsp.addEndpoint('b',point,{uuid:'b1'});
+        // 终点
+        jsp.addEndpoint('c',{uuid:'c1',isTarget:true});
+        // 固定位置的点
+        jsp.addEndpoint('c',{uuid:'c2',isTarget:true,anchor:'Left'});
+
+        //自动连线
+        jsp.connect({uuids: ["a1", "c1"], editable: false});
+        jsp.connect({uuids: ["b1", "c2"], editable: false});
+
+        // 点与点连线
+        // jsPlumb.connect({
+        //   source:"a", 
+        //   target:"b",
+        //   // anchors:["Right", "Left" ]
+        // });
+    })
+</script>
+
+<script>
+$(function(){
+//Jsplumb新老版API本不一样-----------------------------
+
+    
+// 如果是全局则可以使用jsPlumb.importDefaults({···})，
+// 也可以在实例化时，重新定义jsPlumb.getInstance({···})，
+
+// Anchor：锚点位置
+// Endpoint：端点，连接的起点或终点
+// Connector：连线，四种默认类型：Bezier（贝塞尔曲线），Straight（直线），Flowchart（流程图），State machine（状态机）
+// Overlay：装饰连接器的组件，类似箭头之类
+// Group：包含在某个其他元素中的一组元素，可以折叠，导致与所有组成员的连接被合并到折叠的组容器上。
+
+// Anchor---------------------------------------------
+// Static：静态，会固定到元素上的某个点，不会移动
+//     Top,TopRight,TopLeft/Right/Bottom,BottomRight,BottomLeft/Left/center
+//     可以使用基于数组的形式来定义锚点位置：[x,y,dx,dy,offsetX,offsetY]。
+//     [0,0]表示节点的左上角。
+//     x表示锚点在横轴上的距离，y表示锚点在纵轴上的距离，这两个值可以从0到1来设置，0.5为center。
+//     而dx表示锚点向横轴射出线，dy表示锚点向纵轴射出线，有0，-1，1三个值来设置。0为不放射线。
+//     offsetX表示锚点偏移量x（px），offsetY表示锚点偏移量y（px）。
+// Dynamic：动态，是静态锚的集合，就是jsPlumb每次连接时选择最合适的锚
+//     选择每当某物移动或在UI中绘制时最合适的位置。
+//     var dynamicAnchors = [ [0.2,0,0,0],"Top","Bottom" ]
+// Perimeter anchors：周边锚，动态锚的应用
+//     jsPlumb提供了六种形状：Circle/Ellipse/Triangle/Diamond/Rectangle/Square
+//     anchor:"Continuous"
+//     //or
+//     anchor:["Continuous",{faces:["top","left"]}]
+
+// connector-------------------------------------------
+// 连接器是实际连接UI元素的线，默认连接器是贝塞尔曲线，也就是默认值是"Bezier";
+// Bezier：它有一个配置项，curviness（弯曲度），默认为150.这定义了Bezier的控制点与锚点的距离
+// Straight：在两个端点之间绘制一条直线，支持两个配置参数：stub，默认为0。gap，默认为0
+// Flowchart：由一系列垂直或水平段组成的连接。支持四个参数，stub，默认为30；alwaysRespectStubs，默认为false；gap，默认为0；midpoint，默认为0.5；cornerRadius，默认为0；
+// StateMachine：状态器，支持在同一元素上开始和结束的连接，支持的参数有：margin，默认为5；curviness，默认为10；proximityLimit，默认为80；
+
+// Endpoint------------------------------------------------
+// jsPlumb.connect(),创建连接的时候可以配置端点的属性
+// jsPlumb.addEndpoint(),创建一个新的端点时配置属性
+// jsPlumb.makeSource(),配置元素并随后从该元素中拖动连接时，将创建并分配一个新的端点
+
+// Dot：支持三个参数：
+//     radius，默认为10px，定义圆点的半径
+//     cssClass，附加到Endpoint创建的元素的CSS类
+//     hoverClass，一个CSS类，当鼠标悬停在元素或连接的线上时附加到EndPoint创建的元素
+
+// Rectangle：支持的参数：
+//     width，默认为20，定义矩形的宽度
+//     height，默认为20，定义矩形的高度
+//     cssClass，附加到Endpoint创建的元素的CSS类
+//     hoverClass，当鼠标悬停在元素或连接的线上时附加到EndPoint创建的元素
+
+// image：从给定的URL中绘制图像，支持三个参数：
+//     src，必选，指定要使用的图像的URL，
+//     cssClass，附加到Endpoint创建的元素的CSS类
+//     hoverClass，当鼠标悬停在元素或连接的线上时附加到EndPoint创建的元素，
+// Blank：空白
+
+// Overlay---------------------------------------------------
+// Arrow：箭头，在连接器的某个点绘制的可配置箭头，可以控制箭头的长度和宽度,参数有：
+//     width，箭头尾部的宽度
+//     length，从箭头的尾部到头部的距离
+//     location，位置，建议使用0～1之间，当作百分比，便于理解
+//     direction，方向，默认值为1（表示向前），可选-1（表示向后）
+//     foldback，折回，也就是尾翼的角度，默认0.623，当为1时，为正三角
+//     paintStyle，样式对象
+
+// Label：在连接点的可配置标签，参数有
+//     label，要显示的文本
+//     cssClass，Label的可选css
+//     labelStyle，标签外观的可选参数：font，适应canvas的字体大小参数；color，标签文本的颜色；padding，标签的可选填充，比例而不是px；borderWidth，标签边框的可选参数，默认为0；borderStyle，颜色等边框参数
+//     location，位置，默认0.5
+//     也可以使用getLabel，和setLabel，来获取和设置label的文本,可传函数
+
+// PlainArrow：箭头形状为三角形
+//     只是Arrow的foldback为1时的例子，参数与Arrow相同
+
+// Diamond：棱形
+//     同样是Arrow的foldback为2时的例子，参数与Arrow相同
+
+// Custom：自定义
+
+// jsPlumb.connect({
+//   overlays:[
+//     "Arrow",
+//       [ "Label", { label:"foo", location:0.25, id:"myLabel" } ]
+//     ]
+// });
+
+// 而在addEndpoint和makeSource方法中，则不能使用overlays,需要使用connectOverlays.
+// 也可以使用addOverlay:
+
+// var e = jsPlumb.addEndpoint("someElement");
+// e.addOverlay([ "Arrow", { width:10, height:10, id:"arrow" }]);
+// 当然还有获取叠加层的方法：getOverlay(id)这里的id与元素中的id不同，只是组件在jsPlumb中的唯一标识而已，在控制台打印之后，能看到内部提供了很多方法,另外注意原型链中的方
+
+// Removeing Connections／Endpoints-----------------------------------------------------
+// Connections
+//     detach
+//     var conn = jsPlumb.connect({...});
+//     jsPlumb.detach(conn);
+//     如果使用该方法来删除连接线，那么会有几种情况：
+//     如果使用jsPlumb.connect创建的线，而且没有设置deleteEndpointsOnDetach:false,则使用detach时，端点也会一起被移除。
+//     如果通过makeSource配置的元素创建了连接线，而且没有设置deleteEndpointsOnDetach:false,则使用detach时，端点也会一起被移除。
+//     如果使用addEndpoint注册的元素通过鼠标创建了连接线，则不会删除端点。
+//     detachAllConnections(el,[params])
+//     用于删除元素上的所有连接线。
+//     detachEveryConnection()
+
+// Endpoints
+//     deleteEndpoint
+//     删除一个端点。
+//     deleteEveryEndpoint
+//     删除所有的端点
+
+// Connection Type---------------------------------------------------------------
+// jsPlumb.registerConnectionType("example",{
+//   paintStyle:{stroke:"blue",strokeWidth:5},
+// });
+// var c = jsPlumb.connect({source:"someDiv",target:"someOtherDiv"});
+// c.bind("click",function(){
+//   c.setType("example")
+// });
+
+// 也可以使用：
+
+// jsPlumb.registerConnectionTypes({
+//   "basic":{
+//     paintStyle:{stroke:"blue",strokeWidth:7}
+//   },
+//   "selected":{
+//     paintStyle:{stroke:"red",strokeWidth:5}
+//   }
+// });
+
+// c.bind("click",function(){
+//   c.toggleType("selected");
+// })
+
+// Endpoint type------------------------------------------------------
+// jsPlumb.registerEndpointTypes({
+//   "basic":{
+//     paintStyle:{fill:"blue"}
+//   }
+// });
+
+// Events-----------------------------------------------
+// 首先看个小例子：
+
+// jsPlumb.bind("connection",function(info){
+//   console.log(info);
+// });
+// connection(info,originalEvent)即监听所有的连接事件。info包含的信息有：
+// connection
+// sourceId
+// targetId
+// source
+// target
+// sourceEndpoint
+// targetEndpoint
+// connectionDetached(info,originalEvent)即监听当连接断掉时的事件。info类似connection.
+
+// 右键点击也有相应的contextmenu方法。
+
+// 关于connection和endpoint的事件方法，请参考官网api。
+// 记录下overlay的事件。
+
+// jsPlumb.connect({
+//   source:"el1",
+//   target:"el2",
+//   overlays:[
+//     ["Label",{
+//       events:{
+//         click:function(labelOverlay,originalEvent){
+//           console.log(labelOverlay);
+//         }
+//       }
+//       }
+//     }],
+//   ]
+// })
+// 同样，使用unbind方法，可以移除上面所添加的监听。
+
+
+// 筛选jsPlumb----------------------------------------------------------
+// 使用jsPlumb.select()方法，用于在Connections列表上做筛选，打印一下值：
+// 2
+// 就可以使用这些方法对于连接线来进行获取（get）和修改（set）。
+// 还有getConnections,getAllConnections()等方法也可以获取到连接线，只不过这两个方法没有上面slect的方法，相当于静态属性
+
+// 使用jsPlumb.selectEndpoints()方法，用于在Endpoints上做筛选，同样有相应的方法。
+
+// select()和selectEndpoints()都有一个each方法，用于对筛选出的方法进行操作。
+
+// Repainting an element or elements
+// 当需要对修改过后的元素重新计算端点和连接线时，则可以使用
+
+// jsPlumb.repaint(el,[ui])
+// 或
+
+// jsPlumb.repaintEverything().
+
+// Element Ids-------------------------------------------------------
+// 当元素上的id也被改变时，可以使用
+
+// jsPlumb.setId(el,newId);
+// //or
+// jsPlumb.setIdChanged(oldId,newId);
+// 来重新对之前注册的节点进行修改。
+
+})
+
+
+</script>

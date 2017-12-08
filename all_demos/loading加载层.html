@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/bootstrap.css" />
+	<script src="js/jQuery-2.1.4.min.js"></script>
+</head>
+<body>
+	<div id="box" style="background:#eee; position:relative; width:500px; height:500px ">
+		<div class="loading" style="position:absolute;height:100%;width:100%;z-index:1000; background:rgba(0,0,0,0.2)">
+			<div style="position: absolute;width:50px; height:50px; top:50%; left:50%; margin-left:-25px; margin-top:-25px; line-height:50px; font-size:40px; color:#fff"><i class="fa fa-spinner fa-pulse"></i></div>
+		</div>
+	</div>
+
+	<script>
+	//加载效果是loading这个div，放在你要加载的div里面 作为div的子元素，例如上面html结构， 同时div需要设置style="position:relative;", 
+	// 加载开始时显示
+		$('.loading').show();
+	//加载结束后影藏
+		$('.loading').hide();
+	</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<script src="js/jQuery-2.1.4.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<style>
+		
+		html,body{ height:100%; background:#eee;}
+		@media( min-width:1500px){
+			html,body{ height:100%; background:#ff0;}
+		}
+			#myCarousel,#myCarousel .carousel-inner,.carousel-inner .item{ height:100%;}
+			.carousel-indicators>li{ background:#aaa;}
+		</style>
+	</head>
+	<body>
+		<div id="myCarousel" class="carousel slide">
+		<ol class="carousel-indicators">
+			<li class="active" data-target="#myCarousel" data-slide-to="0"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+		</ol>
+		<div class="carousel-inner">
+			<div class="item active">1</div>
+			<div class="item">2</div>
+		</div>
+<!-- 		<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+		<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
+		</div>
+		
+		<script>
+			$(function(){
+				$('#myCarousel').carousel({
+					interval: 1000
+				});
+			})
+		</script>
+
+	</body>
+</html>

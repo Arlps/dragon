@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+	<link rel="stylesheet" href="media/css/jquery.dataTables.css">
+	<link rel="stylesheet" href="media/css/bootstrap.css">
+	<script src="media/js/jquery.js"></script>
+	<script src="media/js/bootstrap.js"></script>
+	<script src="media/js/jquery.dataTables.js"></script>
+	<script src="media/js/DT_bootstrap.js"></script>
+	<!--<script src="media/js/editable-table.js"></script>  -->
+	<style>
+		th,td{ text-align: center;}
+	</style>
+</head>
+<body>
+	
+	<div class="btn-group">
+		<button id="add" class="btn btn-primary" data-toggle="modal" data-target="#addTr">
+	        Add New <i class="fa fa-plus"></i>
+	    </button>
+	</div>
+	<table class="table table-striped table-hover table-bordered table-responsive" id="mytable">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>专题报表</th>
+				<th>开发用户</th>
+				<th>状态</th>
+				<th>创建日期</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="addTr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" class="">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+					</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+						    <label for="sheet" class="col-sm-2 control-label">专题报表</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" id="sheet" placeholder="">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <label for="user" class="col-sm-2 control-label">开发用户</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" id="user" placeholder="">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <label for="state" class="col-sm-2 control-label">状态</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" id="state" placeholder="">
+						    </div>
+						  </div>
+					</from>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" id="addsure">确认</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+	<script>
+		$(function(){
+			var $table=$('#mytable').DataTable({
+			    pagingType:   "full_numbers",
+			    ordering: false,
+			    paging:true,
+			    data:data,
+			    order: [[1, 'asc']]
+			});
+			$table.on('order.dt search.dt',function() {
+		        $table.column(0, {
+		            search: 'applied',
+		            order: 'applied'
+		        }).nodes().each(function(cell, i) {
+		            cell.innerHTML = i + 1;
+		        });
+		    }).draw();
+			$('#mytable').on('click','.delete',function(){
+				if(confirm("是否删除本行")){
+					$table.row($(this).parents('tr')).remove().draw( false );
+				}
+			});
+			$('#addsure').click(function(){
+				$table.row.add( [
+					"",
+					$('#sheet').val(),
+					$('#user').val(),
+					$('#state').val(),
+					new Date(),
+					"<a class='lookOver' href='javascript:;'>查看</a><a class='delete' href='javascript:;'>删除</a>"
+				] ).draw( false );
+			});
+		})
+
+		var data=[];var dataIdx=1;
+		for (var i = 0; i < 15; i++) {
+			data.push([
+				"","item sheet"+dataIdx,"developUser"+dataIdx,"normal",new Date(),"<a class='lookOver' href='javascript:;'>查看</a><a class='delete' href='javascript:;'>删除</a>"
+			]);
+			dataIdx++;
+		};
+		console.log(data)
+	</script>
+</body>
+</html>

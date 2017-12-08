@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/highcharts.js"></script>
+	
+	<style>
+		*{ margin:0; padding:0;}
+		.chartBox{ position:relative;width:400px; height:400px;}
+		.selectBox{ position:absolute; width:auto; top:10px;right:0;z-index:20; box-shadow:1px solid black;}
+		.chart{ width:400px; height:400px; border:1px solid black; float:left;}
+	</style>
+</head>
+<body>
+	<div class="chartBox">
+		<div class="line chart" id="mychart"></div>
+		<!-- <div id="myMap" class="chart"></div> -->
+	</div>
+	
+	<script>
+		$(document).ready(function(){
+			//定义下拉选项数据-------------------------------
+			var selectObj={	
+				typeArr:['column','line',  'spline', 'area', 'areaspline', 'scatter', 'pie'],
+				timeArr:[0.5,1,2,10],
+			}
+			//渲染下拉选项结构
+			var $selectBox=$('<div class="selectBox">');
+			$.each(selectObj,function(i,arr){
+				var $select=$('<select>');
+				$.each(arr,function(j,name){
+					$('<option>').attr('value',name).html(name).appendTo($select)
+				});
+				$select.appendTo($selectBox);
+			})
+			$('.chartBox').append($selectBox);
+			//--------------------------------------------------
+
+			//渲染图表结构
+		    var chart=Highcharts.chart('mychart',{
+		    	chart:{
+		    		zoomType:'xy'
+		    	},
+		        xAxis: {
+		            // categories: [4,3,2,1,"now"];
+					type:'category'	
+		        },
+		        yAxis: {
+		        	max:20
+		        },
+		        plotOptions:{
+		        	series:{
+		        		dataLabels:{
+		        			enabled:true
+		        		}
+		        	}
+		        },
+		        events: {  
+	                click: function() {  
+	                	alert();
+	                }  
+		        },  
+		        series: [{
+		        	id:"test",
+		            data: [{name:"asf",y:7.0}]
+		        }]
+		    });
+		    var dataArr=[];
+		    console.log(chart.series[0].data)
+		    $.each(chart.series[0].data,function(idx,ele){
+		    	dataArr.push(ele.y);console.log(ele.y)
+		    })
+		    var data=dataArr;
+		    var olddata = $('#mychart').highcharts().get('test');
+		    console.log(data,olddata)
+
+
+		    
+		    // 设置初始化类型和刷新时间------------------------
+		    var chartTimer;
+		    setTimer($('.selectBox').find('select:nth-child(2) option:first').attr('value'));
+		    setType($('.selectBox').find('select:nth-child(1) option:first').attr('value'));
+		    // 下拉选择改变效果
+		    $('select:nth-child(1)').change(function(){
+		    	setType($(this).val())
+		    })
+		    $('select:nth-child(2)').change(function(){
+		    	setTimer($(this).val())
+		    })
+		    // 下拉函数
+		    function setTimer(second){
+		    	if(chartTimer){ clearInterval(chartTimer)}
+		    	chartTimer=setInterval(function(){
+				// 每次刷新最后一个数据 //X轴依次+1
+					var newOne= parseInt(Math.random() * 10);
+				    chart.series[0].addPoint(newOne);
+				    chart.series[0].removePoint(0);
+				// 整体刷新数据
+			    	// var data=[1,2,3,4,5]
+			    	//  // 第2个重绘，第3个动画，第4个参数表示是否更新数据点[数组长度一样时建议false]
+			    	// olddata.setData(data, true, true, false);
+			    // 每次刷新最后一个数据//X轴不变		    	
+				    // var newOne= parseInt(Math.random() * 10);
+				    // data.shift();
+				    // data.push(newOne);
+				    // // 最后设置数据，即可实现曲线、趋势线从右向左的动态效果
+				    // olddata.setData(data, true, true, false);
+				    // console.log(data);
+			    },second*1000)
+		    }
+		    function setType(type){
+		    	console.log(chart)
+		    	chart.series[0].update({type: type});
+		    	console.log(chart.series[0])
+		    }
+		    //--------------------------------------------------
+
+		})
+
+	</script>
+</body>
+</html>

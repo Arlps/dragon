@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/bootstrap.css" />
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<style>
+		body{ height:1000px;}
+		.wrap{ margin-top:50px;}
+		.wrap .box{ width:100px; height:100px; box-shadow:0 0 10px; float:left; margin-top:50px; margin-left:50px}
+		.tips{ position:absolute; background:rgba(0,0,0,0.2); }
+		.wrap .box p{ background:rgba(0,0,0,0.3); margin-top:40px;}
+	</style>
+</head>
+
+<body>
+	<div class="wrap" style="background:#eee; position:relative; width:500px; height:500px; position:relative">
+		<div class="box">
+			<p>shaofihoihfoiahoifhoishoid</p>
+		</div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<!-- <p class="tips">ufiahsfuuas</p> -->
+	</div>
+
+	<script>
+	console.log($('.box'))
+		$('.wrap').on('mouseenter','.box',function(){
+			$('<p class="tips">ufiahsfuuas</p>').appendTo('body')
+			
+			$('.wrap').mousemove(function(e){
+				var x=e.clientX,y=e.clientY;console.log(x,y)
+				$('.tips').css({
+					left:x+10+$(window).scrollTop()//+$(that)[0].offsetTop
+				})
+			})
+		}).on('mouseleave','.box',function(){
+			$('.tips').remove();
+			$('.wrap').unbind('mousemove')
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+html,body{ height: 100%}
+.wrap{ 
+	height: 100%;position: relative;min-width: 950px; overflow: hidden; background-image: url(../img/bg1.png);
+}
+/*左侧菜单栏-----------------------------*/
+	.sidebar{
+		width: 200px; height: 100%; position: absolute; left: -200px; top:0;background: rgba(255,255,0,0.5); z-index: 100;
+	}
+	.goright{ position: absolute; background: rgba(255,255,0,0.7); width: 20px; height: 80px; top:40%; left: 200px; cursor: pointer;z-index: 100}
+	.cover{ width: 0; height: 100%; position: absolute;top: 0; left: 200px; background-color: rgba(0,0,0,0.6);width: 1000%; display: none;}
+
+/*右侧显示栏-----------------------------*/
+	.rightbar{
+		 width: 200px; height: 100%; position: absolute; top: 0; right: 0; background: rgba(0,0,0,0.5); 
+	}
+
+
+/*云部分--------------------------------*/
+.cloud{ height: 100%; margin-right: 200px; position: relative; min-width: 600px; min-height: 600px; background: url(../img/1.0-.jpg);
+}
+.contain{
+	width: 10px; height: 10px;border: 1px solid black; border-radius: 10px; position: absolute; top: 50%; left: 50%; margin-left: -5px; margin-top: -5px;background: rgba(255,255,255,0.3);
+	/*display: none;*/
+
+}
+.box{
+	width: 100px; height: 100px; position: absolute; border-radius: 100px;/* box-shadow: 0 0 5px rgba(255,255,255,0.6); */background-image: url(../img/six+.png);background-size: 100% 100%;  /*background-color: rgba(255,255,0,0.4);*/ border: 0px solid rgba(255,255,255,0.6);
+}
+
+.box a{ display: block;width: 100%; height: 100%; overflow: auto;}
+/*.center{top: 0px; left: 0px; }
+.left{ left:-200px;}
+.right{left:200px;}
+.high{ top:-200px;}
+.middle{ top: 0px;}
+.low{ top: 200px;}*/
+/*.center{ border: 1px solid rgba(255,255,255,0.6);}
+.low{ border-top:  1px solid rgba(255,255,255,0.6);}
+.high{ border-bottom:  1px solid rgba(255,255,255,0.6);}
+.right{ border-left:  1px solid rgba(255,255,255,0.6);}
+.left{ border-right:  1px solid rgba(255,255,255,0.6);}*/
+
+
+.box a .inner{
+	width: 88%; margin: 0 auto; height: 50%; /*background-color: rgba(0,0,255,0.5)*/; background-color: rgba(42,199,216,0.4); box-shadow: 0 0 0px; border-radius: 10px;position: relative; overflow: hidden; margin-top: 25%; display: none;
+}
+.flash{
+	position: absolute; width: 200%; height: 100px; transform:rotate(45deg); background-color: rgba(255,255,0,.5); top:0 ;left: -200%;
+}
+
+

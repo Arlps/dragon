@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+</head>
+<body>
+	<!-- <button onclick="makeSence()">asd</button> -->
+	<script>
+	$(function(){
+		// for (var ii = 0; ii < 10; ii++) {
+			makeSence();
+		// };
+	})
+	function makeSence(){
+		var array = "abcdefghijklmnopqrstuvwxyz".split ("") //  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+		var str = "",word="";
+		var num=parseInt(Math.random()*5+3);
+		for (var j = 0; j < num; j++) {
+			for (var i = 0; i < Math.random()*5+3; i++) {
+				word+=array[parseInt(Math.random()*array.length)];
+			};
+			str+=word+" ";
+			word="";
+		};
+		console.log(str)
+		document.write(str+"<br>")
+	}
+			
+	</script>
+</body>
+</html>

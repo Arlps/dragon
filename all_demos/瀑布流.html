@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jquery-1.9.1.js"></script>
+	<style>
+	body{ /*height:1000px;*/}
+		#box{ width:100%;box-shadow:0 0 2px; overflow:hidden;}
+		ul{ float:left; /*box-sizing:border-box; */padding:5px; box-shadow:0 0 1px; width: 30%;}
+		li{ border:0px solid green; height:150px; margin-bottom:10px; font-size:50px; text-align:center; font-weight:bolder; color:#000;}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<ul></ul>
+		<ul></ul>
+		<ul></ul>
+	</div>
+	<script>
+		var n=0;
+		$(function(){
+			while($('#box').height()-$(window).scrollTop()<700){
+				loadData();
+			}
+			$(window).scroll(function(){
+				if ($('#box').height()-$(window).scrollTop()<700) {
+					loadData();
+				};
+			})
+		})
+		function loadData(){
+			n++;
+			var H=150+parseInt(Math.random()*150);
+			var color=parseInt(16777215*Math.random()).toString(16);
+			var $li=$('<li>').css('height',H).css('background','#'+color).css('lineHeight',H+'px').html(n);
+			var $shortest={};
+			$('ul').each(function(idx,ele){
+				if (JSON.stringify($shortest) =='{}') {
+					$shortest=$(ele)
+				} else{
+					if ($shortest.height()>$(ele).height()) {
+						$shortest=$(ele)
+					}
+				}
+			});
+			$shortest.append($li);
+		}
+	</script>
+</body>
+</html>

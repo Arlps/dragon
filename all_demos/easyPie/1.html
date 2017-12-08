@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jquery.easypiechart.min.js"></script>
+	<style>
+		.chart {
+		  position: relative;
+		  display: inline-block;
+		  width: 140px;
+		  height: 140px;
+		  line-height: 140px;
+		  text-align: center;
+		}
+		.chart h1{ 
+			margin: 1em 0 0 0;
+		}
+		.chart.line-normal {
+		  line-height: normal;
+		}
+		.chart canvas {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		}
+		.percent {
+		  display: inline-block;
+		  z-index: 2;
+		}
+		.percent:after {
+		  content: '%';
+		  margin-left: 0.1em;
+		  font-size: .8em;
+		}
+	</style>
+</head>
+<body>
+	<div class="chart task-pie-chart line-normal" id="chart1" data-percent="73">
+		<h1 class="m-top-lg m-bottom-none percent"></h1>
+		<div>内存</div>
+	</div>
+	
+<!-- 	<div data-percent="73" class="chart1"></div> -->
+	<script>
+		$(function(){
+			$('.chart').easyPieChart({
+				animate:1000,
+				easing: 'easeOutBounce',
+				size: '140',
+				lineWidth: '7',
+				// barColor: '#65CEA7',//'#7266ba',
+				barColor: function(percent) {
+	                // percent /= 100;
+	                // return "rgb(" + Math.round(255 * (percent)) + ", " + Math.round(255 * (1-percent)) + ", 0)";
+
+	                if(percent<=40){
+	                	return '#37CD86';
+	                }else if(percent>40&&percent<=80){
+	                	return '#3AADA4';
+	                }else{
+	                	return '#2F9DD4';
+	                }
+	            },
+	            trackColor: '#ddd',
+	            scaleColor: false,
+	           // lineCap: 'butt',
+	            lineWidth: 10,
+				onStep: function(from, to, percent) {
+					$(this.el).find('.percent').text(Math.round(percent));
+				}
+			})
+		})
+
+$(function() { 
+	//create instance 
+	$('#chart1').easyPieChart({ animate: 2000,easing: 'easeOutBounce',}); 
+	//update instance after 5 sec 
+	setTimeout(function() { 
+		$('#chart1').data('easyPieChart').update(40); 
+	}, 3000); 
+});
+	</script>
+</body>
+</html>

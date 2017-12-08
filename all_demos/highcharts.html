@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.8.3.js"></script>
+	<script src="js/highcharts.js"></script>
+</head>
+<body>
+	<div id="container" style="min-width:400px;height:400px"></div>
+	<p></p>
+</body>
+<script>
+var xxx,yyy;
+var namelist=[],agelist=[];
+//你发给我的数据
+    var list=[{"name":"\u889c\u5b50","age":22},{"name":"\u88e4\u5b50","age":"12"},{"name":"\u5bf8\u886b","age":"34"},{"name":"\u674e\u5b81","age":"66"},{"name":"\u8010\u514b","age":"17"},{"name":"\u963f\u8fea","age":"34"}];
+
+    for (var i = 0; i < list.length; i++) {
+        namelist.push(list[i].name);  //组成名字数据（X轴）
+        agelist.push(parseInt(list[i].age));//组成年龄数据（Y轴）
+    };
+    console.log(namelist,agelist)
+setInterval(function(){
+    $.get('highJS.json',function(res){
+        console.log(res[0].categories)
+
+        // chart = new Highcharts.Chart({
+                             
+        //               chart: {
+        //                 renderTo: 'container',
+        //                 type: 'spline',
+        //               },
+        var chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                animation:false
+            },
+            title: {
+                text: 'Monthly Average Temperature',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com',
+                x: -20
+            },
+            xAxis: {
+                categories:res[0].categories//namelist 
+            },
+            yAxis: {
+                title: {
+                    text: 'Temperature (°C)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '°C',
+                crosshairs: [true,true],
+                formatter: function () {
+                    xxx=this.x; yyy=this.y;
+                    console.log(xxx,yyy)
+                    return 'The value for <b>' + this.x +
+                        '</b> is <b>' + this.y + '</b>';
+                }
+
+
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series:res[1].series,
+            // series:[{
+            //     "name": "Tokyo",
+            //     "data":agelist
+            // }],
+            plotOptions: {  
+                series: {  
+                    cursor: 'pointer',  
+                    events: {  
+                        click: function(e) {  
+                            //console.log(e.point.category);  
+                        }  
+                    }  
+                }  
+            },
+        });
+        console.log(chart.series[0].points)
+        
+    })
+},3000)
+//如果是用你发给我的数据的话这里的$.get()没有作用，它是请求highJS.json的
+
+
+
+</script>
+</html>

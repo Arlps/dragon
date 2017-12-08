@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/highcharts.js"></script>
+	<style>
+		html{ background:black;}
+	</style>
+</head>
+<body>
+	<div id="container" style="width:600px; height:600px"></div>
+</body>
+<script>
+	var arr=[];
+	for (var i = 2; i < 50; i+=2) {
+		for (var j= 2; j < 50; j+=2) {
+			var spot=[i,j];
+			arr.push(spot);
+			
+		};
+	};console.log(arr)
+</script>
+<script>
+	$(function () {
+    $('#container').highcharts({
+        chart: {
+        	backgroundColor: 'rgba(0,0,0,0)',
+            type: 'scatter',
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Height Versus Weight of 507 Individuals by Gender'
+        },
+        subtitle: {
+            text: 'Source: Heinz  2003'
+        },
+        xAxis: {
+            title: {
+                enabled: true,
+                text: 'Height (cm)'
+            },
+            startOnTick: true,
+            endOnTick: true,
+            showLastLabel: true, gridLineWidth: 0.2,//网格线宽度
+
+        },
+        yAxis: {
+            title: {
+                text: 'Weight (kg)'
+            },
+            max:50,
+            gridLineWidth: 0.2,//网格线宽度
+        },
+        legend: {
+        	enabled:false,
+            layout: 'vertical',
+            align: 'left',
+            verticalAlign: 'top',
+            x: 100,
+            y: 70,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+            borderWidth: 1
+        },
+        plotOptions: {
+        	series: {
+		        cursor: 'pointer',
+		        events: {
+		            mouseOver: function(event) {
+		                console.log(this.dataMax)
+		            }
+		        }
+		    },
+            scatter: {
+                marker: {
+                	series: {
+		                allowPointSelect: true
+		            },
+                    radius: 5,
+                    states: {
+                        hover: {
+                            enabled: true,
+                            lineColor: 'rgb(255,0,0)',
+                            lineWidth:5
+                        }
+                    }
+                },
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: true
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<b>{series.name}</b><br>',
+                    pointFormat: '{point.x} cm, {point.y} kg'
+                }
+            }
+        },
+
+        series: [{
+            name: 'Female',
+            color: 'rgba(223, 83, 83, 0.5)',
+            data: arr,
+        }]
+    });
+});
+</script>
+</html>

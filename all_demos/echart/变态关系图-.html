@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<script src="js/echarts.min.js"></script>
+	<style>
+		html,body{height:100%;}
+	</style>
+</head>
+<body>
+     <input onmouseover="this.title=this.value">
+	<div id="chart" style="width:100%; height:100%; border:0px solid black"></div>
+	<script>
+	$(function(){
+
+		var myChart=echarts.init(document.getElementById('chart'));
+		myChart.setOption(option);
+		// console.log(myChart);
+		myChart.on('click', function (params) {
+		    console.log(params)
+		});
+   	    $(window).resize(myChart.resize);
+        setTimeout(function(){
+
+            myChart.resize()
+        },4000)
+	})
+
+	var color=["#3c8dbc","#f56954","#00a65a","#00c0ef","#f39c12","#0073b7","#001F3F","#39CCCC","#3D9970","#01FF70","#FF851B","#F012BE","#8E24AA","#D81B60","#222222","#d2d6de"];
+
+	//原始数据
+	var system = [
+		{
+			id:0,
+			name: '资产管理系统安全生产子系统',
+			total: 12,
+			bloodID:[1,2,4,5,6],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:1
+		}, {
+			id:1,
+			name: '海量准实时数据服务平台',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:2
+		}, {
+			id:2,
+			name: 'GIS系统',
+			total: 12,
+			bloodID:[3],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:2
+		}, {
+			id:3,
+			name: '营销系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:3
+		}, {
+			id:4,
+			name: '资产管理系统项目子系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:2
+		}, {
+			id:5,
+			name: '资产管理系统计划投资子系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:2
+		}, {
+			id:6,
+			name: '远程中心系统',
+			total: 12,
+			bloodID:[7,8,9,10],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:2
+		}, {
+			id:7,
+			name: '广东省气象台气象系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:3
+		}, {
+			id:8,
+			name: '南方卫星遥感中心气象遥感系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:3
+		}, {
+			id:9,
+			name: '雷电定位系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:3
+		}, {
+			id:10,
+			name: '输电线路故障精确定位系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:3
+		},{
+			id:11,
+			name: '计量自动化系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:1
+		}, {
+			id:12,
+			name: '变电站视频监控系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:1
+		}, {
+			id:13,
+			name: '电压监测系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:1
+		}, {
+			id:14,
+			name: '电能质量检测系统',
+			total: 12,
+			bloodID:[],
+			linkNum: 3,
+			url:"xxxxxxxxx",
+		//	level:1
+		}
+	];
+
+	function strMuti(str, num) {
+		// var arr = str.substr(0,str.length-2).split('');
+		var arr = str.split('');
+		var newStr = ''
+		for(var i = 0; i < arr.length; i++) {
+			newStr += arr[i];
+			if((i + 1) % num == 0) {
+				newStr += "\n"
+			}
+		}
+		return newStr
+	}
+
+	
+
+	function addRoot(data){
+		var rootArr=[];
+		// 遍历每个节点判断其是否是别人的下属
+		$.each(data,function(idx,item){
+			var flag=true;
+			$.each(data,function(idx2,item2){
+				for (var i = 0; i < item2.bloodID.length; i++) {
+					if(item.id==item2.bloodID[i]){
+						flag=false;break;
+					}
+				};
+			});
+			// 都不是所有节点的下属的话
+			if(flag){ rootArr.push(item.id) }
+		});
+		var idArr=[];
+		// 收集所有id
+		$.each(data,function(idx,item){
+			idArr.push(item.id)
+		});
+		var max=0;
+		for (var i = 0; i < idArr.length; i++) {
+			if(max<idArr[i]){
+				max=idArr[i];
+			}
+		};
+		// console.log(rootArr);
+		data.push({
+			id:max+1,//总节点的id为当前最大+1
+			name: 'ALL',
+			bloodID:rootArr,
+		})
+	}
+
+	//根据id找到节点name
+	function idGetName(id,data){
+		for (var i = 0; i < data.length; i++) {
+			// console.log(data[i].id,id)
+			if(data[i].id==id){
+				// console.log(data[i])
+				return data[i].name;
+				break;
+			}
+		};
+	}
+	
+	// 加总节点
+	addRoot(system);
+	// addID(system);
+	// 处理数据
+	var data={nodes:[],links:[],itemStyle:{}};
+    var linkID=0;var n=0;
+	$.each(system,function(idx,item){
+		// 节点
+		data.nodes.push({
+			// id:item.id,
+			name:item.name,//strMuti(item.title,7),
+			value:parseInt(Math.random()*1000000),
+			// symbol:'image://../img/radar.png'
+			// itemStyle:{normal:{color:color[idx]}}
+		});
+		//线
+		for (var i = 0; i < item.bloodID.length; i++) {
+			data.links.push({
+				// id:item.id,
+				// name:item.id+'-'+item.bloodID[i],
+				source:item.name,
+				target:idGetName(item.bloodID[i],system) //根据添加的ID来建立关系
+				// value:item.bloodID[i].title
+			})
+            var ran=Math.random();
+            if(ran<0.2){
+                 data.links.push({
+                    // id:item.id,
+                    // name:item.id+'-'+item.bloodID[i],
+                    target:item.name,
+                    source:idGetName(item.bloodID[i],system) //根据添加的ID来建立关系
+                    // value:item.bloodID[i].title
+                })
+            }
+           
+            linkID++;
+		};
+	});
+    console.log(data)
+
+
+    option = {
+        series : [{
+            name: 'xxx',
+            type: 'graph',
+            // layout: 'circular',
+            layout: 'force',  // force/none/circular
+            force:{
+            	repulsion:800,
+            	// layoutAnimation:false,//设置为false会导致重新绘制时点线连接不上
+            	// edgeLength: 500,// gravity:0,
+            },
+            hoverAnimation:false,
+            circular: { rotateLabel: true },
+            data: data.nodes,
+            links: data.links,
+            roam: true,
+            symbol:'circle',//'roundRect',
+            symbolSize:30,
+            symbolRotate:0,//45,
+            edgeSymbol:['none','arrow'],
+            edgeSymbolSize:7,
+            label: {
+                normal: {
+                	show:true,
+                    position: 'bottom',//'right',
+                    formatter: '{b}',
+                    textStyle:{
+                    	color:'#111',
+                    	fontSize:10,
+                    	fontWeight:'normal'
+                    }
+                },
+                emphasis:{
+                	textStyle:{
+                    	color:'#111',
+                    	fontSize:14,
+                    	fontWeight:'bold'
+                    }
+                }
+            },
+            edgeLabel:{
+            	normal:{
+            		show:false,
+            		formatter:'{c}',
+            		position:'middle',
+            		textStyle:{
+                    	color:'#888',
+                    	fontSize:9,
+                    	fontWeight:'normal'
+                    }
+            	}
+            },
+            lineStyle: {
+                normal: {
+                    color: '#72CFAC',//'source',
+                    width:1,
+                    curveness: 0
+                },
+                emphasis:{
+                	width:1,
+                }
+            },
+            itemStyle:{
+            	normal:{
+            		color:'#3C8BBA'//'#72CFAC'
+            	}
+            },
+            animationDuration: 1000,//function (idx) {return idx * 200;},
+			animationEasing:'exponentialOut'
+        }]
+    };
+    // console.log(option)
+
+    
+	</script>
+</body>
+</html>

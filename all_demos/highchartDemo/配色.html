@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/highcharts.js"></script>
+	
+	<style>
+
+	.chart{ width:400px; height:400px; border:1px solid black; float:left;}
+	</style>
+</head>
+<body>
+	<div class="chartBox">
+		<div class="line chart" id="container"></div>
+		<button id="btn">ads</button>
+		<!-- <div id="myMap" class="chart"></div> -->
+	</div>
+	
+	<script>
+		$(function () {
+			Highcharts.setOptions({
+				// colors:['#F5675D','#EDDC49','#72CB6F','#5FBDB7','#6984E3'],//柔美
+				// colors:["#C74E5D","#E9B964","#EDE787","#8BCFA8","#4CA3E6","#93E1F5"],
+				colors:["#9BCA35","#64A539","#36A972","#44BFA3","#4DB4CC","#4FC5F3"]
+			})
+    // Create the chart
+    $('#container').highcharts({
+    	
+        chart: {
+        	// type:'column'
+            type: 'pie'
+        },
+        title: {
+            text: '2015年1月-5月，各浏览器的市场份额'
+        },
+        subtitle: {
+            text: '点击可查看具体的版本数据，数据来源: <a href="https://netmarketshare.com">netmarketshare.com</a>.'
+        },
+        
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: '总的市场份额'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                colorByPoint:true,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.1f}%'
+                }
+            },
+            pie:{
+            	innerSize:"60%"
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        },
+        series: [{
+            name: '浏览器品牌',
+            data: [{
+                name: 'Microsoft Internet Explorer',
+                y: 56.33,
+                drilldown: 'Microsoft Internet Explorer'
+            }, {
+                name: 'Chrome',
+                y: 24.03,
+                drilldown: 'Chrome'
+            }, {
+                name: 'Firefox',
+                y: 40.38,
+                drilldown: 'Firefox'
+            }, {
+                name: 'Safari',
+                y: 24.77,
+                drilldown: 'Safari'
+            }, {
+                name: 'Opera',
+                y: 40.91,
+                drilldown: 'Opera'
+            }, {
+                name: 'Proprietary or Undetectable',
+                y: 30.2,
+                drilldown: null
+            }]
+        }],
+    });
+});
+
+	</script>
+</body>
+</html>

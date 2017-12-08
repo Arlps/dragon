@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src='js/jquery-1.9.1.js'></script>
+	<script src="js/highcharts.js"></script><!--highcharts -->
+		<script src="js/highcharts-more.js"></script><!--highcharts -->
+		<script src="js/solid-gauge.js"></script><!--highcharts -->
+	<script src='js/amcharts.js'></script>
+	<script src='js/serial.js'></script>
+	
+	<style>
+	html,body{ height: 100%}
+		#chart-div{ width: 40%; height: 50%}
+	</style>
+</head>
+<body>
+	<div id="chart-div"></div>
+	<button>111</button>
+</body>
+<script>
+	$('button').click(function(){
+		$('#chart-div').width(800)
+	})
+    chart();
+    setInterval(function(){
+        chart()
+    },1000)
+    function chart(){
+        var chart = AmCharts.makeChart("chart-div", {
+            "sequencedAnimation":"false",
+            "theme": "light",
+            "type": "serial",
+            "startDuration": 1,
+            "columnWidth": 0.51,
+            "dataProvider": [
+            {
+                "country": "USA",
+                "visits": 4025,
+                "color": "#FF0F00"
+            }, {
+                "country": "China",
+                "visits": 1882,
+                "color": "#FF6600"
+            }, {
+                "country": "Japan",
+                "visits": 1809,
+                "color": "#FF9E01"
+            }, {
+                "country": "Germany",
+                "visits": 1322,
+                "color": "#FCD202"
+            }],
+            "valueAxes": [{
+                "position": "left",
+                "title": "Visitors"
+            }],
+            "graphs": [{
+                "balloonText": "[[category]]: <b>[[value]]</b>",
+                "fillColorsField": "color",
+                "fillAlphas": 1, //柱体透明度
+                "lineAlpha": 0.1,//柱体边透明度
+                "type": "column",
+                "valueField": "visits"
+            }],
+            "depth3D": 10,
+              "angle": 30,
+            "chartCursor": {
+                "categoryBalloonEnabled": true,//X值对齐自动选择
+                "cursorAlpha": 0.1, //十字线对齐线透明度
+                "zoomable": true
+            },
+            "categoryField": "country",
+            "categoryAxis": {
+                "gridPosition": "start",
+                "labelRotation": 90
+            },
+            "export": {
+                "enabled": false,
+                "exportAlpha": 0.1,
+             }
+        });
+    }
+	
+</script>
+</html>

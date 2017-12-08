@@ -1,0 +1,481 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>拓扑demo</title>
+    <link href="../../dist/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../dist/jQuery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../../dist/bootstrap.js"></script>
+    <script type="text/javascript" src="../../dist/vis.js"></script>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      
+      #condition {
+        padding: 10px;
+      }
+      .vis{
+        border:1px solid #ccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="condition">
+      <div class="form-group pull-right" style="text-align: center;margin-top: 10px">
+        <a href="javascript:void(0)" class="btn btn-primary btn-sm submit_004" id="submitbtn">
+          <i class="fa fa-save"></i> 测试
+        </a>
+        <a href="javascript:void(0)" class="btn btn-primary btn-sm submit_004" id="submitbtn">
+          <i class="fa fa-save"></i> 确定
+        </a>
+        <a href="javascript:void(0)" class="btn btn-danger btn-sm submit_004">
+          <i class="fa fa-times-circle"></i> 取消
+        </a>
+      </div>
+      <!--运算按钮组-->
+      <div class=" pull-left" style="margin:10px 0">
+        <!-- 与 -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          && + 与(AND) <span class="caret"></span>
+        </button>
+          <ul class="dropdown-menu" style="max-height: 200px; overflow: auto; border-color:#aaa">
+            <li>
+              <a href="#">Action</a>
+            </li>
+          </ul>
+        </div>
+        <!-- 或 -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          || + 或(OR) <span class="caret"></span>
+        </button>
+          <ul class="dropdown-menu" style="max-height: 200px; overflow: auto; border-color:#aaa">
+            <li>
+              <a href="#">Action</a>
+            </li>
+          </ul>
+        </div>
+        <!-- 与 -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          != + 非(NOT) <span class="caret"></span>
+        </button>
+          <ul class="dropdown-menu" style="max-height: 200px; overflow: auto; border-color:#aaa">
+            <li>
+              <a href="#">Action</a>
+            </li>
+          </ul>
+        </div>
+        <button class="btn btn-primary">删除</button>
+      </div>
+      <div>
+        <!--拓扑区-->
+        <div class="col-xs-8" style="border: 0px solid #ccc; padding: 0;">
+          <button id="get" onclick="getNode()">获取节点</button>
+          <div class="vis" style="min-height: 400px;height: 400px;"></div>
+        </div>
+        <!--设置窗口-->
+        <div id="event_property" class="col-xs-4" style="padding-right: 0;">
+          <div class="box box-primary" style="border: 1px solid #3C8DBC;">
+            <div class="box-header with-border" style="background: #3C8DBC; color: #fff;padding: 5px;">
+              事件属性
+            </div>
+            <div class="box-body" style="padding: 1px;">
+              <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                  <li class="active">
+                    <a href="#tab_1" data-toggle="tab">条件属性</a>
+                  </li>
+                  <li>
+                    <a href="#tab_2" data-toggle="tab">引用资源</a>
+                  </li>
+                </ul>
+                <div class="tab-content" style="min-height: 250px; ">
+                  <div class="tab-pane active" id="tab_1">
+                    <div class="form-horizontal" role="form">
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">属性</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" value="事件名称" readonly/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">操作符</label>
+                        <div class="col-sm-8">
+                          <select name="" class="form-control">
+                            <option value="a">1</option>
+                            <option value="b">2</option>
+                            <option value="c">3</option>
+                            <option value="d">4</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">值</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="" style="text-align: center;">
+                        <button class="btn btn-primary">确定</button>
+                        <button class="btn btn-primary">取消</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="tab_2">
+                    <div class="form-horizontal" role="form">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label">引用资源</label>
+                        <div class="col-sm-8">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button">选择</button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="" style="text-align: center;">
+                        <button class="btn btn-primary">确定</button>
+                        <button class="btn btn-primary">取消</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+    var network=null;
+     $(function(){
+      //初始化
+        
+        network=createTopo(nodes,edges,$('.vis')[0],network);
+    //  network.canvasToDOM({x:100,y:100});
+        var arr=network.getConnectedNodes(0);  //所有与id为0相连接的点的集合
+        // console.log(network)
+    //  setTimeout(function(){
+    //    nodes.remove({id:0})//删除节点
+    //  },2000)
+
+        // $('#get').click(function(){
+          // 获取选中的点
+          // var nodes=network.getSelectedNodes();
+          // 获取选中的点和线
+          // var nodes=network.getSelection();
+          // console.log(nodes)
+        // })
+      
+      //点击节点改变属性
+        network.on("selectNode", function(params) {
+          var nodeId=params.nodes[0];
+          
+          // console.log(params)
+    //    var connectedNodes = network.getConnectedNodes(nodeId);console.log(connectedNodes)
+    //    $.each(connectedNodes, function(index, item) {
+    //          if (item != nodes[nodeId - 1]['pid']) {//当前节点的父节点 ，不操作
+    //              console.log(item)
+    //          }
+    //      });
+          $('#modal-x').modal('show');
+          $('#confirm').unbind('click')
+          $('#confirm').click(function(){
+            var info= $('input[name=info]').val();
+            network.clustering.updateClusteredNode(params.nodes[0], {label : info});
+            $('#modal-x').modal('hide');
+          })
+          //点击节点更新点信息
+          //network.clustering.updateClusteredNode(params.nodes[0], {label : '123456'});
+          
+        });
+      
+        // console.log(nodes);
+        //将格局转化为JSON数据
+      exportNetwork(network)
+    })
+    
+
+
+    function getNode(){
+      alert()
+      var nodes=network.getSelectedNodes();
+      console.log(nodes)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //获取某节点直属下级节点
+    function get_directly_sub_nodes(node_id) {
+        var return_nodes = [];
+        var connectedNodes = network.getConnectedNodes(node_id);//获取所有连接节点
+        $.each(connectedNodes, function(index, item) {
+            if (item != allnodes[node_id - 1]['pid']) {//当前节点的父节点 ，不操作
+                return_nodes.push(item);
+            }
+        });
+        return return_nodes;
+    }
+
+    var data_vis=[{
+      id:0,
+      children:[{
+        id:1,
+        children:[{
+          id:2,
+          children:[{
+            id:3
+          }]
+        }]
+      },{
+        id:4
+      },{
+        id:5,
+        children:[{
+          id:6
+        },{
+          id:7
+        }]
+      }]
+    }];
+
+    var arr_node=[];
+    loop(data_vis,arr_node);
+
+    function loop(data,arr){//console.log(arr)
+      for (var i = 0; i < data.length; i++) {
+        arr.push({
+          id:data[i].id
+        });
+        if(data[i].children){
+          loop(data[i].children,arr)
+        }
+      }
+    }
+
+
+
+      // 节点数据
+      var nodes = new vis.DataSet(arr_node);
+      // 连线数据
+      var edges = new vis.DataSet([
+        {from: 0, to: 1},
+        {from: 1, to: 2},
+        {from: 2, to: 3},
+        {from: 0, to: 4},
+        {from: 0, to: 5},
+        {from: 5, to: 6},
+        {from: 5, to: 7},
+        ]);
+
+      
+      // 初始化函数
+      function createTopo(nodes,edges,$dom,network){
+    //  var data = {
+    //    nodes: nodes,
+    //    edges: edges
+    //  };
+        var data={
+          nodes: getNodeData(json),
+          edges: getEdgeData(json)
+        }
+        // console.log(data)
+    //  console.log(data)
+        var options = {
+          // 点样式
+          nodes: {
+            label:"node",
+            shape:'box',//'circularImage',//'dot',
+            image:'images/2.png',
+            // image: {
+            //   unselected: './unselected.svg',
+            //   selected: './BROKEN_LINK/selected.svg',
+            // }
+            borderWidth:1.5,
+            size:25,
+            color: {border: '#f60',background: '#eee'},
+            font:{
+              color:'#666',
+              strokeWidth:0.2,//字体边缘
+              strokeColor:'#fff',
+            },
+            widthConstraint: {maximum: 20},
+            fixed:false,//固定节点
+            shapeProperties: {
+              useBorderWithImage:true
+           }
+          },
+          // 线样式
+          edges: {
+            color: '#aaa',//'lightgray',
+            font: {
+              align: 'middle',//线上文字的位置 horizontal
+            },
+            length:300,
+            width:1.9,
+            smooth:false, //false为直线
+    //      arrows: {from:true,to:true}, //middle
+            widthConstraint: {maximum: 10 }
+          },
+          // 图层
+          layout: {
+            hierarchical: {
+                direction: 'LR',//树状布局 并规定方向RL UD DU LR
+                sortMethod: 'directed',
+              },
+              randomSeed:1, //一旦设置则固定初始化布局
+          },
+          // 互动效果
+          interaction: {
+            hover: true,// hover移中高亮
+            dragNodes :true, //是否支持拖动
+          },
+          // 物理效果
+          physics: {
+            enabled:false, //是否支持物理运动
+            stabilization: false,//false弹性不稳定增强
+          }, 
+          // -----------------------------
+        };
+        network = new vis.Network($dom, data, options);
+        return network;
+      }
+
+    function getNodeData(data) {
+        var networkNodes = [];
+
+        data.forEach(function(elem, index, array) {
+            networkNodes.push({id: elem.id, label: elem.id, x: elem.x, y: elem.y});
+        });
+
+        return new vis.DataSet(networkNodes);
+    }
+    function getNodeById(data, id) {
+        for (var n = 0; n < data.length; n++) {
+            if (data[n].id == id) {  // double equals since id can be numeric or string
+              return data[n];
+            }
+        };
+
+        throw 'Can not find id \'' + id + '\' in data';
+    }
+     function getEdgeData(data) {
+        var networkEdges = [];
+
+        data.forEach(function(node) {
+            // add the connection
+            node.connections.forEach(function(connId, cIndex, conns) {
+                networkEdges.push({from: node.id, to: connId});
+                let cNode = getNodeById(data, connId);
+
+                var elementConnections = cNode.connections;
+
+                // remove the connection from the other node to prevent duplicate connections
+                var duplicateIndex = elementConnections.findIndex(function(connection) {
+                  return connection == node.id; // double equals since id can be numeric or string
+                });
+
+
+                if (duplicateIndex != -1) {
+                  elementConnections.splice(duplicateIndex, 1);
+                };
+          });
+        });
+
+        return new vis.DataSet(networkEdges);
+    }
+     
+    //输出JSON
+    function exportNetwork(network) {
+        var nodes = objectToArray(network.getPositions());
+        nodes.forEach(function(elem, index) {
+          // need to replace this with a tree of the network, then get child direct children of the element
+          elem.connections = network.getConnectedNodes(index);
+      });
+        var exportValue = JSON.stringify(nodes, undefined, 2);
+        // console.log(exportValue)
+    }
+
+    function objectToArray(obj) {
+        return Object.keys(obj).map(function (key) {
+          obj[key].id = key;
+          return obj[key];
+        });
+    }
+    //传入JSON
+    function importNetwork() {
+        var inputValue = exportArea.value;
+        var inputData = JSON.parse(inputValue);
+
+        var data = {
+            nodes: getNodeData(inputData),
+            edges: getEdgeData(inputData)
+        }
+        network = new vis.Network(container, data, {});
+        resizeExportArea();
+    }
+    var json=[
+      {
+
+        "id": "0",
+        "connections": [
+          1,
+          4
+        ]
+      },
+      {
+
+        "id": "1",
+        "connections": [
+          0,
+          2,
+          3
+        ]
+      },
+      {
+
+        "id": "2",
+        "connections": [
+          1
+        ]
+      },
+      {
+
+        "id": "3",
+        "connections": [
+          1
+        ]
+      },
+      {
+
+        "id": "4",
+        "connections": [
+          0
+        ]
+      }
+    ];
+    </script>
+
+  </body>
+
+</html>

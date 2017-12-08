@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<script src="js/jQuery-2.1.4.min.js"></script>
+	<script src="js/echarts.min.js"></script>
+	<style>
+		html,body{height:100%;}
+	</style>
+</head>
+<body>
+	<div id="chart" style="width:50%; height:40%; border:1px solid black; margin:100px auto 0"></div>
+	<script>
+	$(function(){
+		var myChart=echarts.init(document.getElementById('chart'));
+		myChart.setOption(option);
+        // myChart.resize({
+        //     width: 100,
+        //     height:100,
+        //     // silent?: boolean
+        // })
+		console.log(myChart);
+		myChart.on('click', function (params) {
+            if (params.dataType=='node') {
+                 console.log(params.data.id)
+            };
+		   
+		});
+        var n=0;
+        setInterval(function(){
+            myChart.dispatchAction({
+                type:'showTip',
+                seriesIndex: 0,
+                dataIndex: n
+            })
+
+            n++
+        },1000)
+        
+   	    $(window).resize(myChart.resize);
+	})
+
+	var color=["#3c8dbc","#f56954","#00a65a","#00c0ef","#f39c12","#0073b7","#001F3F","#39CCCC","#3D9970","#01FF70","#FF851B","#F012BE","#8E24AA","#D81B60","#222222","#d2d6de"];
+
+	//原始数据
+	var system = [
+		{
+
+			"systemId": 11,
+			"systemName": "供电局配网自动化主站",
+
+			"link": "14,19",
+
+		}, {
+
+			"systemId": 12,
+			"systemName": "远程中心系统",
+
+			"link": "",
+
+		}, {
+
+			"systemId": 13,
+			"systemName": "电能质量检测系统",
+
+			"link": "",
+
+		}, {
+
+			"systemId": 14,
+			"systemName": "资产管理系统安全生产子系统",
+
+			"link": ",15,16,17,19,11,12",
+
+		}, {
+
+			"systemId": 15,
+			"systemName": "资产管理系统项目子系统",
+
+			"link": "",
+
+		}, {
+
+			"systemId": 16,
+			"systemName": "资产管理系统投资计划子系统",
+
+			"link": "",
+
+		}, {
+
+			"systemId": 17,
+			"systemName": "GIS系统",
+
+			"link": "14,18",
+
+		}, {
+
+			"systemId": 18,
+			"systemName": "营销系统",
+
+			"link": "",
+
+		}, {
+			ID:10000,
+			"systemId": 19,
+			"systemName": "海量准实时数据服务平台",
+
+			"link": "",
+
+		}, {
+
+			"systemId": 20,
+			"systemName": "计量自动化系统",
+
+			"link": "19",
+
+		}, {
+
+			"systemId": 21,
+			"systemName": "调度自动化系统",
+
+			"link": "19",
+
+		}, {
+
+			"systemId": 22,
+			"systemName": "变电站视频监控系统",
+
+			"link": "",
+
+		}, {
+
+			"systemId": 23,
+			"systemName": "电压检测系统",
+
+			"link": "",
+
+		}, {
+
+			"systemId": 24,
+			"systemName": "广东省气象台气象系统",
+
+			"link": "12",
+
+		}, {
+
+			"systemId": 25,
+			"systemName": "南方卫星遥感中心气象遥感系统",
+
+			"link": "12",
+
+		}, {
+
+			"systemId": 26,
+			"systemName": "雷电定位系统",
+
+			"link": "12",
+
+		}, {
+
+			"systemId": 27,
+			"systemName": "输电线路故障精确定位系统",
+
+			"link": "12",
+
+		}, {
+			ID:100,
+			"systemId": 28,
+			"systemName": "输电线路覆冰检测系统",
+
+			"link": "12",
+
+		}
+	];
+	// 根据id找到ID函数
+	function getID(id,data){
+		for (var i = 0; i < data.length; i++) {
+			if(data[i].systemId==id){
+				return data[i].ID;
+				break;
+			}
+		};
+	}
+	//字符串换行函数
+	function strMuti(str, num) {
+		var arr = str.substr(0,str.length-2).split('');
+		var newStr = ''
+		for(var i = 0; i < arr.length; i++) {
+			newStr += arr[i];
+			if((i + 1) % num == 0) {
+				newStr += "\n"
+			}
+		}
+		return newStr
+	}
+    function strElle(str){
+        return str.substr(0,4)+'...'
+    }
+
+	// 添加连续ID,连线关系由ID决定，
+	$.each(system,function(idx,item){
+		item.ID=idx;
+	})
+
+	// 处理数据
+	var data={nodes:[],links:[],itemStyle:{}};var n=0;
+	$.each(system,function(idx,item){
+		console.log(item)
+		// 节点
+		data.nodes.push({
+			id:item.systemId,
+			name:strElle(item.systemName),//item.systemName,//strMuti(item.systemName,5),
+			value:parseInt(Math.random()*1000000),
+			// itemStyle:{normal:{color:color[idx]}}
+		});
+		console.log(item.link)
+		//线
+		for (var i = 0; i < item.link.split(',').length; i++) {
+			data.links.push({
+				id:n,
+				name:item.ID+'-'+getID(item.link.split(',')[i],system),
+				source:item.ID,
+				target:getID(item.link.split(',')[i],system),
+			})	
+            n++;
+		};
+	});
+    console.log(data)
+
+
+    option = {
+        tooltip:{
+            trigger:'item',
+            position:'inside',
+            // formatter:'{b},{a},{c},{d}'
+        },
+        // grid:{
+        //     containLabel:true,
+        //     top:"30%",bottom:"30%",left:"30%",right:"30%"
+        // },
+        // geo:{
+        //     zoom:0.1,
+        //     scaleLimit:{
+        //         min:0.5,
+        //         max:0.6
+        //     }
+        // },
+        series : [{
+            left:'20%',
+            right:'20%',
+            top:'20%',
+            bottom:'20%',
+            name: 'xxx',
+            type: 'graph',
+            layout: 'circular',  // force/none/circular
+            // layout:'force',
+            // force:{
+            // 	repulsion:500,
+            // 	layoutAnimation:false,
+            // 	edgeLength: 500,
+            // 	gravity:10,
+            // },
+            hoverAnimation:false,
+            circular: { rotateLabel: true},
+            data: data.nodes,
+            links: data.links,
+            roam: true,
+            nodeScaleRatio:0.6,
+            symbol:'circle',
+            symbolSize:10,
+            symbolRotate:0,//45,
+            // edgeSymbol:['circle','arrow'],
+            edgeSymbolSize:10,
+            label: {
+                normal: {
+                	show:1,
+                    position: 'center',
+                    formatter: '{b}',
+                    textStyle:{
+                    	color:'#000',
+                    	fontSize:9,
+                    	fontWeight:'normal'
+                    }
+                },
+                emphasis:{
+                	textStyle:{
+                    	color:'#f00',
+                    	fontSize:14,
+                    	fontWeight:'bold'
+                    }
+                }
+            },
+            edgeLabel:{
+            	normal:{
+            		show:false,
+            		formatter:'{c}',
+            		position:'middle',
+            		textStyle:{
+                    	color:'#888',
+                    	fontSize:9,
+                    	fontWeight:'normal'
+                    }
+            	}
+            },
+            lineStyle: {
+                normal: {
+                    color: '#72CFAC',//'source',
+                    width:1,
+                    curveness: 0.3
+                },
+                emphasis:{
+                	width:1,
+                }
+            },
+            itemStyle:{
+            	normal:{
+            		color:'#5FBDB7'//'#72CFAC'
+            	}
+            },
+            animationDuration: 1000,//function (idx) {return idx * 200;},
+			animationEasing:'exponentialOut'
+        }]
+    };
+    console.log(option)
+
+    
+	</script>
+</body>
+</html>

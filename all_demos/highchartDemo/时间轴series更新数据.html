@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/highcharts.js"></script>
+</head>
+<body>
+	<div id="container" style="width:500px;height:400px"></div>
+	<script>
+		var mydata=[[1370131200000,0.7695],[1370217600000,0.7648],[1370304000000,0.7645],[1370390400000,0.7638],[1370476800000,0.7549],[1370563200000,0.7562],[1370736000000,0.7574],[1370822400000,0.7543],[1370908800000,0.751],[1370995200000,0.7498]];
+		var mydata2=[[1370131200000,2.7695],[1370217600000,0.7648],[1370304000000,0.7645],[1370390400000,0.7638],[1370476800000,0.7549],[1370563200000,0.7562],[1370736000000,2.7574],[1370822400000,0.7543],[1370908800000,0.751],[1370995200000,0.7498]];
+		initChart();
+
+		function initChart(){
+			$('#container').highcharts({
+				chart: {
+					type: 'column',
+					zoomType:'x'
+				},
+				title: {
+					text: ''
+				},
+				xAxis: {
+					type: 'datetime',
+					dateTimeLabelFormats: {
+						millisecond: '%H:%M:%S.%L',
+						second: '%H:%M:%S',
+						minute: '%H:%M',
+						hour: '%H:%M',
+						day: '%m-%d',
+						week: '%m-%d',
+						month: '%Y-%m',
+						year: '%Y'
+					}
+				},
+				tooltip: {
+					dateTimeLabelFormats: {
+						millisecond: '%H:%M:%S.%L',
+						second: '%H:%M:%S',
+						minute: '%H:%M',
+						hour: '%H:%M',
+						day: '%Y-%m-%d',
+						week: '%m-%d',
+						month: '%Y-%m',
+						year: '%Y'
+					}
+				},
+				yAxis: {
+					title: {
+						text: '汇率'
+					}
+				},
+				legend: {
+					enabled: false
+				},
+				series: [{
+					
+					data: mydata
+				}]
+			},function(){
+				var that=this;
+				setInterval(function(){
+					mydata.shift();
+					mydata.push([(new Date()).getTime(),parseInt(Math.random()*5)])
+					var aaa=JSON.parse(JSON.stringify(mydata));
+					console.log(aaa);
+					console.log(mydata)
+					that.series[0].update({
+						data:mydata
+					});
+				},1000)
+			});
+			
+			
+		}
+			
+		function update(){
+			
+		}
+
+
+</script>
+</body>
+</html>

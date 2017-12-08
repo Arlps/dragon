@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/morris.css">
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/raphael-min.js"></script>
+	<script src="js/morris.min.js"></script>
+	<style>
+		#chart{ width: 200px; height: 200px; background: #eee}
+	</style>
+</head>
+<body>
+	<div id="chart"></div>
+	<div class="chart task-pie-chart line-normal" data-percent="73">
+		<h1 class="m-top-lg m-bottom-none">73</h1>
+		<div>Percent</div>
+	</div>
+	<script>
+		Morris.Donut({
+        element: 'chart',
+        data: [
+          {label: "Chrome", value: 25},
+          {label: "Safari", value: 20},
+          {label: "Firefox", value: 15},
+          {label: "Opera", value: 5},
+          {label: "Internet Explorer", value: 10},
+          {label: "Other", value: 25}
+        ],
+        colors: ['#00a3d8', '#2fbbe8', '#72cae7', '#d9544f', '#ffc100', '#1693A5']
+     	});
+        $('#chart').find("path[stroke='#ffffff']").attr('stroke', 'rgba(0,0,0,0)');
+	</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+/* body>div {
+	font-size: 13px;
+	color: #525252;
+} */
+/* .table>tfoot>tr>td,.table>tfoot>tr>th,.table>thead>tr>td,.table>thead>tr>th,.table>tbody>tr>td,.table>tbody>tr>th
+	{
+	padding: 2px;
+	line-height: 1.5;
+	vertical-align: middle;
+	min-width: 50px;
+	max-width: 500px;
+} */
+#change_adv{
+	padding:5px 0px 5px 0px
+}
+#change_adv label{
+	font-weight: normal;
+}
+.wid_row .wid_form{
+	width:27%;
+}
+.td-no-data {
+	text-align: center;
+}
+
+textarea {
+	width: 100%;
+	resize: none;
+}
+
+.box-inline {
+	display: inline-block;
+	width: auto;
+}
+
+.float-right {
+	display: inline-block;
+	float: right;
+}
+
+label {
+	vertical-align: -webkit-baseline-middle
+}
+/* 根据状态中重新定义颜色 */
+.bg-urgent{
+	background:#b94a48 !important;
+}
+.bg-main{
+	background:#fa9300 !important;
+}
+.bg-secondary{
+	background-color: #dd7f00 !important;
+}
+.bg-warning{
+	background:#cccc00 !important;
+}
+.bg-normal{
+	background:#468847 !important;
+}
+.bg-unsure{
+	background:#3a87ad !important;
+}
+.bg-ban{
+	background:#aaaaaa !important;
+}
+
+.state-urgent {
+	background-color: #b94a48;
+	color: #ffffff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.state-main {
+	background-color: #a16611;
+	color: #ffffff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.state-secondary {
+	background-color: #dd7f00;
+	color: #ffffff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.state-warning {
+	background-color: #cdcd00;
+	color: #ffffff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.state-normal {
+	background-color: #32cd32;
+	color: #ffffff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.state-unsure {
+	background-color: #aaaaaa;
+	color: #ffffff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.state-all {
+	background-color: #3c8dbc;
+	color: #ffffff;
+	font-weight: bold;
+	text-align: center;
+}
+#reportrange{
+	padding-top:3px;
+}

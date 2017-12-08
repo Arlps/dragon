@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" id="theme">
+	<script src="../js/jquery-1.9.1.js"></script>
+	<style>
+		html,body{ height:100%; }
+	</style>
+</head>
+<body>
+	<label for="select">柱题</label>
+	<select name="" id="select">
+		<option value="">默认</option>
+		<option value="yellow">黄</option>
+		<option value="black">黑</option>
+	</select>
+	<script>
+		$(function(){
+			$('#select').change(function(){
+				//console.log(this.value);console.log($(this).val());
+				if($(this).val().length>0){
+					$('#theme').attr('href',"css/"+$(this).val()+".css")
+				}else{
+					$('#theme').attr('href',"")
+				}
+				
+			})
+		})
+	</script>
+</body>
+</html>
