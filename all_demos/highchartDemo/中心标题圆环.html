@@ -18,6 +18,7 @@
 		<div id="div" class="chart"></div>
 	</div>
 	<script>
+	console.log($('#div').offset())
 		var chart = null;
 		$(function () {
 		    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
@@ -140,7 +141,8 @@
 		            y:centerY + titleHeight/2
 		        });
 		        chart = c;
-		    });
+				chart.tooltip.refresh(chart.series[0].data[0]);
+			})
 		});
 	</script>
 </body>
