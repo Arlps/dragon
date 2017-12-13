@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <!--  <script src="js/jquery-1.9.1.js"></script> -->
+        <script src="js/vue.js"></script>
+        <style>
+            .red{ color:red;}
+        </style>
+    </head>
+    <body>
+        <div id="app1">
+            <p>{{time}} // {{time2}}</p>
+            <p>{{blank}}</p>
+            <p v-bind:class='{"btn-sm":small,"btn-primary":blue}' v-bind:class="ID">直接绑定class</p>
+            <p v-bind:class="class1">data绑定class</p>
+            <p v-bind:class="class2">computed绑定class</p>
+            <p v-bind:class="[classA,classB,blue?class1:'']">数组绑定class</p>
+            <span v-once v-bind:class="style" v-bind:style="{color:color}">这里不会动态绑定{{message}}</span><!--  v-bind:style="color:color" -->
+            <span>计算属性:{{reverseStr}}</span>
+            <input type="text" v-model="message">
+            <button v-on:click="reverse(message)"  @mouseover="over()">reverse</button>
+            
+            <h4 v-if="flag">条件控制<span v-if="!flag">!</span></h4>
+            <template v-if="!flag">
+              <span>1</span><span>2</span><span>3</span>
+            </template>
+            <template v-else-if="flag==0">
+              <span>1</span><span>2</span><span>3</span>
+            </template>
+            <template v-else>
+                <span>3</span><span>2</span><span>1</span>
+            </template>
+            <ul>
+                <li v-for="item in arr">a:{{item.a}},b:{{item.b}}</li>
+                <li v-for="(item,index) in arr" :key="item.id">{{index}}:({{item.a}},{{item.b}})</li>
+            </ul>
+            <ul>
+                <li v-for="(value,key,index) in object">{{index}}--{{key}}:{{value}}</li>
+            </ul>
+            <p><span v-for="item in filterNumber">{{item}}</span></p>
+            <p><span v-for="item in filterFunction(arrNumber)">{{item}}</span></p>
+            <p><span v-for="item in arrNumber">{{item}}</span></p>
+        </div>
+        <script>
+            var app1=new Vue({
+                el:"#app1",
+                data:{
+                    message:"12345",
+                    style:"red",
+                    color:'#0f0',
+                    time:new Date(),
+                    blank:'',
+                    blue:true,
+                    small:true,
+                    // 此处不可以用this.name作为值
+                    class1:{
+                        footer:true,
+                        'btn-primary':false
+                    },
+                    classA:"active",
+                    classB:"center",
+
+                    flag:true,
+                    arr:[{a:1,b:'1-1'},{a:2,b:'2-1'}],
+                    object: {
+                        firstName: 'John',
+                        lastName: 'Doe',
+                        age: 30
+                    },
+                    arrNumber:[1,2,3,4,5,6,7,8,9,10]
+                },
+                methods:{
+                    reverse:function(str){
+                        this.message=str.split('').reverse().join('');
+                    },
+                    over:function(){
+                        console.log('mouseOver')
+                    },
+                    now:function(){
+                        var _this=this;
+                        setInterval(function(){
+                            _this.time= new Date();
+                        },1000)
+                    },
+                    filterFunction:function(arr){
+                        return arr.filter(function(item){
+                            return item%2==0;
+                        })
+                    }
+                },
+                computed:{
+                    // 不能传参，使用时不用括号执行
+                    reverseStr:function(){
+                        return this.message.split('').reverse().join('')
+                    },
+                    time2: function () {
+                        return Date.now()
+                    },
+                    class2:function(){
+                        return {nav:this.blue}
+                    },
+                    filterNumber:function(){
+                        return this.arrNumber.filter(function(item){
+                            return item%2==0;
+                        })
+                    }
+                },
+                watch:{
+                    time:function(newV,oldV){
+                        this.blank=oldV
+                    }
+                },
+                // onload
+                mounted:function(){
+                    this.now()
+                }
+            })
+        </script>
+    </body>
+</html>
