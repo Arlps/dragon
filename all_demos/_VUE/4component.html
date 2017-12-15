@@ -17,8 +17,11 @@
 
         <p>
            <counter></counter><counter></counter><counter></counter><counter></counter><counter></counter><counter></counter>
-        </p>
-
+        </p><hr>
+        
+        <p>
+            <input type="text" v-model="inputProp"><prop v-bind:prop-value='inputProp'></prop>
+        </p><hr>
     </div>
 
     <script>
@@ -27,7 +30,9 @@
         var app=new Vue({
             
             el:'#app1',
-            data:{},
+            data:{
+                inputProp:''
+            },
             methods:{
 
             },
@@ -43,6 +48,10 @@
                     data:function(){
                         return {num:0}
                     }
+                },
+                "prop":{
+                    props:["propValue"],
+                    template:"<a href='#'>{{propValue}}</a>"
                 }
             },
             
