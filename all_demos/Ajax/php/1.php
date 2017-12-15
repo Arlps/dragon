@@ -1,6 +1,6 @@
 <?php
 if(isset($_GET['name'])){
-	echo "hello":".$_GET['name'];
+	echo "hello"
 }else{
 	echo "error"
 }

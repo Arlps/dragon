@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+		<title>Document</title>
+		<script src="../js/jQuery-2.1.4.min.js"></script>
+	</head>
+
+	<body>
+		<input type="text" name="ask" value="北京" />
+		<button onclick="xxx()">query</button>
+		<div id="box" style="height: 100px; width: 500px; border: 1px solid #ccc;"></div>
+		<script>
+			$.getJSON("http://m.weather.com.cn/data/101010100.html", function (jsondata) {
+		        alert(jsondata.weatherinfo.city);
+		    });
+			
+			function query() {
+				var question = $('input[name=ask]').val();
+				$.ajax({
+					//					url:'http://www.tuling123.com/openapi/api?key=15dfce0464f1117dd0f9c6097bd8a359&info='+question+'',
+					//					url:'http://apistore.baidu.com/microservice/cityinfo?cityname='+question+'',
+					url: 'http://www.sojson.com/open/api/weather/json.shtml?city=北京',
+					type: 'GET',
+					success: function(data) {
+						console.log(data)
+						$('#box').html(data.text);
+						console.log(1)
+					},
+					error: function(error) {
+						console.log(error)
+					}
+				})
+			}
+
+			function xxx() {
+				var question = $('input[name=ask]').val();
+				$.ajax({
+					url: "http://apistore.baidu.com/microservice/cityinfo?cityname=北京",
+					type: 'GET',
+					header: {
+						apikey: "15dfce0464f1117dd0f9c6097bd8a359"
+					},
+					success: function(response) {
+						console.log(response)
+					},
+					error:function(error){
+						console.log(error)
+					}
+				});
+			};
+			
+			
+		</script>
+	</body>
+
+</html>

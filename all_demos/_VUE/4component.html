@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <script src="js/vue.js"></script>
+    <style>
+        .my-nav{ overflow:hidden;}
+        .my-nav li{ float:left; height:20px; width:100px; background:#ccc; border:1px solid #000; text-align:center; cursor:pointer; } 
+        .my-nav li:hover{ background:#ff0;}
+    </style>
+</head>
+<body>
+    <div id="app1">
+        <my-nav></my-nav>  <hr>
+
+        <p>
+           <counter></counter><counter></counter><counter></counter><counter></counter><counter></counter><counter></counter>
+        </p>
+
+    </div>
+
+    <script>
+        
+        
+        var app=new Vue({
+            
+            el:'#app1',
+            data:{},
+            methods:{
+
+            },
+            components:{
+                "my-nav":{
+                    template:"<ul class='my-nav'><li>{{menu}}</li><li>menu2</li></ul>",
+                    data:function(){
+                        return {menu:0}
+                    }
+                },
+                "counter":{
+                    template:"<button v-on:click='num++;if(num==10){num=0}'>{{num}}</button>",
+                    data:function(){
+                        return {num:0}
+                    }
+                }
+            },
+            
+        });
+
+        // 全局注册
+        Vue.component("my-nav2",{
+            template:"<ul class='my-nav'><li>menu1</li><li>menu2</li></ul>"
+        })
+    </script>
+</body>
+</html>

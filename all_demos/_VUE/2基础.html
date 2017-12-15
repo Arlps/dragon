@@ -12,7 +12,7 @@
     <body>
         <div id="app1">
             <p>{{time}} // {{time2}}</p>
-            <p>{{blank}}</p>
+            <p>{{blank}}</p><hr>
             <p v-bind:class='{"btn-sm":small,"btn-primary":blue}' v-bind:class="ID">直接绑定class</p>
             <p v-bind:class="class1">data绑定class</p>
             <p v-bind:class="class2">computed绑定class</p>
@@ -20,7 +20,7 @@
             <span v-once v-bind:class="style" v-bind:style="{color:color}">这里不会动态绑定{{message}}</span><!--  v-bind:style="color:color" -->
             <span>计算属性:{{reverseStr}}</span>
             <input type="text" v-model="message">
-            <button v-on:click="reverse(message)"  @mouseover="over()">reverse</button>
+            <button v-on:click="reverse(message)"  @mouseover="over()">reverse</button><hr>
             
             <h4 v-if="flag">条件控制<span v-if="!flag">!</span></h4>
             <template v-if="!flag">
@@ -31,17 +31,19 @@
             </template>
             <template v-else>
                 <span>3</span><span>2</span><span>1</span>
-            </template>
+            </template><hr>
             <ul>
                 <li v-for="item in arr">a:{{item.a}},b:{{item.b}}</li>
                 <li v-for="(item,index) in arr" :key="item.id">{{index}}:({{item.a}},{{item.b}})</li>
             </ul>
             <ul>
                 <li v-for="(value,key,index) in object">{{index}}--{{key}}:{{value}}</li>
-            </ul>
+            </ul><hr>
             <p><span v-for="item in filterNumber">{{item}}</span></p>
-            <p><span v-for="item in filterFunction(arrNumber)">{{item}}</span></p>
+            <p><span v-for="item in filterFunction(arrNumber)">{{item}}</span></p><hr>
             <p><span v-for="item in arrNumber">{{item}}</span></p>
+            <p> <template v-for="item in 5"><span>{{item*10}}</span><button>?</button></template></p>
+            <p><span v-for="item in arrNumber" v-if="item%3==0">{{item}}</span></p>
         </div>
         <script>
             var app1=new Vue({

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <!--  <script src="js/jquery-1.9.1.js"></script> -->
+        <script src="js/vue.js"></script>
+        <style>
+            .red{ color:red;}
+        </style>
+    </head>
+    <body>
+        <div id="app1">
+            <input type="text" name="person" placeholder="input a name" v-model="name">
+            <button v-on:click.once="add()">add</button>
+            <ul>
+                <li v-for="item in arr">{{item.name}} <span v-on:click="remove(item.name)">&times</span></li>
+            </ul><hr>
+
+            <input type="checkbox" value="A" v-model="arrCheck">A
+            <input type="checkbox" value="B" v-model="arrCheck">B
+            <input type="checkbox" value="C" v-model="arrCheck">C
+            <span>&nbsp;&nbsp;value: {{arrCheck}}</span>
+            <span>&nbsp;&nbsp;value: {{checkArr}}</span><hr>
+            
+            <input type="radio" name="radio" value="A" v-model="radio">A
+            <input type="radio" name="radio" value="B" v-model="radio">B
+            <span>&nbsp;&nbsp;value: {{radio}}</span><hr>
+
+            <select name="" id="" v-model="option">
+                <option value="A">A</option>
+                <option value="B">B</option>
+            </select>
+            <span>&nbsp;&nbsp;value: {{option}}</span><hr>
+
+            <select name="" id="" v-model="option2">
+                <option v-for="item in arr" v-bind:value="item.name" >{{item.name}}</option>
+            </select>
+            <span>&nbsp;&nbsp;value: {{option2}}</span><hr>
+
+            <input type="text" v-model.lazy.trim="lazy">{{lazy}} <br>
+            <!-- 在 type="number" 时，HTML 输入元素的值也总会返回字符串。 -->
+            <input type="text" v-model.number="number">{{number}}
+        </div>
+        <script>
+            var app=new Vue({
+                el:'#app1',
+                data:{
+                    name:'',
+                    arr:[{
+                        name:"jack"
+                    },{
+                        name:'rose'
+                    }],
+                    arrCheck:['A'],
+                    radio:'B',
+                    option:'B',
+                    option2:'',
+                    lazy:'',
+                    number:''
+                },
+                methods:{
+                    add:function(){
+                        this.arr.push({
+                            name: this.name
+                        })
+                    },
+                    remove:function(name){
+                        for (var i = 0; i < this.arr.length; i++) {
+                            if(this.arr[i].name==name){
+                                this.arr.splice(i,1)
+                            }
+                        };
+                    }
+                },
+                computed:{
+                    checkArr:function(){
+                        var str='';
+                        for (var i = 0; i < this.arrCheck.length; i++) {
+                            str+=(''+this.arrCheck[i])
+                        };
+                        return str
+                    }
+                }
+            })
+            app.add();
+            // 表单值初始化
+            app.option2=app.arr[0].name
+        </script>
+    </body>
+</html>

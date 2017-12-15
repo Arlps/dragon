@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title>Document</title>
 		<link rel="stylesheet" href="css/reset.css">
-		<link rel="stylesheet" href="css/bootstrap.css" />
+		<!-- <link rel="stylesheet" href="css/bootstrap.css" /> -->
 		<script src="js/jquery-1.9.1.js"></script>
 	</head>
 
@@ -14,11 +14,12 @@
 	</body>
 
 	<script>
-		var obj={};
-		for (var i = 0; i < 100; i++) {
-			obj[i]="ASSD"+i;
-		}
-		console.log(obj)
+		var arr=[1,2,3,4,5,6,7,8,9,0];
+		for (var i = 0; i < arr.length; i++) {
+			if(arr[i]%3==0){
+				console.log(arr[i])
+			}
+		};
 	</script>
 </html>
 		

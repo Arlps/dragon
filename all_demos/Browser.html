@@ -8,7 +8,11 @@
 
 	<body>
 		<script>
-			console.log(BrowserType())
+		var type=BrowserType()
+			console.log(type)
+			if (type=='Chrome') {
+				window.location.href="http://www.baidu.com"
+			};
 			/* 
 			 * 描述：判断浏览器信息 
 			 * 编写：LittleQiang_w 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css hack</title>
+    <style>
+        .common{ color:#333; font-weight:bold; text-decoration:underline;}
+
+        /*IE8+ 和IE9+*/
+        *{ border:1px solid #aaa\0; box-shadow:0 0 10px #000\9\0;}
+        /*所有IE各自不同颜色，注意顺序*/
+        .box{
+            background-color: red;              /*所有浏览器*/
+            background-color: blue\9;        /*所有IE（IE6+）*/
+            background-color: green\0;      /*IE8 */
+            +background-color: pink;          /*IE7*/
+            _background-color: orange;      /*IE6*/
+        }
+    </style>
+        <!--[if IE]>
+            <style>
+                body{ background:#fcc}
+            </style>
+        <![endif]-->
+    
+    
+</head>
+<body>
+    <!--[if IE]>IE下显示<![endif]-->
+    <!--[if lte IE 8]>IE8-显示<![endif]-->
+    <div class="common">
+        <p> CSS Hack大致有3种表现形式：CSS属性前缀法、选择器前缀法以及IE条件注释法（即HTML头部引用if IE）Hack</p>
+        
+
+        <h3>条件注释法</h3>
+        lte：就是Less than or equal to的简写，也就是小于或等于的意思 <br/>
+        lt ：就是Less than的简写，也就是小于的意思。<br/>
+        gte：就是Greater than or equal to的简写，也就是大于或等于的意思<br/>
+        gt ：就是Greater than的简写，也就是大于的意思。<br/>
+        ! ：就是不等于的意思。<br/>
+        <i>注释标签内部必须有style标签，不能直接写css，也可以是div button其他标签</i>  <br/>  
+
+        <h3>属性前缀法 _color</h3>
+        “-″减号是IE6专有的hack<br/>
+        “\9″ IE6/IE7/IE8/IE9/IE10都生效<br/>
+        “\0″ IE8/IE9/IE10都生效，是IE8/9/10的hack<br/>
+        “\9\0″ 只对IE9/IE10生效，是IE9/10的hack<br/>
+
+        <h3>选择器hack</h3>
+        *html *前缀只对IE6生效<br/>
+        *+html *+前缀只对IE7生效<br/>
+        @media screen\9{...}只对IE6/7生效<br/>
+        @media \0screen {body { background: red; }}只对IE8有效<br/>
+        @media \0screen\,screen\9{body { background: blue;}}只对IE6/7/8有效<br/>
+        @media screen\0 {body { background: green; }} 只对IE8/9/10有效<br/>
+        @media screen and (min-width:0\0) {body { background: gray; }} 只对IE9/10有效<br/>
+        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {body { background: orange; }} 只对IE10有效<br/>
+    </div>
+    
+</body>
+</html>
