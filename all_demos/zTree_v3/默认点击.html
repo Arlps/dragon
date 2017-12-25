@@ -31,6 +31,13 @@
 <script>
 	$(document).ready(function(){
 		var myTree=creatTree($("#treeDemo"),mydata);
+
+		var arr=myTree.transformToArray(myTree.getNodes());
+		for (var i = 0; i < arr.length; i++) {
+			if(arr[i].id==3){
+				myTree.selectNode(arr[i]);
+			}
+		};
 	});
 
 	var mydata=[{
