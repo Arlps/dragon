@@ -1,7 +1,7 @@
 
 $(window).resize(function(){
 	$('.pie_chart').each(function(idx,ele){
-		$(this).highcharts().reflow()
+		// $(this).highcharts().reflow()
 	})
 })
 //业务视图 监测器状态 设备状态 CPU  内存 磁盘 综述

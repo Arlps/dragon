@@ -94,8 +94,16 @@ function visible() {
 
     {
       id: 9,
-      label: '数据库账户',
+      label: '数据库',
       level: 2,cid:7, 
+      shape: 'image',
+      image: DIR + 'business.png'
+    },
+
+    {
+      id: 10,
+      label: '数据库账户',
+      level: 3,cid:9, 
       shape: 'image',
       image: DIR + 'user.png'
     },
@@ -149,6 +157,8 @@ function visible() {
       from:7,to:8
     },{
       from:7,to:9
+    },{
+      from:9,to:10
     }
   ];
 
@@ -243,6 +253,10 @@ function draw(nodes,edges) {
 function clusterByCid(cid) {
       var clusterOptionsByData = {
           joinCondition:function(childOptions) {
+              console.log(childOptions)
+              if(childOptions.cid == cid){
+                clusterByCid(childOptions.id)
+              }
               return childOptions.cid == cid;
           },
           clusterNodeProperties: {
@@ -255,9 +269,10 @@ function clusterByCid(cid) {
   }
 
   function clusterAll(){
-     for(var i=0; i<100;i++){
-      clusterByCid(i)
-     }
+    clusterByCid(1)
+     // for(var i=0; i<100;i++){
+     //  clusterByCid(i)
+     // }
   }
   </script>
 

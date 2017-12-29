@@ -79,7 +79,8 @@
 	<script>
 		$(function(){
 			var $table=$('#mytable').DataTable({
-			    pagingType:   "full_numbers",
+			    pagingType:   "numbers",
+			    "bInfo" : false,
 			    ordering: false,
 			    paging:true,
 			    data:data,

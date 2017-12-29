@@ -1,4 +1,5 @@
 $(function () {
+
 	$('.time').html("上一次保存的时间为："+(localStorage.getItem('saveTime')||"no record"))
 	console.log(dataJson)
 	// 设置默认参数（10个）
@@ -104,7 +105,7 @@ $(function () {
 	// $(window).resize(function(){
 	// 	resizeChart();
 	// })
-	resizeChart();
+	// resizeChart();
 });
 	
 	var arrType=["pie","line","column","bar","table"];
