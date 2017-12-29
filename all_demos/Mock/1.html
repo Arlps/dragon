@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<link rel="stylesheet" href="css/reset.css">
+		<script src="js/jQuery-2.1.4.min.js"></script>
+		<script src="js/mock.js"></script>
+		<style>
+			#loading {
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.35);
+				z-index: 999999;
+				top: 0;
+				left: 0;
+			}
+			
+			#loading>.loading {
+				position: absolute;
+				width: 50px;
+				height: 50px;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				line-height: 50px;
+				font-size: 40px;
+				color: #fff
+			}
+		</style>
+	</head>
+
+	<body>
+		<ul id="list"></ul>
+
+		<!--正在加载  -->
+		<div id="loading" style="display:none;">
+			<div class="loading">request...
+				<i class="fa fa-spinner fa-pulse"></i>
+			</div>
+		</div>
+		<script>
+			var arr = [1, 2, 3, 4, 5];
+			var obj = {
+				a: 1,
+				b: 2,
+				c: 3,
+				d: 4
+			}
+			//数据模板中的每个属性由 3 部分构成：属性名、生成规则、属性值
+			//'name|rule': value
+			Mock.mock('http://123.com', {
+				'random':'@name',
+				'constellation':'@star',
+				'email':'@email',
+				'color':'@color',
+				'name|3': 'fei',
+				'age|20-30': 25,
+				'firstName|3': 'fei', //重复fei这个字符串 3 次，打印出来就是'feifeifei'。
+				'lastName|2-5': 'jiang', //重复jiang这个字符串 2-5 次。
+				'big|+1': 0, //属性值自动加 1，初始值为 0
+				'age|20-30': 25, //生成一个大于等于 20、小于等于 30 的整数，属性值 25 只是用来确定类型
+				'weight|100-120.2-5': 110.24, //生成一个浮点数,整数部分大于等于 100、小于等于 120，小数部分保留 2 到 5 位。
+				'likeMovie|1': Boolean, //随机生成一个布尔值，值为 true 的概率是 1/2，值为 false 的概率同样是 1/2。
+				'friend1|1': arr, //从数组 arr 中随机选取 1 个元素，作为最终值。
+				'friend2|+1': arr, //从属性值 arr 中顺序选取 1 个元素，作为最终值
+				'friend3|2-3': arr, //通过重复属性值 arr 生成一个新数组，重复次数大于等于 2，小于等于 3。
+				'life1|2': obj, //从属性值 obj 中随机选取 2 个属性
+				'life1|1-2': obj, //从属性值 obj 中随机选取 1 到 2 个属性。
+				'regexp1': /^[a-z][A-Z][0-9]$/, //生成的符合正则表达式的字符串
+				'num':function(){
+					var num='';
+					setInterval(function(){
+						num=Mock.mock('@EMAIL')
+					},1000)
+					return num;
+				}
+			});
+			Mock.setup({
+				timeout: 500
+			});
+			Mock.Random.extend({
+			    star: function(date) {
+			        var arr = ['白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座']
+			        return this.pick(arr)
+			    }
+			})
+			
+			function send(){
+				$('#loading').show()
+				$.ajax({
+					url: 'http://123.com',
+					dataType: 'json',
+					type:'POST',
+					success: function(data) {
+						$('#loading').hide()
+						var $list = $('#list');
+						$list.empty();
+						for(var key in data) {
+							$list.append('<li style="color:'+data.color+'">' + key + '：' + data[key] + '<li>')
+						}
+					}
+				})
+				
+			}
+			
+			send();
+			setInterval(function(){
+				send()
+			},2000)
+			
+		</script>
+	</body>
+
+</html>
