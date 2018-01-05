@@ -21,6 +21,8 @@
 		<li>2</li>
 	</ul>
 	<button id="btn" onclick="xxx()">click</button>
+
+	<div id="box"></div>
 	<script>
 	$('ul li').mouseenter(function(){
 		$(this).css('background','#ff0')
@@ -36,6 +38,12 @@
 	// 先执行
 	function xxx(){
 		alert("HTML绑定")
+	}
+
+	var str="哈哈";
+	$('#box').html('<button onclick="move(\''+str+'\')">哈哈</button>')
+	function move(str){
+		alert(str)
 	}
 	</script>
 </body>

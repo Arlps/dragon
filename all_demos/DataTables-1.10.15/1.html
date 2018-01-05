@@ -79,13 +79,16 @@
 	<script>
 		$(function(){
 			var $table=$('#mytable').DataTable({
+				
 			    pagingType:   "numbers",
 			    "bInfo" : false,
 			    ordering: false,
 			    paging:true,
 			    data:data,
-			    order: [[1, 'asc']]
+			    order: [[1, 'asc']],
+			     "dom": '<"toolbar">frtip'
 			});
+			$("div.toolbar").html('<b style="color:red">自定义文字、图片等等</b>');
 			$table.on('order.dt search.dt',function() {
 		        $table.column(0, {
 		            search: 'applied',

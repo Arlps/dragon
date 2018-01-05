@@ -25,7 +25,17 @@
 	<script type="text/javascript" language="javascript" class="init">
 	
 $(document).ready(function() {
-	$('#example').DataTable();
+//	l - Length changing 改变每页显示多少条数据的控件
+//	f - Filtering input 即时搜索框控件
+//	t - The Table 表格本身
+//	i - Information 表格相关信息控件
+//	p - Pagination 分页控件
+//	r - pRocessing 加载等待显示信息
+	$('#example').DataTable({
+//		 "dom": '<"toolbar">ftip'
+		 "dom":'r<"right"f><"toolbar">t<"bottom"ip><"clear">'
+	});
+	$("div.toolbar").addClass('col-sm-6').html('<span class="btn btn-primary">删除</span>');
 } );
 
 	</script>

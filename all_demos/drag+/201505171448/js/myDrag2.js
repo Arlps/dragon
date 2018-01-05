@@ -35,7 +35,7 @@ var layout=[
 		"scale": {
 			"width": 4,
 			"height": 3,
-			"x": 4,
+			"x": 0,
 			"y": 1
 		}
 	}, {
