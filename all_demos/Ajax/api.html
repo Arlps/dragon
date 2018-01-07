@@ -9,22 +9,23 @@
 	</head>
 
 	<body>
-
+	
 		<script>
-		// http://api.avatardata.cn/ActNews/Query?key=bd9745ef97b24a54907b8bab2a31a91b&keyword=NBA
-		// http://api.avatardata.cn/Lottery/List?key=bd9745ef97b24a54907b8bab2a31a91b&lotterytype=1
-		// http://api.avatardata.cn/HistoryToday/LookUp?key=ffe84c3cab824f95a6057955e33212fc&yue=1&ri=1&type=1&page=1&rows=5
-		// http://api.3023.com/barcode/barcode?barcode=6936292120079
+		//易源 cfd167020808687a2008edc0482d97aa
 			$(document).ready(function() {
 				console.log(1)
 //				$.get('php/1.php',{name:"123"},function(data){ alert(data)})
 				$.ajax({
-					url:'php/1.php',
-					data:{name:213},
-//					url: 'http://api.avatardata.cn/Joke/QueryJokeByTime?key=a84e89cc4b9f49998a94b71361e2c2c8&sort=asc&time=1418745237',//&yue=1&ri=1&type=1&page=1&rows=5',
+					url:'http://v.juhe.cn/weather/index?key=cfd167020808687a2008edc0482d97aa',
+					data:{cityname:"广州"},
 					type: 'GET',
-					success: function(result) {
-						console.log(result)
+					dataType:'jsonp',
+					success: function(res) {
+						console.log(res);
+						var data=res.result.today;
+						for(var key in data){
+							document.write(key+':'+data[key]+'<br>');
+						}
 					},
 					error: function() {
 						alert(0)

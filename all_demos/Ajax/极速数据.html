@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+			<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+		<title>Document</title>
+		<script src="../js/jQuery-2.1.4.min.js"></script>
+	</head>
+
+	<body>
+		<select name="city"></select>
+		<button onclick="weather()">查询</button>
+		<div id="box"></div>
+		<script>
+			city()
+			function weather(){
+				var city=$('select[name=city]').val();
+				$.ajax({
+					url:'http://api.jisuapi.com/weather/query?appkey=1793aab537f9d9e9',
+					data:{"city":city},
+					type:"get",
+					dataType:"jsonp",,++++987321`1*9+56	+6598
+//					jsonpCallback:'callback',
+					success: function(res) {
+						console.log(res);
+						var data=res.result;
+						var str=data.city+':'+data.weather;
+						$('#box').html('').html(str)
+					},
+					error: function() {
+						alert(0)
+					}
+				})
+			}
+			
+			function city(){
+				$.ajax({
+					url:'http://api.jisuapi.com/area/province?appkey=1793aab537f9d9e9',
+					type:"get",
+					dataType:"jsonp",
+					success: function(res) {
+						console.log(res);
+						var data=res.result;
+						var str='';
+						for (var i = 0; i < data.length; i++) {
+							str+='<option value='+data[i].name+'>'+data[i].name+'</option>';
+						}
+						$('select[name=city]').html(str);
+					}
+				})
+			}
+			
+			
+//			$.getJSON("http://user.hnce.com.cn/getregion.aspx?id=0&jsoncallback=?",function(json){ 
+//			//要求远程请求页面的数据格式为： ?(json_data) //例如： //?([{"_name":"湖南省","_regionId":134},{"_name":"北京市","_regionId":143}]) alert(json[0]._name); 
+//			}); 
+
+		</script>
+	</body>
+
+</html>
