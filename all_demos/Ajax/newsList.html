@@ -1,0 +1,149 @@
+<select name="channel" id=""></select>
+<table id="list" class="table table-bordered table-responsive dataTable">
+	<thead>
+		<th>类别</th>
+		<th>标题</th>
+		<th>时间</th>
+		<th>详情</th>
+	</thead>
+	<tbody></tbody>
+</table>
+<ul id="pagin" class="pagination"></ul>
+<ul class="num hidden">
+	<li>
+		<a>1</a>
+	</li>
+	<li>
+		<a>2</a>
+	</li>
+	<li>
+		<a>3</a>
+	</li>
+	<li>
+		<a>4</a>
+	</li>
+	<li>
+		<a>5</a>
+	</li>
+	<li>
+		<a>6</a>
+	</li>
+</ul>
+<script>
+	$(function() {
+		//选择频道筛选新闻
+		initChannel();
+		news($('select[name=channel]').val());
+		$('select[name=channel]').change(function() {
+			channel = $(this).val();
+			$('#pagin').jqPaginator('option', {
+				currentPage: 1
+			});
+			news('新闻', 0);
+
+		});
+
+		//分页插件
+		paging();
+
+	})
+	var channel = '';
+
+	function initChannel() {
+		$.ajax({
+			url: 'http://api.jisuapi.com/news/channel?appkey=1793aab537f9d9e9',
+			type: 'GET',
+			dataType: 'jsonp',
+			success: function(res) {
+				console.log(res);
+				var data = res.result;
+				var str = '';
+				for(var i = 0; i < data.length; i++) {
+					str += '<option value=' + data[i] + '>' + data[i] + '</option>';
+				}
+				$('select[name=channel]').html(str);
+			},
+			error: function(error) {
+				console.log(error)
+			}
+		})
+	}
+
+	function news(channel, start) {
+		$.ajax({
+			url: 'http://api.jisuapi.com/news/get?appkey=1793aab537f9d9e9',
+			data: {
+				channel: channel,
+				num: 10,
+				start: start ? start : 0
+			},
+			type: "GET",
+			dataType: 'jsonp',
+			success: function(res) {
+				console.log(res);
+				var data = res.result;
+				var str = '';
+				for(var i = 0; i < data.list.length; i++) {
+					str += '<tr><td>' + data.channel + '</td><td>' + data.list[i].title + '</td><td>' + data.list[i].time + '</td><td>' + '<a href="javascript:;" onclick="view(\'' + data.list[i].url + '\')">详情</a>' + '</td></tr>';
+				}
+				$('#list tbody').html('').html(str);
+				//						$('#list').DataTable()
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		})
+	}
+
+	function view() {
+//		$('body').load('newsDetail.html');
+		urlParams(window.location.href, 'page', 100);
+	}
+
+	function urlParams(url, param, value) {
+		var index = url.indexOf('?');
+		var str = url.substr(index + 1);
+		var arr = str.split('&');
+		
+		var flag=true;
+		for (var i = 0; i < arr.length; i++) {
+			for(var j=0; j<arr[i].length; j++){
+				if(arr[i][0]==param){
+					arr[i][1]=value;
+					flag=false;
+				}
+			}
+		}
+		if(flag){
+			arr.push(param + '=' + value);
+		}
+		var newStr = arr.join('&');
+		window.location.search = newStr;
+		console.log(newStr)
+		return newUrl;
+	}
+
+	function num() {
+		$('.num').on('click', 'li', function() {
+			news('新闻', $(this).index() * 10)
+		})
+	}
+
+	function paging() {
+		$.jqPaginator('#pagin', {
+			totalPages: 100,
+			visiblePages: 5,
+			currentPage: 1,
+			//			        first: '<li class="first"><a href="javascript:void(0);">首页<\/a><\/li>',
+			//		            prev: '<li class="prev"><a href="javascript:void(0);"><i class="arrow arrow2"><\/i>上一页<\/a><\/li>',
+			//		            next: '<li class="next"><a href="javascript:void(0);">下一页<i class="arrow arrow3"><\/i><\/a><\/li>',
+			//		            last: '<li class="last"><a href="javascript:void(0);">末页<\/a><\/li>',
+			//		            page: '<li class="page"><a href="javascript:void(0);">{{page}}<\/a><\/li>',
+			onPageChange: function(num, type) {
+				console.log(num);
+				num--;
+				news(channel, num * 10)
+			}
+		});
+	}
+</script>
