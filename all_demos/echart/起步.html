@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="css/reset.css">
 	<script src="js/jQuery-2.1.4.min.js"></script>
 	<script src="js/echarts.min.js"></script>
+	<script src="js/dark.js"></script>
 </head>
 <body>
 	<div id="chart" style="width:400px; height:400px; border:1px solid black"></div>
@@ -118,7 +119,7 @@
 		}
 
 		// 初始化
-		var mychart=echarts.init(document.getElementById('chart'));
+		var mychart=echarts.init(document.getElementById('chart'),'dark');
 		mychart.showLoading();
 		mychart.setOption(column);
 		mychart.hideLoading();

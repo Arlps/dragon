@@ -1,0 +1,53 @@
+Arlps ——1075895951.dH
+https://github.com/Arlps/dragon.git
+https://github.com/Arlps/dragon/tree/master/all_demos
+
+软件地址：https://pan.baidu.com/s/1kU5OCOB#list/path=%2Fpub%2Fgit
+-----------------1安装
+默认安装  git-bash启动
+安装完成后，还需要最后一步设置，在命令行输入：
+$ git config --global user.name "Your Name"    // Arlps
+$ git config --global user.email "email@example.com"  //1075895951@qq.com
+表示你这台机器上所有的Git仓库都会使用这个配置
+当然也可以对某个仓库指定不同的用户名和Email地址。
+
+-----------------2创建repository
+创建一个版本库非常简单，首先，选择一个合适的地方，创建一个空目录：
+$ mkdir learngit
+$ cd learngit
+$ pwd    //pwd命令用于显示当前目录 /Users/michael/learngit
+$ git init   //Initialized empty Git repository in /Users/michael/learngit/.git/
+
+-----------------3提交文件
+把一个文件放到Git仓库只需要两步
+1.  $ git add readme.txt  //将文件添加到暂存区
+2.  $ git commit -m "wrote a readme file"    //-m后面输入的是本次提交的说明  提交
+//[master (root-commit) cb926e7] wrote a readme file
+//1 file changed, 2 insertions(+)
+//create mode 100644 readme.txt
+commit可以一次提交很多文件，所以你可以多次add不同的文件
+
+------------------4提交修改文件
+1.git status //查看当前目录下已经修改但是没准备提交的文件（红色表示为add）
+2.git diff readme.txt //查看与已提交的文件的差别
+3.git add readme.txt //
+4.git status  //readme.txt显示为绿色(表示已经add)
+5.git commit -m "提交修改后的readme.txt"
+
+------------------5回退历史版本
+git log  //查看提交日志
+git reset --hard HEAD^  //回退到上一个版本
+git reset --hard HEAD~50  //回退到前50个版本
+如果要重新重置回最新版本  在未关闭的窗口中找到最新提交文件的ID
+git reset --hard ID   //又再次回到最新版本(撤销回退动作)
+
+------------------6远程仓库
+1.$ ssh-keygen -t rsa -C "1075895951@qq.com"   //创建SSH Key
+2.GitHub------“Account settings”--------“SSH Keys”  
+   然后，点“Add SSH Key”，填上任意Title
+   在Key文本框里粘贴id_rsa.pub文件的内容(c/Users/10758/.ssh/id_rsa)
+3.github创建新仓库
+4. //本地仓库与远程仓库关联
+   $ git remote add origin git@github.com:Arlps/dragon.git 
+   //远程库的名字就是origin
+5.$ git push -u origin master

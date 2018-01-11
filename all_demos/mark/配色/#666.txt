@@ -1,0 +1,60 @@
+colors=["","","","",""]
+Bootstrap：["","","","",""]
+adminLTE：["#D9544F","#418BCA","#16A085","#3F4E62"]
+easyPieChart：["#E12424","#FFB848","#35AA47"]
+
+3. ["#C74E5D","#E9B964","#EDE787","#8BCFA8","#4CA3E6","#93E1F5"]
+
+4.["#2F9DD4","#27BB96","#3AADA4","#37CD86"]
+
+6.["#9BCA35","#64A539","#36A972","#44BFA3","#4DB4CC","#4FC5F3"]
+
+8.
+['#F5675D','#EDDC49','#72CB6F','#5FBDB7','#6984E3']
+
+9.
+["#4ACACB","#5AB6DF","#6A8BC0","#FE8676"]
+
+
+adminlte:
+    lightBlue: "#3c8dbc",
+    red: "#f56954",
+    green: "#00a65a",
+    aqua: "#00c0ef",
+    yellow: "#f39c12",
+    blue: "#0073b7",
+    navy: "#001F3F",
+    teal: "#39CCCC",
+    olive: "#3D9970",
+    lime: "#01FF70",
+    orange: "#FF851B",
+    fuchsia: "#F012BE",
+    purple: "#8E24AA",
+    maroon: "#D81B60",
+    black: "#222222",
+    gray: "#d2d6de"
+
+["#3c8dbc","#f56954","#00a65a","#00c0ef","#f39c12","#0073b7","#001F3F","#39CCCC","#3D9970","#01FF70","#FF851B","#F012BE","#8E24AA","#D81B60","#222222","#d2d6de"]
+常用：
+["#DD4B39","#00C0EF","#F39C12","#00A65A","#3C8DBC","#d2d6de"]
+
+10.['#b94a48','#a16611','#dd7f00','#cdcd00','#32cd32']
+
+
+紧急 主要 次要 警告 正常
+红    褐    橙    黄    绿
+['#B94A48','#A16611','#FA9300','#BCBC00','#438144']
+不确定(蓝)#3882A7
+
+<span class="pull-right" style="opacity:0.4">
+<font style="color:#b94a48">紧急；</font>
+<font style="color:#fa9300">主要；</font>
+<font style="color:#cccc00">次要；</font>
+<font style="color:#468847">正常；</font>
+<font style="color:#aaaaaa">禁止；</font>
+<font style="color:#3a87ad">不确定</font></span>
+#67B876
+
+
+echarts:["#C23531","#2F4554","#61A0A8","#D48265","#91C7AE"]
+echarts2:["#C15958","#86B5E1","#438BB3","#546872","#729973","#A9A67F","#6E67A8"]

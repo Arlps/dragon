@@ -13,7 +13,9 @@
 			#color li{
 				width:50px; height:50px; float:left;
 			}
-
+			
+			.wrap{overflow:auto; position:relative; height:100px;border:1px solid black;}
+			.inner{ position:absolute; top:50px; height:200px; width:100%; background:#ccc;}
 
 		</style>
 
@@ -21,6 +23,18 @@
 	</head>
 
 	<body>
+		<div class="wrap">
+			<div class="inner"></div>
+		</div>
+
+
+		<div id="btnBox"></div>
+		<script>
+			$('#btnBox').html('<button type="button" id="xxxx">xxxx</button>')
+			$('#xxxx').click(function(){
+				alert()
+			})
+		</script>
 		<select name="a" id="">
 			<option value="1">1</option>
 			<option value="2">2</option>

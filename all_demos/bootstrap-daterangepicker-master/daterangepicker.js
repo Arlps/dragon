@@ -1168,7 +1168,11 @@
                 target.closest(this.container).length ||
                 target.closest('.calendar-table').length
                 ) return;
-            this.hide();
+            this.hide();//注释代码
+    //添加的代码，这里只是隐藏显示，不做任何赋值操作xxxxxxxxxxxxxxxxxxxxxx
+//          this.element.removeClass('active');
+//          this.container.hide();
+//          this.element.trigger('hide.daterangepicker', this);
             this.element.trigger('outsideClick.daterangepicker', this);
         },
 

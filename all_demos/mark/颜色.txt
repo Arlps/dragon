@@ -1,0 +1,68 @@
+在线教程
+
+tuyiti —www.tuyiyi.com/ued
+Treehouse?—?www.teamtreehouse.com
+Dev.Opera?—?http://dev.opera.com/web
+Steer?—?www.steer.me
+Lynda?—?www.lynda.com
+Codeacademy —www.codecademy.com
+Code School?—?www.codeschool.com
+Udacity?—?www.udacity.com
+
+http://coding.smashingmagazine.com/2011/07/12/behind-the-scenes-of-nike-better-world/ 
+
+
+http://www.photoshopstar.com/  PS教程
+
+
+http://www.25xt.com/allcode/5306.html  25学堂
+
+梁景红配色
+
+红    #BB4B39 #C25D4C
+深蓝 #3B5998 #4E69A2
+天蓝 #00ACED #19B4EF
+正蓝 #4875B4 #5A83BB
+绿    #4DBD74
+黄    #F8CB00
+
+柔和白背景
+绿色 #5CB85C
+红色 #D9534F
+蓝色 #5BC0DE
+橙色 #F0AD4E
+["#F0AD4E","#5CB85C","#5BC0DE","#F8CB00","#D9534F"]
+
+很酷的那个环形的配色
+1205行
+背景 #49586E     
+【天蓝，蓝，海蓝，红】
+#4ACACB，#5AB6DF，#6A8BC0，#FE8676
+
+主页标签4色
+adminLTE默认： bg-aqua  bg-red  bg-green  bg-yellow
+红 蓝 绿 黑
+#D9544F #418BCA #16A085 #3F4E62
+
+
+chartJS
+红 #F56954
+橙 #F39C12
+绿 #00A65A
+天蓝 #00C0EF
+海蓝 #3C8DBC
+紫 #E4A8BE
+table-striped
+
+easyPieChart
+橙 #FFB848
+绿 #35AA47
+红 #E12424
+
+    font-family: 'Source Sans Pro',sans-serif;漂亮的百分比数字
+
+rgb——highchart
+"145,232,225","224,91,91","43,144,143","228,211,84","241,92,128","128,133,233","247,163,92","144,237,125","67,67,72","124,181,236"
+
+法国乡村
+'#F5675D','#EDDC49','#72CB6F','#5FBDB7','#6984E3'

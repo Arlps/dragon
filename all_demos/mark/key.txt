@@ -1,0 +1,29 @@
+电脑编号 20DCA073CDPF0MVSZL
+登录邮箱网址： https://email.uni-power.com.cn/owa
+huangdh@uni-power.com.cn
+12345678
+
+ip  192.168.2.107    （132）
+
+SVN插件地址
+http://subclipse.tigris.org/update_1.12.x
+https://192.168.2.70/svn/主站代码/Unipower_MasterStation
+https://192.168.2.70/svn/主站代码/trunk
+
+账号:
+huangdh
+密码:
+pl1C_G
+
+http://192.168.2.132/
+admin
+admin123
+
+MySQL57
+
+C:\Users\10758\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\AC\#!001\MicrosoftEdge\Cache\D9VOIYST
+
+netstat -an //端口号被占用情况
+
+部门资源： \\192.168.2.200
+部门文档： \\192.168.2.70
