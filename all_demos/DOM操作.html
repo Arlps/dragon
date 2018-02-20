@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="box">
+		<button>1</button>
+		<button>2</button>
+	</div>
+	<script>
+		var $box=document.getElementById('box')
+		$box.addEventListener('click',function(){
+			console.log(this);
+			// getAttr()
+			// child()
+			// parent()
+			// create()
+			// insert()
+			remove()
+		})
+
+		function getAttr(){
+			$box.setAttribute('title','xxx');
+			alert($box.getAttribute('title'))
+		}
+		function child(){
+			alert($box.childNodes.length)
+		}
+		function parent(){
+			alert($box.parentNode.nodeName)
+		}
+		function create(){
+			var $input=document.createElement("input");
+			$input.type="text";
+			$input.value="please";
+			$box.appendChild($input)
+		}
+		function insert(){
+			var $btn=document.createElement('button');
+			var body=document.getElementsByTagName("body")[0]
+			body.insertBefore($btn,$box);
+		}
+		function remove(){
+			$box.removeChild($box.childNodes[0])
+		}
+	</script>
+</body>
+</html>

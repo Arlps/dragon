@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" id="txt">
+	<input type="button" id="btn" onclick="validate()" value="按钮">
+	<script>
+		function validate(){
+			var $txt=document.getElementById('txt');
+			var val=$txt.value;
+			try{
+				if(val==""){
+					throw "空";
+				}
+			}catch(err){
+				alert(err)
+			}
+		}
+	</script>
+	<script>
+		error();
+		function error(){
+			try{
+				alert(a)
+			}catch(err){
+				alert(err);
+				if(!err){
+					alert(0)
+				}
+			}
+			// 继续执行
+			alert(1)
+		}
+	</script>
+</body>
+</html>

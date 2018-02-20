@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<a href="#">第一个</a>
+	<a id="a" href="#">按钮</a>
+	<script>
+		var $a=document.getElementById('a');
+		$a.href="https://www.baidu.com";
+		$a.style.color="red";
+
+		var $tag=document.getElementsByTagName('a');
+		console.log($tag);
+		$tag[0].innerHTML="只修改第一个";
+
+		//重复添加不覆盖
+		// $tag[0].addEventListener('click',action);
+		// $tag[0].addEventListener('click',action2);
+		//重复添加覆盖
+		// $tag[0].onclick=action;
+		// $tag[0].onclick=action2;
+		function action(){
+			alert(1)
+		}
+		function action2(){
+			alert(2)
+		}
+
+		setTimeout(function(){
+			$tag[0].removeEventListener('click',action)
+		},2000)
+	</script>
+</body>
+</html>

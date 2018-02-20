@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/angular.min.js"></script>
+	<style>
+		.btn{ color:red;}
+	</style>
+</head>
+<body ng-controller="directive">
+	<hello></hello>
+	<script>
+		angular.module('app',[])
+		.controller('directive',function($scope){
+			$scope.bomb=function(){
+				alert('bomb in template')
+			}
+		})
+		.directive('hello',function(){
+			return{
+				restrict:'E',
+				replace:true,
+				template:'<button attr class="btn" ng-click="bomb()">按钮</button>'
+			}
+		}).directive('attr',function(){
+			return {
+				restrict:'A',
+				link:function(){
+					alert('from attr')
+				}
+			}
+		}).directive('class',function(){
+			return{
+				restrict:'C',
+				link:function(){
+					return 'btn'
+				}
+			}
+		})
+	</script>
+</body>
+</html>

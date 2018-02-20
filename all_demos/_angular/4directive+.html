@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/angular.min.js"></script>
+	<style>
+		.btn,.red{ color:red;}
+	</style>
+</head>
+<body ng-controller="directive">
+	<button action="enter()">更多</button>
+	<red></red>
+	<script>
+		angular.module('app',[])
+		.controller('directive',function($scope){
+			$scope.enter=function(){
+				alert('loading...')
+			}
+			$scope.leave=function(){
+				alert('loaded')
+			}
+		})
+		.directive('action',function(){
+			return{
+				restrict:'A',
+				link:function(scope,element,attrs){
+					element.bind('click',function(){
+						scope.$apply(attrs.action)//scope.load()
+					})
+				}
+			}
+			
+		}) 
+		.directive('red',function(){
+			return{
+				restrict:'E',
+				template:'<input type="text" ng-model="txt">{{txt}}',
+				link:function(scope,element,attrs){
+					scope.$watch('txt',function(newVal){
+						if(newVal=='red'){
+							element.addClass('red')
+						}else{
+							element.removeClass('red')
+						}
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

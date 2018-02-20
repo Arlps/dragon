@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/angular.min.js"></script>
+	<style>
+		.red{ color:red;}
+		.green{ color:green;}
+	</style>
+</head>
+<body>
+	<!-- todolist -->
+	<div ng-controller="todoList"  ng-clock class="ng-clock">
+		<div class="input-group">
+			<input ng-model="msg" type="text" class="form-control">
+			<span class="input-group-btn">
+				<button class="btn btn-default" ng-click="add()">新增</button>
+			</span>
+		</div>
+		<h4 ng-show="tasks.length" style="text-indent:5px">
+			任务列表：
+			<span>{{msg}}</span>
+			<span class="{{msg}}" ng-bind="msg"></span>
+			<span ng-bind="reverse()"></span>
+		</h4>
+		<ul class="list-group">
+			<li class="list-group-item" ng-repeat="item in tasks track by $index">
+				<span ng-class="{'red':$first}" ng-class="'
+				green':$last">{{$index+1+'. '+item}}</span>
+				<span class="close" ng-click="tasks.splice($index,1)">&times;</span>
+			</li>
+		</ul>
+	</div><hr>
+		
+	<!-- 登录 -->
+	<div class="form-inline" ng-controller="login">
+		<div class="form-group">
+			<label for="">用户名</label>
+			<input ng-model="user.name" type="text" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="">密码</label>
+			<input ng-model="user.pwd" type="text" class="form-control">
+		</div>
+		<div class="form-group">
+			<span class="btn btn-primary" ng-click="login()">登录</span>
+			<span ng-show="fail.length">{{fail}}</span>
+		</div>
+	</div><hr>
+	
+	<!-- 表单 -->
+	<div class="form-inline" ng-controller="form" name="myForm" ng-submit="submit(user)">
+		<div class="form-group">
+			<label for="">姓名</label>
+			<input class="form-control" type="text" ng-model="user.name" required>
+		</div>
+		<div class="form-group">
+			<label for="">性别：</label>
+			<label for=""><input type="radio" name="sex" ng-checked="user.sex==1">男</label>
+			<label for=""><input type="radio" name="sex" ng-checked="user.sex!=1">女</label>
+		</div>
+		<div class="form-group">
+			<label for="">职位</label>
+			<select class="form-control" name="" id="">
+				<option value="">请选择</option>
+				<option value="1" ng-selected="user.type==1">java</option>
+				<option value="2" ng-selected="user.type==2">c++</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="">爱好：</label>
+			<label for=""><input type="checkbox" name="hobby" ng-checked="check(1)">A</label>
+			<label for=""><input type="checkbox" name="hobby" ng-checked="check(2)">B</label>
+			<label for=""><input type="checkbox" name="hobby" ng-checked="check(3)">C</label>
+		</div>
+		<button class="btn btn-primary" type="submit" ng-disabled="myForm.$invalid">提交信息</button>
+	</div><hr>
+</body>
+<script>
+	//value constant factory services provider
+	angular.module("app",[])
+	.value('data1','1075895951')
+	.constant('data2','18826255059')
+	.factory('common',function(){
+		return{
+			msg:'helloC'
+		}
+	})
+	.factory('data3',function(){
+		return{
+			age:100,
+			add:function(){
+				this.age=10000;
+				return this.age
+			}
+		}
+	})
+	.service('data4',function(){
+		this.num=3.14,
+		this.length=function(){
+			return Math.pow(this.num,2)*100
+		}
+	})
+	.controller('todoList',function($scope,data1,data2,data3,data4){
+		//todolist
+		$scope.msg="";
+		$scope.tasks=[data1,data2,data3.add(),data4.length()];
+		$scope.add=function(){
+			$scope.tasks.push($scope.msg);
+			console.log($scope.tasks);
+			$scope.msg='';
+		}
+		$scope.reverse=function(){
+			return $scope.msg.split('').reverse().join('')
+		}
+	})
+	.controller('login',function($scope,common){
+		$scope.user={
+			name:'',
+			pwd:''
+		}
+		$scope.fail="";
+		$scope.login=function(){
+			if($scope.user.name=="admin" && $scope.user.pwd=="123"){
+				$scope.fail="登录成功";
+			}else{
+				$scope.fail="用户名或密码错误";
+			}
+		}
+	})
+	.controller('form',function($scope,data1,common){
+		$scope.user={
+			name:data1,
+			sex:1,
+			type:2,
+			hobby:[1,3]
+		}
+		$scope.check=function(n){
+			for (var i = 0; i < $scope.user.hobby.length; i++) {
+				if($scope.user.hobby[i]==n){
+					return true
+				}
+			};
+		}
+		$scope.submit=function(user){alert()
+			console.log(user)
+		}
+	})
+</script>
+</html>

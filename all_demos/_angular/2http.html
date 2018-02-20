@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-controller="myhttp">
+	<h4>{{msg}}</h4>
+	<ul>
+		<li ng-repeat="item in data">{{item.Country+','+item.Name+','+item.Url}}</li>
+	</ul>
+	<script>
+		angular.module('app',[])
+		.controller('myhttp',function($scope,$http){
+			$scope.msg="http请求";
+			$scope.data=[];
+
+			$http({
+				method:'Get',
+				url:'js/data.json'
+			}).then(function successCallback(response){
+				console.log(response);
+				$scope.data=response.data.sites;
+				console.log($scope.data)
+			},function errorCallback(error){
+				alert(error)
+			})
+		})
+	</script>
+</body>
+</html>

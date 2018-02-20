@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="box">
+		<a href="https://www.baidu.com" id="btn" >点击</a>
+	</div>
+	<script>
+		var $btn=document.getElementById('btn');
+		var $box=document.getElementById('box');
+		$btn.addEventListener('click',action);
+		$box.addEventListener('click',action2)
+		function action(event){
+			alert(event.type);
+			alert(event.target);
+			console.log(event.target);
+			event.stopPropagation()//阻止事件冒泡
+			event.preventDefault();//阻止默认事件
+		}
+		function action2(){
+			alert('x')
+		}
+	</script>
+</body>
+</html>
